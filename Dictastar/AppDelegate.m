@@ -17,7 +17,42 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
+    
+    NSString *username = [dict objectForKey:@"username"];
+    
+    if(username != nil) {
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+        UITabBarController *tabVc = (UITabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"MainTabBar"];
+        
+        self.window.rootViewController = tabVc;
+    }
+    
     return YES;
+}
+
+#pragma mark - Set TabBar Apperances
+
+- (void) setUpTabBarAppearance {
+    
+    // Change the tab bar background
+    UIImage* tabBarBackground = [UIImage imageNamed:@"header"];
+    [[UITabBar appearance] setBackgroundImage:tabBarBackground];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_selected"]];
+    
+    
+    
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                       [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                       nil] forState:UIControlStateNormal];
+    UIColor *titleHighlightedColor = [UIColor colorWithRed:153/255.0 green:192/255.0 blue:48/255.0 alpha:1.0];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                       titleHighlightedColor, NSForegroundColorAttributeName,
+                                                       nil] forState:UIControlStateHighlighted];
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
