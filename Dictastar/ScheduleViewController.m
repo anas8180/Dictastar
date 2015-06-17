@@ -31,7 +31,11 @@
 
     [self fetchPatientInfo];
     
-    _scheduleDateLable.text = [NSString stringWithFormat:@"SCHEDULE LIST %@",[self getDate]];
+    _scheduleDateLable.text = [NSString stringWithFormat:@"%@",[self getDate]];
+    
+//    self.tableView.estimatedRowHeight = 70.0;
+//    self.tableView.rowHeight = UITableViewAutomaticDimension;
+
     
 }
 

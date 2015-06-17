@@ -31,6 +31,15 @@
     
 }
 
+//-(void)viewWillAppear:(BOOL)animated {
+//    
+//    [super viewWillAppear:YES];
+//    
+//    self.hidesBottomBarWhenPushed = YES;
+//    
+//}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

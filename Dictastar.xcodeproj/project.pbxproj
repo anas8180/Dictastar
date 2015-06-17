@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		890EC1F11B31E0A1004F2175 /* DictateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 890EC1F01B31E0A1004F2175 /* DictateViewController.m */; };
+		890EC1F41B31E0BC004F2175 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 890EC1F31B31E0BC004F2175 /* InformationViewController.m */; };
+		890EC1F71B31E0D2004F2175 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 890EC1F61B31E0D2004F2175 /* RecordViewController.m */; };
+		890EC1FA1B31E0F2004F2175 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 890EC1F91B31E0F2004F2175 /* ReportViewController.m */; };
 		893D03D01B2FCF1200CD178A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D03CF1B2FCF1200CD178A /* main.m */; };
 		893D03D31B2FCF1200CD178A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D03D21B2FCF1200CD178A /* AppDelegate.m */; };
 		893D03D91B2FCF1200CD178A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 893D03D71B2FCF1200CD178A /* Main.storyboard */; };
@@ -37,6 +41,7 @@
 		893D04401B30262600CD178A /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D043F1B30262600CD178A /* ScheduleViewController.m */; };
 		893D04441B30268800CD178A /* SendQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D04431B30268800CD178A /* SendQViewController.m */; };
 		893D04481B3026A100CD178A /* ReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D04471B3026A100CD178A /* ReviewViewController.m */; };
+		897A5B2B1B318A4E00C08397 /* ReviewDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */; };
 		8994CB9A1B303D8400FBD6E8 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8994CB991B303D8400FBD6E8 /* CustomTableViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +56,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		890EC1EF1B31E0A1004F2175 /* DictateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictateViewController.h; sourceTree = "<group>"; };
+		890EC1F01B31E0A1004F2175 /* DictateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DictateViewController.m; sourceTree = "<group>"; };
+		890EC1F21B31E0BC004F2175 /* InformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationViewController.h; sourceTree = "<group>"; };
+		890EC1F31B31E0BC004F2175 /* InformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationViewController.m; sourceTree = "<group>"; };
+		890EC1F51B31E0D2004F2175 /* RecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordViewController.h; sourceTree = "<group>"; };
+		890EC1F61B31E0D2004F2175 /* RecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordViewController.m; sourceTree = "<group>"; };
+		890EC1F81B31E0F2004F2175 /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
+		890EC1F91B31E0F2004F2175 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
 		893D03CA1B2FCF1200CD178A /* Dictastar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dictastar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		893D03CE1B2FCF1200CD178A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		893D03CF1B2FCF1200CD178A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -113,6 +126,8 @@
 		893D04431B30268800CD178A /* SendQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendQViewController.m; sourceTree = "<group>"; };
 		893D04461B3026A100CD178A /* ReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewViewController.h; sourceTree = "<group>"; };
 		893D04471B3026A100CD178A /* ReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewViewController.m; sourceTree = "<group>"; };
+		897A5B291B318A4E00C08397 /* ReviewDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewDetailViewController.h; sourceTree = "<group>"; };
+		897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewDetailViewController.m; sourceTree = "<group>"; };
 		8994CB981B303D8400FBD6E8 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		8994CB991B303D8400FBD6E8 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,6 +150,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		890EC1EE1B31E084004F2175 /* DictateVC */ = {
+			isa = PBXGroup;
+			children = (
+				890EC1EF1B31E0A1004F2175 /* DictateViewController.h */,
+				890EC1F01B31E0A1004F2175 /* DictateViewController.m */,
+				890EC1F21B31E0BC004F2175 /* InformationViewController.h */,
+				890EC1F31B31E0BC004F2175 /* InformationViewController.m */,
+				890EC1F51B31E0D2004F2175 /* RecordViewController.h */,
+				890EC1F61B31E0D2004F2175 /* RecordViewController.m */,
+				890EC1F81B31E0F2004F2175 /* ReportViewController.h */,
+				890EC1F91B31E0F2004F2175 /* ReportViewController.m */,
+			);
+			name = DictateVC;
+			sourceTree = "<group>";
+		};
 		893D03C11B2FCF1200CD178A = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +186,7 @@
 		893D03CC1B2FCF1200CD178A /* Dictastar */ = {
 			isa = PBXGroup;
 			children = (
+				897A5AF41B317BB400C08397 /* Third Party */,
 				8994CB971B303D4400FBD6E8 /* Views */,
 				893D03FC1B2FFC5700CD178A /* AFNetworking */,
 				893D03F71B2FD8B900CD178A /* Utilities */,
@@ -199,6 +230,7 @@
 		893D03F31B2FD06D00CD178A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				890EC1EE1B31E084004F2175 /* DictateVC */,
 				893D04451B30269100CD178A /* ReviewVC */,
 				893D04411B30266E00CD178A /* SendQVC */,
 				893D043D1B30261300CD178A /* ScheduleVC */,
@@ -320,8 +352,17 @@
 			children = (
 				893D04461B3026A100CD178A /* ReviewViewController.h */,
 				893D04471B3026A100CD178A /* ReviewViewController.m */,
+				897A5B291B318A4E00C08397 /* ReviewDetailViewController.h */,
+				897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */,
 			);
 			name = ReviewVC;
+			sourceTree = "<group>";
+		};
+		897A5AF41B317BB400C08397 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Third Party";
 			sourceTree = "<group>";
 		};
 		8994CB971B303D4400FBD6E8 /* Views */ = {
@@ -382,6 +423,7 @@
 				TargetAttributes = {
 					893D03C91B2FCF1200CD178A = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 9725FJGA2L;
 					};
 					893D03E21B2FCF1300CD178A = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -440,20 +482,25 @@
 				893D03D31B2FCF1200CD178A /* AppDelegate.m in Sources */,
 				893D04161B2FFC8A00CD178A /* AFSecurityPolicy.m in Sources */,
 				893D03FB1B2FD93B00CD178A /* DataController.m in Sources */,
+				897A5B2B1B318A4E00C08397 /* ReviewDetailViewController.m in Sources */,
 				893D04401B30262600CD178A /* ScheduleViewController.m in Sources */,
 				893D04131B2FFC8A00CD178A /* AFHTTPRequestOperationManager.m in Sources */,
 				893D04171B2FFC8A00CD178A /* AFURLConnectionOperation.m in Sources */,
 				893D043C1B30225000CD178A /* HomeViewController.m in Sources */,
 				893D04301B2FFCA000CD178A /* UIImageView+AFNetworking.m in Sources */,
+				890EC1FA1B31E0F2004F2175 /* ReportViewController.m in Sources */,
 				893D04121B2FFC8A00CD178A /* AFHTTPRequestOperation.m in Sources */,
+				890EC1F71B31E0D2004F2175 /* RecordViewController.m in Sources */,
 				893D042D1B2FFCA000CD178A /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				893D03D01B2FCF1200CD178A /* main.m in Sources */,
+				890EC1F41B31E0BC004F2175 /* InformationViewController.m in Sources */,
 				893D04181B2FFC8A00CD178A /* AFURLRequestSerialization.m in Sources */,
 				893D04141B2FFC8A00CD178A /* AFHTTPSessionManager.m in Sources */,
 				893D04151B2FFC8A00CD178A /* AFNetworkReachabilityManager.m in Sources */,
 				893D04191B2FFC8A00CD178A /* AFURLResponseSerialization.m in Sources */,
 				893D04331B2FFCA000CD178A /* UIWebView+AFNetworking.m in Sources */,
 				893D041A1B2FFC8A00CD178A /* AFURLSessionManager.m in Sources */,
+				890EC1F11B31E0A1004F2175 /* DictateViewController.m in Sources */,
 				893D042C1B2FFCA000CD178A /* AFNetworkActivityIndicatorManager.m in Sources */,
 				893D04481B3026A100CD178A /* ReviewViewController.m in Sources */,
 				8994CB9A1B303D8400FBD6E8 /* CustomTableViewCell.m in Sources */,
@@ -518,9 +565,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: KAMALAM INFOTECH (9725FJGA2L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: KAMALAM INFOTECH (9725FJGA2L)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -540,6 +589,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "86bf0c96-7969-4da1-bd7f-c0f2813aeb85";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -561,9 +611,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: KAMALAM INFOTECH (9725FJGA2L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: KAMALAM INFOTECH (9725FJGA2L)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -576,6 +628,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "86bf0c96-7969-4da1-bd7f-c0f2813aeb85";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -585,9 +638,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Dictastar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Dictastar/Dictastar-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -595,9 +654,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Dictastar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Dictastar/Dictastar-Bridging-Header.h";
 			};
 			name = Release;
 		};

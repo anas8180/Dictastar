@@ -13,5 +13,8 @@
 @property (nonatomic, strong) IBOutlet UILabel *title;
 @property (nonatomic, strong) IBOutlet UILabel *subTitle;
 @property (nonatomic, strong) IBOutlet UILabel *accessoryLable;
+@property (nonatomic, strong) IBOutlet UIButton *selectRadioButton;
+@property (nonatomic, strong) IBOutlet UIImageView *statusIcon;
+@property (nonatomic, strong) IBOutlet UILabel *statusLable;
 
 @end
