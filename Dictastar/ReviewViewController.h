@@ -10,4 +10,6 @@
 
 @interface ReviewViewController : UIViewController
 
+@property (nonatomic) BOOL isFromHome;
+
 @end

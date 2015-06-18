@@ -10,4 +10,6 @@
 
 @interface SendQViewController : UIViewController
 
+@property (nonatomic) BOOL isFromHome;
+
 @end

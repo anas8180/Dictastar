@@ -8,6 +8,8 @@
 
 #import "HomeViewController.h"
 #import "BTServicesClient.h"
+#import "SendQViewController.h"
+#import "ReviewViewController.h"
 
 @interface HomeViewController ()
 
@@ -66,14 +68,25 @@
     
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    if ([segue.identifier isEqualToString:@"SendQSegue"]) {
+        
+        SendQViewController *sendQVC = segue.destinationViewController;
+        sendQVC.isFromHome = YES;
+    }
+    else if ([segue.identifier isEqualToString:@"ReviewSegue"]) {
+        
+        ReviewViewController *reviewVC = segue.destinationViewController;
+        reviewVC.isFromHome = YES;
+    }
 }
-*/
+
 
 @end
