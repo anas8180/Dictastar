@@ -25,7 +25,7 @@
 
     [self fetchDetail];
     
-    _titleLable.text = [NSString stringWithFormat:@"%@ %@",[dataDict objectForKey:@"PatientName"],[dataDict objectForKey:@"ServiceDate"]];
+    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[dataDict objectForKey:@"PatientName"],[self cutStringDate:[dataDict objectForKey:@"ServiceDate"]]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -77,6 +77,28 @@
     [_webView loadHTMLString:loadHtml baseURL:nil];
 
 }
+
+-(NSString *)cutStringDate:(NSString *)dateString
+{
+    // cut the String
+    NSRange range = [dateString rangeOfString:@"T"];
+    NSString *newString = [dateString substringWithRange:NSMakeRange(0, range.location)];
+    
+    // chanage the Date Format
+    NSDateFormatter *oldFormatter = [[NSDateFormatter alloc] init];
+    [oldFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *theDate= [oldFormatter dateFromString:newString];
+    NSDateFormatter *newFormatter = [[NSDateFormatter alloc]init];
+    [newFormatter setDateFormat:@"MM/dd/yyyy"];
+    
+    NSString *cutDate = [NSString stringWithFormat:@"%@",[newFormatter stringFromDate:theDate]];
+    
+    cutDate = [cutDate stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    
+    return cutDate;
+    
+}
+
 
 /*
 #pragma mark - Navigation
