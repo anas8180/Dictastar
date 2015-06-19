@@ -25,6 +25,7 @@
 @end
 
 @implementation DictateViewController
+@synthesize dataDict;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,14 +33,18 @@
     
     _viewControllerArray = [NSMutableArray array];
 
+    NSLog(@"%@",dataDict);
     
     InformationViewController *infoVC = (InformationViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"InformationView"];
+    infoVC.dataDict = dataDict;
     infoVC.title = @"INFORMATION";
     
     RecordViewController *recordVC = (RecordViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"RecordView"];
+    recordVC.dataDict = dataDict;
     recordVC.title = @"DICTATE";
 
     ReportViewController *reportVC = (ReportViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"ReportView"];
+    reportVC.dataDict = dataDict;
     reportVC.title = @"PRE REPORTS";
 
 
@@ -76,7 +81,7 @@
     _pageController.delegate = self;
     _pageController.dataSource = self;
     [_pageController setViewControllers:@[[_viewControllerArray objectAtIndex:0]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-    _pageController.view.frame = CGRectMake(0, 74, self.view.frame.size.width, self.view.frame.size.height - 74);
+    _pageController.view.frame = CGRectMake(0, 114, self.view.frame.size.width, self.view.frame.size.height - 114);
     [self addChildViewController:_pageController];
     [self.view addSubview:_pageController.view];
     [_pageController didMoveToParentViewController:self];

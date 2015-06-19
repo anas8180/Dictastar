@@ -10,6 +10,7 @@
 #import "BTServicesClient.h"
 #import "SendQViewController.h"
 #import "ReviewViewController.h"
+#import "ScheduleViewController.h"
 
 @interface HomeViewController ()
 
@@ -85,6 +86,12 @@
         
         ReviewViewController *reviewVC = segue.destinationViewController;
         reviewVC.isFromHome = YES;
+    }
+    else if ([segue.identifier isEqualToString:@"ScheduleSegue"]) {
+        
+        ScheduleViewController *reviewVC = segue.destinationViewController;
+        reviewVC.isFromHome = YES;
+
     }
 }
 

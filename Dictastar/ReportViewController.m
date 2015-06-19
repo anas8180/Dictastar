@@ -7,12 +7,18 @@
 //
 
 #import "ReportViewController.h"
+#import "BTServicesClient.h"
+#import "CustomTableViewCell.h"
 
 @interface ReportViewController ()
+
+@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, strong) NSDictionary *user_info;
 
 @end
 
 @implementation ReportViewController
+@synthesize dataDict;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,36 +28,68 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    _user_info = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
+    [self fetchPatientInfo];
+
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+-(void)fetchPatientInfo {
+    
+    NSDictionary *params = @{@"AttendingPhysician":[_user_info objectForKey:@"DictatorId"],@"patientID":[dataDict objectForKey:@"PatientID"]};
+    
+    [[BTServicesClient sharedClient] GET:@"GetTranscriptionIDbyAttendingPhysicianforSignedJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        _dataArray  = [jsonData objectForKey:@"Table"];
+        
+        [self.tableView reloadData];
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        
+        NSLog(@"%@",error.localizedDescription);
+        
+        
+    }];
+    
+}
+
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return _dataArray.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    
+    CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     // Configure the cell...
     
+    cell.title.text = [NSString stringWithFormat:@"%@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"PatientName"]];
+    
+    cell.subTitle.text = [NSString stringWithFormat:@"%@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"ServiceDate"]];
+    
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

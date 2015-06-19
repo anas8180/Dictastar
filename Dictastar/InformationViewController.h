@@ -10,4 +10,6 @@
 
 @interface InformationViewController : UITableViewController
 
+@property (nonatomic, strong) NSDictionary *dataDict;
+
 @end

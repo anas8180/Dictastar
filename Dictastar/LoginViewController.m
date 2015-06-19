@@ -11,6 +11,7 @@
 #import "BTServicesClient.h"
 
 @interface LoginViewController ()
+
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topLayout;
 @property (strong, nonatomic) IBOutlet UITextField *emailTextFld;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextFld;
@@ -25,17 +26,17 @@
     
     if (IS_IPHONE4) {
         
-        _topLayout.constant = -100;
+        _topLayout.constant = 20;
     }
     
     else if (IS_IPHONE5) {
         
-        _topLayout.constant = -50;
+        _topLayout.constant = 70;
     }
     
     else if (IS_IPHONE6 || IS_IPHONE6PLUS) {
         
-        _topLayout.constant = 0;
+        _topLayout.constant = 70;
     }
     
 }
@@ -68,30 +69,30 @@
 #pragma mark - Keyboard Notifications
 - (void)keyboardDidShow:(NSNotification *)notification{
     
-    CGRect frame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
-    // if keyboard is above textview
-    if (CGRectIntersectsRect(frame, self.passwordTextFld.frame)) {
-       
         if (IS_IPHONE4) {
-            self.topLayout.constant = -250;
+            self.topLayout.constant = -120;
         }
         else if (IS_IPHONE5) {
-            self.topLayout.constant = -200;
+            self.topLayout.constant = -30;
         }
-        
+        else if (IS_IPHONE6 || IS_IPHONE6PLUS) {
+            self.topLayout.constant = 70;
+        }
+    
         [self moveViewUpAndDown];
-    }
     
 }
 
 - (void)keyboardDidHide:(NSNotification *)notification{
    
     if (IS_IPHONE4) {
-        self.topLayout.constant = -100;
+        self.topLayout.constant = 20;
     }
     else if (IS_IPHONE5) {
-        self.topLayout.constant = -50;
+        self.topLayout.constant = 70;
+    }
+    else if (IS_IPHONE6PLUS || IS_IPHONE6) {
+        self.topLayout.constant = 70;
     }
     [self moveViewUpAndDown];
 }

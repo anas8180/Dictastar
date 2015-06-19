@@ -10,6 +10,7 @@
 #import "BTServicesClient.h"
 #import "CustomTableViewCell.h"
 #import "NoDataViewCell.h"
+#import "DictateViewController.h"
 
 @interface ScheduleViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -23,6 +24,7 @@
 @end
 
 @implementation ScheduleViewController
+@synthesize isFromHome;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,6 +46,23 @@
     
     
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (isFromHome) {
+        self.tabBarController.tabBar.hidden=YES;
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    if (isFromHome) {
+        self.tabBarController.tabBar.hidden=NO;
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -118,7 +137,7 @@
     
     NSString *dateString = [dateFormat stringFromDate:_currentDate];
     
-    NSDictionary *params = @{@"FacilityId":[_userInfo objectForKey:@"FacilityId"],@"Fromdate":dateString,@"Todate":dateString};
+    NSDictionary *params = @{@"FacilityId":[_userInfo objectForKey:@"FacilityId"],@"Fromdate":_scheduleDateLable.text,@"Todate":_scheduleDateLable.text};
     
     [[BTServicesClient sharedClient] GET:@"FetchPatientJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
@@ -145,15 +164,15 @@
 
 -(void)getDate {
     
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+  /*  NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
     
     NSString *dateString = [dateFormat stringFromDate:_currentDate];
     
-    _scheduleDateLable.text = [NSString stringWithFormat:@"%@",dateString];
+    _scheduleDateLable.text = [NSString stringWithFormat:@"%@",dateString]; */
     
-  /*  NSString *str = @"2014-04-01"; /// here this is your date with format yyyy-MM-dd
+    NSString *str = @"2014-04-01"; /// here this is your date with format yyyy-MM-dd
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; // here we create NSDateFormatter object for change the Format of date..
     [dateFormatter setDateFormat:@"yyyy-MM-dd"]; //// here set format of date which is in your output date (means above str with format)
@@ -165,8 +184,8 @@
     
     NSString *convertedString = [dateFormatter stringFromDate:date]; //here convert date in NSString
     NSLog(@"Converted String : %@",convertedString);
-    
-    return convertedString; */
+   
+   _scheduleDateLable.text = [NSString stringWithFormat:@"%@",convertedString];
 }
 
 #pragma mark - Action
@@ -193,6 +212,7 @@
     _currentDate = [dateFormatter dateFromString:convertedString];
 
     [self getDate];
+    _dataArray = [[NSArray alloc]init];
     [self.tableView reloadData];
     [self fetchPatientInfo];
 }
@@ -218,18 +238,24 @@
     _currentDate = [dateFormatter dateFromString:convertedString];
     
     [self getDate];
+    _dataArray = [[NSArray alloc]init];
     [self.tableView reloadData];
     [self fetchPatientInfo];
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    
+    DictateViewController *dictateVC = segue.destinationViewController;
+    dictateVC.dataDict = [_dataArray objectAtIndex:indexPath.row];
 }
-*/
+
 
 @end

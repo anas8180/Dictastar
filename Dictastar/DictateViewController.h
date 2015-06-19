@@ -10,4 +10,6 @@
 
 @interface DictateViewController : UIViewController<UIPageViewControllerDataSource,UIPageViewControllerDelegate,UIScrollViewDelegate>
 
+@property (nonatomic, strong) NSDictionary *dataDict;
+
 @end

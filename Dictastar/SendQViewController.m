@@ -209,6 +209,7 @@
     _currentDate = [dateFormatter dateFromString:convertedString];
     
     [self getDate];
+    _dataArray = [[NSArray alloc]init];
     [self.tableView reloadData];
     [self fetchPatientInfo];
 }
@@ -234,6 +235,7 @@
     _currentDate = [dateFormatter dateFromString:convertedString];
     
     [self getDate];
+    _dataArray = [[NSArray alloc]init];
     [self.tableView reloadData];
     [self fetchPatientInfo];
 }

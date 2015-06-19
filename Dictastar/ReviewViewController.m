@@ -37,7 +37,6 @@
     _userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
     
     [self fetchPatientInfo];
-    [self getDate];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -146,88 +145,6 @@
     }];
     
 }
-
--(void)getDate {
-    
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    
-    [dateFormat setDateFormat:@"MM/dd/yyyy"];
-    
-    NSString *dateString = [dateFormat stringFromDate:_currentDate];
-    
-    _dateLable.text = [NSString stringWithFormat:@"%@",dateString];
-    
-    /*  NSString *str = @"2014-04-01"; /// here this is your date with format yyyy-MM-dd
-     
-     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; // here we create NSDateFormatter object for change the Format of date..
-     [dateFormatter setDateFormat:@"yyyy-MM-dd"]; //// here set format of date which is in your output date (means above str with format)
-     
-     NSDate *date = [dateFormatter dateFromString: str]; // here you can fetch date from string with define format
-     
-     dateFormatter = [[NSDateFormatter alloc] init];
-     [dateFormatter setDateFormat:@"MM/dd/yyyy"];// here set format which you want...
-     
-     NSString *convertedString = [dateFormatter stringFromDate:date]; //here convert date in NSString
-     NSLog(@"Converted String : %@",convertedString);
-     
-     return convertedString; */
-}
-
-
-
-#pragma mark - Action
-
-- (IBAction)backAction:(id)sender {
-    
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *comps = [NSDateComponents new];
-    comps.day   = -1;
-    NSDate *date = [calendar dateByAddingComponents:comps toDate:_currentDate options:0];
-    NSDateComponents *components = [calendar components:NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitYear fromDate:date]; // Get necessary date components
-    /*NSLog(@"Previous month: %ld",(long)[components month]);
-     NSLog(@"Previous day  : %ld",(long)[components day]);
-     NSLog(@"Previous month: %ld",(long)[components year]); */
-    
-    NSString *str = [NSString stringWithFormat:@"%ld-%ld-%ld",[components year],[components month],[components day]];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSDate *dt = [dateFormatter dateFromString: str];
-    
-    dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MM/dd/yyyy"];
-    NSString *convertedString = [dateFormatter stringFromDate:dt];
-    _currentDate = [dateFormatter dateFromString:convertedString];
-    
-    [self getDate];
-    [self.tableView reloadData];
-    [self fetchPatientInfo];
-}
-- (IBAction)forwardAction:(id)sender {
-    
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *comps = [NSDateComponents new];
-    comps.day   = +1;
-    NSDate *date = [calendar dateByAddingComponents:comps toDate:_currentDate options:0];
-    NSDateComponents *components = [calendar components:NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitYear fromDate:date]; // Get necessary date components
-    /*   NSLog(@"Previous month: %ld",(long)[components month]);
-     NSLog(@"Previous day  : %ld",(long)[components day]);
-     NSLog(@"Previous month: %ld",(long)[components year]); */
-    
-    NSString *str = [NSString stringWithFormat:@"%ld-%ld-%ld",[components year],[components month],[components day]];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSDate *dt = [dateFormatter dateFromString: str];
-    
-    dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MM/dd/yyyy"];
-    NSString *convertedString = [dateFormatter stringFromDate:dt];
-    _currentDate = [dateFormatter dateFromString:convertedString];
-    
-    [self getDate];
-    [self.tableView reloadData];
-    [self fetchPatientInfo];
-}
-
 
 #pragma mark - Navigation
 

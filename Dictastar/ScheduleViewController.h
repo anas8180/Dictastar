@@ -10,4 +10,6 @@
 
 @interface ScheduleViewController : UIViewController
 
+@property (nonatomic) BOOL isFromHome;
+
 @end

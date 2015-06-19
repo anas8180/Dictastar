@@ -12,11 +12,14 @@
 
 @interface InformationViewController ()
 
-@property (nonatomic, strong) NSArray *_dataArray;
+@property (nonatomic, strong) NSDictionary *userInfo;
+@property (nonatomic, strong) NSDictionary *resultDict;
+@property (nonatomic, strong) NSArray *keyDictionary;
 
 @end
 
 @implementation InformationViewController
+@synthesize dataDict;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,6 +30,8 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    _userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
+    [self fetchPatientInfo];
     
 }
 
@@ -35,15 +40,17 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*-(void)fetchPatientInfo {
+-(void)fetchPatientInfo {
         
-    NSDictionary *params = @{@"FacilityId":[_userInfo objectForKey:@"FacilityId"],@"Fromdate":todayDate,@"Todate":todayDate};
+    NSDictionary *params = @{@"FacilityId":[_userInfo objectForKey:@"FacilityId"],@"patientID":[dataDict objectForKey:@"PatientID"]};
     
-    [[BTServicesClient sharedClient] GET:@"FetchPatientJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+    [[BTServicesClient sharedClient] GET:@"FetchPatientInfoJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
-        _dataArray = [jsonData objectForKey:@"Table"];
+        NSArray *dataArray = [jsonData objectForKey:@"Table"];
+        _resultDict = [dataArray objectAtIndex:0];
+        _keyDictionary = [_resultDict allKeys];
         
         [self.tableView reloadData];
         
@@ -55,7 +62,7 @@
         
     }];
     
-} */
+}
 
 
 #pragma mark - Table view data source
@@ -67,7 +74,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 0;
+    return _keyDictionary.count;
 }
 
 
@@ -76,6 +83,10 @@
     CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     // Configure the cell...
+    
+    cell.title.text = [NSString stringWithFormat:@"%@",[_keyDictionary objectAtIndex:indexPath.row]];
+    
+    cell.subTitle.text = [NSString stringWithFormat:@"%@",[_resultDict objectForKey:[_keyDictionary objectAtIndex:indexPath.row]]];
     
     return cell;
 }

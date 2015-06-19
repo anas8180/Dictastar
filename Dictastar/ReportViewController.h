@@ -10,4 +10,6 @@
 
 @interface ReportViewController : UITableViewController
 
+@property (nonatomic, strong) NSDictionary *dataDict;
+
 @end

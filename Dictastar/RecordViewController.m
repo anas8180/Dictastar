@@ -13,6 +13,7 @@
 @end
 
 @implementation RecordViewController
+@synthesize dataDict;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
