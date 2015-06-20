@@ -8,6 +8,7 @@
 
 #import "ReviewDetailViewController.h"
 #import "BTServicesClient.h"
+#import "BTActionService.h"
 
 @interface ReviewDetailViewController ()
 
@@ -26,6 +27,9 @@
     [self fetchDetail];
     
     _titleLable.text = [NSString stringWithFormat:@"%@   %@",[dataDict objectForKey:@"PatientName"],[self cutStringDate:[dataDict objectForKey:@"ServiceDate"]]];
+    
+    //    NSString *yourHTMLSourceCodeString = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -97,6 +101,45 @@
     
     return cutDate;
     
+}
+
+#pragma mark - Action
+
+- (IBAction)saveTapped:(id)sender {
+    
+    NSString *webHTMLSourceCodeString = [_webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
+    
+    NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"],@"Content":webHTMLSourceCodeString};
+    
+    [self callWebService:params];
+
+}
+- (IBAction)signTapped:(id)sender {
+    
+    
+}
+- (IBAction)deleteTapped:(id)sender {
+        
+    NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"],@"Status":@"Deleted"};
+
+    [self callWebService:params];
+}
+
+#pragma mark - Service Methods
+
+- (void)callWebService:(NSDictionary *)params {
+    
+    [[BTActionService sharedClient] GET:@"DeleteRecord" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSLog(@"%@",jsonData);
+        
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+    }];
+
 }
 
 

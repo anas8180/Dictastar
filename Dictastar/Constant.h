@@ -17,5 +17,6 @@
 
 #define IS_IPHONE4 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )480 ) < DBL_EPSILON )
 
+#define IntegrationURL @"http://182.72.151.117/HL7WS/HLIntegration.asmx?op="
 
 #endif

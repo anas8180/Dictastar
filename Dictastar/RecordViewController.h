@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface RecordViewController : UIViewController
+@interface RecordViewController : UIViewController <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) NSDictionary *dataDict;
 

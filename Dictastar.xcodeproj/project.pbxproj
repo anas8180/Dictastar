@@ -12,6 +12,7 @@
 		890EC1F71B31E0D2004F2175 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 890EC1F61B31E0D2004F2175 /* RecordViewController.m */; };
 		890EC1FA1B31E0F2004F2175 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 890EC1F91B31E0F2004F2175 /* ReportViewController.m */; };
 		892113B91B32D6E900BCAFF7 /* NoDataViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 892113B81B32D6E900BCAFF7 /* NoDataViewCell.m */; };
+		89375B8B1B3567ED007516E6 /* BTActionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 89375B8A1B3567ED007516E6 /* BTActionService.m */; };
 		893D03D01B2FCF1200CD178A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D03CF1B2FCF1200CD178A /* main.m */; };
 		893D03D31B2FCF1200CD178A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D03D21B2FCF1200CD178A /* AppDelegate.m */; };
 		893D03D91B2FCF1200CD178A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 893D03D71B2FCF1200CD178A /* Main.storyboard */; };
@@ -42,6 +43,7 @@
 		893D04401B30262600CD178A /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D043F1B30262600CD178A /* ScheduleViewController.m */; };
 		893D04441B30268800CD178A /* SendQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D04431B30268800CD178A /* SendQViewController.m */; };
 		893D04481B3026A100CD178A /* ReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D04471B3026A100CD178A /* ReviewViewController.m */; };
+		8946B9E91B34736B00916FD2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8946B9E81B34736B00916FD2 /* AVFoundation.framework */; };
 		897A5B2B1B318A4E00C08397 /* ReviewDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */; };
 		8994CB9A1B303D8400FBD6E8 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8994CB991B303D8400FBD6E8 /* CustomTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -67,6 +69,8 @@
 		890EC1F91B31E0F2004F2175 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
 		892113B71B32D6E900BCAFF7 /* NoDataViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoDataViewCell.h; sourceTree = "<group>"; };
 		892113B81B32D6E900BCAFF7 /* NoDataViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoDataViewCell.m; sourceTree = "<group>"; };
+		89375B891B3567ED007516E6 /* BTActionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTActionService.h; sourceTree = "<group>"; };
+		89375B8A1B3567ED007516E6 /* BTActionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTActionService.m; sourceTree = "<group>"; };
 		893D03CA1B2FCF1200CD178A /* Dictastar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dictastar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		893D03CE1B2FCF1200CD178A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		893D03CF1B2FCF1200CD178A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -129,6 +133,7 @@
 		893D04431B30268800CD178A /* SendQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendQViewController.m; sourceTree = "<group>"; };
 		893D04461B3026A100CD178A /* ReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewViewController.h; sourceTree = "<group>"; };
 		893D04471B3026A100CD178A /* ReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewViewController.m; sourceTree = "<group>"; };
+		8946B9E81B34736B00916FD2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		897A5B291B318A4E00C08397 /* ReviewDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewDetailViewController.h; sourceTree = "<group>"; };
 		897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewDetailViewController.m; sourceTree = "<group>"; };
 		8994CB981B303D8400FBD6E8 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
@@ -140,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8946B9E91B34736B00916FD2 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +177,7 @@
 		893D03C11B2FCF1200CD178A = {
 			isa = PBXGroup;
 			children = (
+				8946B9E81B34736B00916FD2 /* AVFoundation.framework */,
 				893D03CC1B2FCF1200CD178A /* Dictastar */,
 				893D03E61B2FCF1300CD178A /* DictastarTests */,
 				893D03CB1B2FCF1200CD178A /* Products */,
@@ -248,6 +255,8 @@
 			children = (
 				893D04351B2FFD0200CD178A /* BTServicesClient.h */,
 				893D04361B2FFD0200CD178A /* BTServicesClient.m */,
+				89375B891B3567ED007516E6 /* BTActionService.h */,
+				89375B8A1B3567ED007516E6 /* BTActionService.m */,
 				893D03F81B2FD8DE00CD178A /* Constant.h */,
 				893D03F91B2FD93B00CD178A /* DataController.h */,
 				893D03FA1B2FD93B00CD178A /* DataController.m */,
@@ -511,6 +520,7 @@
 				893D04481B3026A100CD178A /* ReviewViewController.m in Sources */,
 				8994CB9A1B303D8400FBD6E8 /* CustomTableViewCell.m in Sources */,
 				893D04371B2FFD0200CD178A /* BTServicesClient.m in Sources */,
+				89375B8B1B3567ED007516E6 /* BTActionService.m in Sources */,
 				893D03F61B2FD08900CD178A /* LoginViewController.m in Sources */,
 				893D04441B30268800CD178A /* SendQViewController.m in Sources */,
 			);

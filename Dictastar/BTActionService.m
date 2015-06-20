@@ -1,33 +1,33 @@
 //
-//  BTServicesClient.m
+//  BTActionService.m
+//  Dictastar
 //
-//  Created by Madhavi
+//  Created by mohamed on 20/06/15.
+//  Copyright (c) 2015 mohamed. All rights reserved.
+//
 
-
-#import "BTServicesClient.h"
+#import "BTActionService.h"
 #import "UIKit+AFNetworking.h"
 
-@implementation BTServicesClient
+static NSString * const DictastarAPIBaseURLString = @"http://182.72.151.117/HL7WS/HLIntegration.asmx?op=";
 
-static NSString * const DictastarAPIBaseURLString = @"http://182.72.151.117:8080/ios/service.asmx?op=";
-
+@implementation BTActionService
 
 + (instancetype)sharedClient
 {
-    static BTServicesClient *_sharedClient = nil;
+    static BTActionService *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedClient = [[BTServicesClient alloc] initWithBaseURL:[NSURL URLWithString:DictastarAPIBaseURLString]];
+        _sharedClient = [[BTActionService alloc] initWithBaseURL:[NSURL URLWithString:DictastarAPIBaseURLString]];
         _sharedClient.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone ];
         _sharedClient.securityPolicy.allowInvalidCertificates = YES;
         
-         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
-
+        [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+        
     });
     
     return _sharedClient;
 }
-
 
 #pragma mark - custom initialization
 
@@ -37,12 +37,10 @@ static NSString * const DictastarAPIBaseURLString = @"http://182.72.151.117:8080
     if (self)
     {
         self.requestSerializer = [AFHTTPRequestSerializer new];
-//        self.responseSerializer = [AFJSONResponseSerializer new];
+        //        self.responseSerializer = [AFJSONResponseSerializer new];
         self.responseSerializer = [AFHTTPResponseSerializer serializer];
     }
     return self;
 }
-
-
 
 @end

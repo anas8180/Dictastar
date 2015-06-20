@@ -33,6 +33,8 @@
     _userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
     [self fetchPatientInfo];
     
+    self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+
 }
 
 - (void)didReceiveMemoryWarning {
