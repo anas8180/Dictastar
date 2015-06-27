@@ -34,12 +34,12 @@
     _patientName.text = [NSString stringWithFormat:@"%@ %@",[dataDict objectForKey:@"Name"],[self cutStringDate:[dataDict objectForKey:@"Dateofstudy"]]];
     
     NSString *fileNameString = [self getAudioFileName:[dataDict objectForKey:@"Name"]];
-    _fileName.text = [NSString stringWithFormat:@"%@.wav",fileNameString];
+    _fileName.text = [NSString stringWithFormat:@"%@.m4a",fileNameString];
 
     // Set the audio file
     NSArray *pathComponents = [NSArray arrayWithObjects:
                                [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
-                               fileNameString,
+                               @"MyAudioMemo.m4a",
                                nil];
     NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
     
@@ -130,7 +130,6 @@
     
     if (recorder.recording) {
         
-        [sender setImage:[UIImage imageNamed:@"recorder_play"] forState:UIControlStateNormal];
         [recorder stop];
         
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
@@ -141,33 +140,23 @@
     else if (player.isPlaying){
         
         [player stop];
-        [sender setImage:[UIImage imageNamed:@"recorder_play"] forState:UIControlStateNormal];
     }
-    else {
-        
-        [sender setImage:[UIImage imageNamed:@"recorder_stop"] forState:UIControlStateNormal];
-
-        player = [[AVAudioPlayer alloc] initWithContentsOfURL:recorder.url error:nil];
-        [player setDelegate:self];
-        
-        [player play];
-        
-        _slider.minimumValue = 0.0;
-        float total= player.duration;
-        total = total/60;
-        _slider.maximumValue = total;
-
-        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
-
-    }
-
     
 }
 - (IBAction)pausePressed:(id)sender {
     
-    if (recorder.recording) {
-        [recorder pause];
-    }
+    player = [[AVAudioPlayer alloc] initWithContentsOfURL:recorder.url error:nil];
+    [player setDelegate:self];
+    
+    [player play];
+    
+    _slider.minimumValue = 0.0;
+    float total= player.duration;
+    total = total/60;
+    _slider.maximumValue = total;
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+    
 }
 - (IBAction)sendPressed:(id)sender {
     

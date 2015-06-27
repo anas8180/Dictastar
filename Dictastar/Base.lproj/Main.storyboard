@@ -2154,6 +2154,9 @@
                                         <include reference="yn6-y7-kaj"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="stopPressed:" destination="fk6-ol-uFq" eventType="touchUpInside" id="VAE-gs-9HZ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hba-JK-ED4">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -2179,6 +2182,9 @@
                                         <include reference="de7-p2-2S4"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="pausePressed:" destination="fk6-ol-uFq" eventType="touchUpInside" id="5Kw-mk-CuE"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUg-80-Myv">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -2204,6 +2210,9 @@
                                         <include reference="RHC-ce-SW4"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="sendPressed:" destination="fk6-ol-uFq" eventType="touchUpInside" id="dvI-Nk-jX0"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STAT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7d-Rc-wCY">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -2248,6 +2257,9 @@
                                         <include reference="nXC-8d-vDc"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="statPressed:" destination="fk6-ol-uFq" eventType="touchUpInside" id="MFr-lf-zE8"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2332,6 +2344,7 @@
                     </view>
                     <connections>
                         <outlet property="fileName" destination="V8R-AC-DBu" id="m9u-Qi-8pa"/>
+                        <outlet property="slider" destination="kfo-f3-HGH" id="Jza-0L-CCf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f3n-l0-bTt" userLabel="First Responder" sceneMemberID="firstResponder"/>
