@@ -29,7 +29,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"Send Q";
+    self.title = @"Outbox";
         
     _currentDate = [NSDate date];
     

@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @property (strong, nonatomic) IBOutlet UILabel *titleLable;
+@property (strong, nonatomic) NSDictionary *jobDict;
+@property (strong, nonatomic) NSDictionary *user_info;
 
 @end
 
@@ -26,9 +28,13 @@
 
     [self fetchDetail];
     
-    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[dataDict objectForKey:@"PatientName"],[self cutStringDate:[dataDict objectForKey:@"ServiceDate"]]];
     
-    //    NSString *yourHTMLSourceCodeString = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
+    NSLog(@"%@",dataDict);
+    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[dataDict objectForKey:@"PatientName"],[dataDict objectForKey:@"ServiceDate"]];
+    
+    _user_info = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
+    
+    [self fetchJobDetials];
 
 }
 
@@ -57,13 +63,10 @@
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
-        NSLog(@"%@",jsonData);
         
         NSArray *jsonArray = [jsonData objectForKey:@"Table"];
         
         NSString *jsonString = [[jsonArray objectAtIndex:0] objectForKey:@"DetailValue"];
-        
-        NSLog(@"%@",jsonString);
         
         [self setHtmlLoad:jsonString];
         
@@ -111,35 +114,58 @@
     
     NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"],@"Content":webHTMLSourceCodeString};
     
-    [self callWebService:params];
+    [self callWebService:params service:@"SaveRecord"];
 
 }
 - (IBAction)signTapped:(id)sender {
     
+    NSString *webHTMLSourceCodeString = [_webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
+
+    NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"],@"ReviewState":@"Signed",@"_Content":webHTMLSourceCodeString,@"jobid":[_jobDict objectForKey:@"JobID"],@"PDFModule":[_jobDict objectForKey:@"PDFModule"],@"FacilityId":[_user_info objectForKey:@"FacilityId"],@"FileNames":[_jobDict objectForKey:@"ReportName"]};
+    
+    [self callWebService:params service:@"SignRecordWS"];
+
     
 }
 - (IBAction)deleteTapped:(id)sender {
         
     NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"],@"Status":@"Deleted"};
 
-    [self callWebService:params];
+    [self callWebService:params service:@"DeleteRecord"];
 }
 
 #pragma mark - Service Methods
 
-- (void)callWebService:(NSDictionary *)params {
+- (void)callWebService:(NSDictionary *)params service:(NSString *)service {
     
-    [[BTActionService sharedClient] GET:@"DeleteRecord" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+    [[BTActionService sharedClient] GET:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
-        NSLog(@"%@",jsonData);
         
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
+        NSLog(@"%@",error.localizedDescription);
     }];
 
+}
+
+- (void)fetchJobDetials {
+    
+    NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"]};
+    
+    [[BTServicesClient sharedClient] GET:@"GetJobDetailsJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSArray *data = [jsonData objectForKey:@"Table"];
+        _jobDict = [data objectAtIndex:0];
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+    }];
+    
 }
 
 

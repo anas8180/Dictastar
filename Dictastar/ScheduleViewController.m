@@ -10,7 +10,7 @@
 #import "BTServicesClient.h"
 #import "CustomTableViewCell.h"
 #import "NoDataViewCell.h"
-#import "DictateViewController.h"
+#import "ReportTypeViewController.h"
 
 @interface ScheduleViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -118,8 +118,25 @@
     CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     cell.title.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Name"];
-    cell.subTitle.text = [NSString stringWithFormat:@"%@ %@ %@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Gender"],[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"DOB"],[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"ProcedureName"]];
-    cell.accessoryLable.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Status"];
+    cell.subTitle.text = [NSString stringWithFormat:@"%@ %@ - %@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Gender"],[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"DOB"],[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"ProcedureName"]];
+    
+    NSString *status = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Status"];
+        
+        if ([status isEqualToString:@"Signed"]) {
+            cell.editIcon.alpha = 1;
+            cell.headSetIcon.alpha = 0.2;
+            cell.recordIcon.alpha = 0.2;
+        }
+        else if ([status isEqualToString:@"Transcribed"]) {
+            cell.headSetIcon.alpha = 1;
+            cell.recordIcon.alpha = 0.2;
+            cell.editIcon.alpha = 0.2;
+        }
+        else {
+            cell.recordIcon.alpha = 1;
+            cell.editIcon.alpha = 0.2;
+            cell.headSetIcon.alpha = 0.2;
+        }
     
     return cell;
     }
@@ -144,6 +161,7 @@
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         _dataArray = [jsonData objectForKey:@"Table"];
+        NSLog(@"%@",_dataArray);
         
         _isLoading = NO;
         
@@ -253,7 +271,7 @@
     
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     
-    DictateViewController *dictateVC = segue.destinationViewController;
+    ReportTypeViewController *dictateVC = segue.destinationViewController;
     dictateVC.dataDict = [_dataArray objectAtIndex:indexPath.row];
 }
 

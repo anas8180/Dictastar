@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topLayout;
 @property (strong, nonatomic) IBOutlet UITextField *emailTextFld;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextFld;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *logoBtmLayout;
 
 @end
 
@@ -27,11 +28,13 @@
     if (IS_IPHONE4) {
         
         _topLayout.constant = 20;
+        _logoBtmLayout.constant = 70;
     }
     
     else if (IS_IPHONE5) {
         
-        _topLayout.constant = 70;
+        _topLayout.constant = 20;
+        _logoBtmLayout.constant = 100;
     }
     
     else if (IS_IPHONE6 || IS_IPHONE6PLUS) {
@@ -75,8 +78,8 @@
         else if (IS_IPHONE5) {
             self.topLayout.constant = -30;
         }
-        else if (IS_IPHONE6 || IS_IPHONE6PLUS) {
-            self.topLayout.constant = 70;
+        else if (IS_IPHONE6) {
+            self.topLayout.constant = 20;
         }
     
         [self moveViewUpAndDown];
@@ -89,9 +92,9 @@
         self.topLayout.constant = 20;
     }
     else if (IS_IPHONE5) {
-        self.topLayout.constant = 70;
+        self.topLayout.constant = 20;
     }
-    else if (IS_IPHONE6PLUS || IS_IPHONE6) {
+    else if (IS_IPHONE6) {
         self.topLayout.constant = 70;
     }
     [self moveViewUpAndDown];

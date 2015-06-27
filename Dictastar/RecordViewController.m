@@ -16,9 +16,7 @@
 }
 @property (strong, nonatomic) IBOutlet UILabel *patientName;
 @property (strong, nonatomic) IBOutlet UILabel *conditionLable;
-@property (strong, nonatomic) IBOutlet UILabel *timerLable;
 @property (strong, nonatomic) IBOutlet UILabel *fileName;
-@property (strong, nonatomic) IBOutlet UILabel *recordState;
 @property (strong, nonatomic) IBOutlet UISlider *slider;
 @property (strong, nonatomic) IBOutlet UIButton *playStopButton;
 
@@ -34,19 +32,14 @@
     NSLog(@"%@",dataDict);
     
     _patientName.text = [NSString stringWithFormat:@"%@ %@",[dataDict objectForKey:@"Name"],[self cutStringDate:[dataDict objectForKey:@"Dateofstudy"]]];
-    _conditionLable.text = [NSString stringWithFormat:@"CC : %@",[dataDict objectForKey:@"ProcedureName"]];
-    _timerLable.text = @"00:00";
     
-    _recordState.text = @"Ready";
-    
-    [self getAudioFileName];
-    
-    NSString *fileName = [NSString stringWithFormat:@"%@",[dataDict objectForKey:@"Name"]];
-    
+    NSString *fileNameString = [self getAudioFileName:[dataDict objectForKey:@"Name"]];
+    _fileName.text = [NSString stringWithFormat:@"%@.wav",fileNameString];
+
     // Set the audio file
     NSArray *pathComponents = [NSArray arrayWithObjects:
                                [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
-                               @"MyAudioMemo.m4a",
+                               fileNameString,
                                nil];
     NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
     
@@ -98,7 +91,7 @@
     
 }
 
-- (void) getAudioFileName {
+- (NSString *) getAudioFileName:(NSString *)name {
     
     NSDate *currentDate = [NSDate date];
     NSCalendar* calendar = [NSCalendar currentCalendar];
@@ -110,7 +103,9 @@
     NSLog(@"%ld",(long)[components minute]);
     NSLog(@"%ld",(long)[components second]);
 
-
+    NSString *file = [NSString stringWithFormat:@"%@_%ld%ld%ld_%ld%ld%ld",name,[components day],[components month],[components year],[components hour],[components minute],[components second]];
+    
+    return file;
 }
 
 
@@ -129,7 +124,6 @@
         // Start recording
         [recorder record];
         
-        _recordState.text = @"Recording...";
     }
 }
 - (IBAction)stopPressed:(UIButton *)sender {
@@ -142,16 +136,12 @@
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         [audioSession setActive:NO error:nil];
         
-        _recordState.text = @"Recorded";
 
     }
     else if (player.isPlaying){
         
         [player stop];
         [sender setImage:[UIImage imageNamed:@"recorder_play"] forState:UIControlStateNormal];
-        _recordState.text = @"Ready";
-        _slider.value = 0.0;
-        self.timerLable.text = [NSString stringWithFormat:@"%.2f",self.slider.value];
     }
     else {
         
@@ -161,8 +151,6 @@
         [player setDelegate:self];
         
         [player play];
-
-        _recordState.text = @"Playing...";
         
         _slider.minimumValue = 0.0;
         float total= player.duration;
@@ -179,8 +167,6 @@
     
     if (recorder.recording) {
         [recorder pause];
-        
-        _recordState.text = @"Paused";
     }
 }
 - (IBAction)sendPressed:(id)sender {
@@ -206,8 +192,6 @@
     float f =  (player.currentTime) ;
     self.slider.value = f/60.0;
     
-    
-    self.timerLable.text = [NSString stringWithFormat:@"%.2f",self.slider.value];
 }
 
 #pragma mark - AVAudioPlayer delegate methods
@@ -217,7 +201,6 @@
     if (flag) {
         
         [_playStopButton setImage:[UIImage imageNamed:@"recorder_play"] forState:UIControlStateNormal];
-        _recordState.text = @"Ready";
     }
 }
 

@@ -11,11 +11,22 @@
 #import "SendQViewController.h"
 #import "ReviewViewController.h"
 #import "ScheduleViewController.h"
+#import "Constant.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface HomeViewController ()
 
 @property (strong, nonatomic) IBOutlet UILabel *doctorName;
 @property (nonatomic, strong) NSDictionary *userInfo;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topLayout;
+@property (strong, nonatomic) IBOutlet UIView *alertView;
+@property (strong, nonatomic) IBOutlet UILabel *alertLable1;
+@property (strong, nonatomic) IBOutlet UILabel *alertLable2;
+@property (strong, nonatomic) IBOutlet UILabel *alertLable3;
+@property (strong, nonatomic) IBOutlet UILabel *alertTitle;
+@property (strong, nonatomic) NSDictionary *alertData;
+@property (strong, nonatomic) IBOutlet UIView *loadingView;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loader;
 
 @end
 
@@ -32,6 +43,18 @@
     
     _doctorName.text = [NSString stringWithFormat:@"WELCOME DR. %@",[_userInfo objectForKey:@"DictatorName"]];
     
+    if (IS_IPHONE4) {
+        _topLayout.constant = 10;
+
+    }
+    
+    _alertView.layer.cornerRadius = 5;
+    _alertView.layer.masksToBounds = YES;
+
+    _alertTitle.font = [UIFont boldSystemFontOfSize:16.0f];
+    _loadingView.hidden = NO;
+    
+    [self fetchAlertInfo];
 }
 
 //-(void)viewWillAppear:(BOOL)animated {
@@ -47,6 +70,39 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Method
+
+-(void)fetchAlertInfo {
+    
+    NSDictionary *params = @{@"AttendingPhysician":[_userInfo objectForKey:@"DictatorId"]};
+
+    [[BTServicesClient sharedClient] GET:@"GetAlertJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSArray *dataArray = [jsonData objectForKey:@"Table"];
+        _alertData = [dataArray objectAtIndex:0];
+        [self setAlertDetails];
+        
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        
+        NSLog(@"%@",error.localizedDescription);
+    }];
+    
+}
+
+-(void) setAlertDetails {
+    
+    _alertLable1.text = [NSString stringWithFormat:@"%@ Files Ready For Approval",[_alertData objectForKey:@"Approved"]];
+    _alertLable2.text = [NSString stringWithFormat:@"%@ Files Waiting For Transcription",[_alertData objectForKey:@"YettoTranscripted"]];
+    _alertLable2.text = [NSString stringWithFormat:@"0 Files Waiting For Transcription"];
+
+    _loadingView.hidden = YES;
+}
+
 
 #pragma mark - Action
 - (IBAction)getAlert:(id)sender {

@@ -16,5 +16,8 @@
 @property (nonatomic, strong) IBOutlet UIButton *selectRadioButton;
 @property (nonatomic, strong) IBOutlet UIImageView *statusIcon;
 @property (nonatomic, strong) IBOutlet UILabel *statusLable;
+@property (nonatomic, strong) IBOutlet UIImageView *recordIcon;
+@property (nonatomic, strong) IBOutlet UIImageView *headSetIcon;
+@property (nonatomic, strong) IBOutlet UIImageView *editIcon;
 
 @end

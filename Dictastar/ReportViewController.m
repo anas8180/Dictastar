@@ -87,7 +87,7 @@
     
     cell.title.text = [NSString stringWithFormat:@"%@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"PatientName"]];
     
-    cell.subTitle.text = [NSString stringWithFormat:@"%@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"ServiceDate"]];
+    cell.statusLable.text = [NSString stringWithFormat:@"%@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"ServiceDate"]];
     
     return cell;
 }

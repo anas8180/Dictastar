@@ -18,14 +18,15 @@
 }
 @property (nonatomic, strong) UIPageViewController *pageController;
 @property (nonatomic, strong) NSMutableArray *viewControllerArray;
-@property (strong, nonatomic) IBOutlet UIImageView *infoArrow;
-@property (strong, nonatomic) IBOutlet UIImageView *dictateArrow;
-@property (strong, nonatomic) IBOutlet UIImageView *reportArrow;
+@property (strong, nonatomic) IBOutlet UIView *infoArrow;
+@property (strong, nonatomic) IBOutlet UIView *dictateArrow;
+@property (strong, nonatomic) IBOutlet UIView *reportArrow;
 
 @end
 
 @implementation DictateViewController
 @synthesize dataDict;
+@synthesize jobType;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,9 +54,7 @@
     [_viewControllerArray addObject:reportVC];
     
     [self setupPageViewController];
-    
-    _reportArrow.hidden = YES;
-    _dictateArrow.hidden = YES;
+    [self makeDefaultDictatePage];
     
 }
 
@@ -99,6 +98,44 @@
         }
     }
 }
+
+-(void) makeDefaultDictatePage {
+    
+    int tagVal = 1;
+    
+    NSInteger tempIndex = currentPageIndex;
+    
+    __weak typeof(self) weakSelf = self;
+    
+    //%%% check to see if you're going left -> right or right -> left
+    if (tagVal > tempIndex) {
+        
+        //%%% scroll through all the objects between the two points
+        for (int i = (int)tempIndex+1; i<=tagVal; i++) {
+            [_pageController setViewControllers:@[[_viewControllerArray objectAtIndex:i]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL complete){
+                
+                //%%% if the action finishes scrolling (i.e. the user doesn't stop it in the middle),
+                //then it updates the page that it's currently on
+                if (complete) {
+                    [weakSelf updateCurrentPageIndex:i];
+                }
+            }];
+        }
+    }
+    
+    //%%% this is the same thing but for going right -> left
+    else if (tagVal < tempIndex) {
+        for (int i = (int)tempIndex-1; i >= tagVal; i--) {
+            [_pageController setViewControllers:@[[_viewControllerArray objectAtIndex:i]] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:^(BOOL complete){
+                if (complete) {
+                    [weakSelf updateCurrentPageIndex:i];
+                }
+            }];
+        }
+    }
+    
+}
+
 - (IBAction)segmentToggled:(id)sender {
     
     NSInteger tempIndex = currentPageIndex;

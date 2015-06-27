@@ -86,7 +86,7 @@
     
     // Configure the cell...
     
-    cell.title.text = [NSString stringWithFormat:@"%@",[_keyDictionary objectAtIndex:indexPath.row]];
+    cell.title.text = [NSString stringWithFormat:@"%@ :",[_keyDictionary objectAtIndex:indexPath.row]];
     
     cell.subTitle.text = [NSString stringWithFormat:@"%@",[_resultDict objectForKey:[_keyDictionary objectAtIndex:indexPath.row]]];
     

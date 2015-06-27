@@ -12,13 +12,17 @@
 #import "ReviewDetailViewController.h"
 #import "NoDataViewCell.h"
 
-@interface ReviewViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface ReviewViewController ()<UITableViewDelegate,UITableViewDataSource> {
+    
+    BOOL isSelectedAll,isSelectedSingle;
+}
 
 @property (strong, nonatomic) IBOutlet UILabel *dateLable;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *dataArray;
 @property (nonatomic, strong) NSDictionary *userInfo;
 @property (strong, nonatomic) NSDate *currentDate;
+@property (strong, nonatomic) NSMutableArray *selectedIndexPaths;
 @property (nonatomic) BOOL isLoading;
 
 @end
@@ -29,6 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _selectedIndexPaths = [NSMutableArray new];
     
     self.title = @"Review";
     
@@ -37,6 +42,9 @@
     _userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
     
     [self fetchPatientInfo];
+    
+    isSelectedAll = NO;
+    isSelectedSingle = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -111,8 +119,36 @@
     CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     cell.title.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"PatientName"];
-//    cell.subTitle.text = [NSString stringWithFormat:@"%@ %@ %@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Gender"],[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"DOB"],[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"ProcedureName"]];
+    cell.subTitle.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"DocumentFlag"];
+    cell.statusLable.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"DOB"];
     
+    [cell.selectRadioButton addTarget:self action:@selector(selectReport:) forControlEvents:UIControlEventTouchUpInside];
+        
+    cell.selectRadioButton.tag = indexPath.row;
+        
+        
+        if (_selectedIndexPaths.count) {
+           
+            NSString *str = [NSString stringWithFormat:@"%ld",indexPath.row];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF LIKE[cd] %@", str];
+            NSArray *filtered = [_selectedIndexPaths filteredArrayUsingPredicate:predicate];
+            
+            if (filtered.count) {
+                [cell.selectRadioButton setImage:[UIImage imageNamed:@"checkbox_on"] forState:UIControlStateNormal];
+            }
+            else {
+                [cell.selectRadioButton setImage:[UIImage imageNamed:@"checkbox_off"] forState:UIControlStateNormal];
+            }
+            
+        }
+        else {
+            
+            [cell.selectRadioButton setImage:[UIImage imageNamed:@"checkbox_off"] forState:UIControlStateNormal];
+
+        }
+    
+
     return cell;
     }
 }
@@ -130,7 +166,7 @@
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         _dataArray = [jsonData objectForKey:@"Table"];
-        
+        NSLog(@"%@",_dataArray);
         _isLoading = NO;
         
         [self.tableView reloadData];
@@ -145,6 +181,48 @@
     }];
     
 }
+
+#pragma mark - Button Action
+
+-(void)selectReport:(id)sender {
+    
+    NSInteger tag = [sender tag];
+    
+    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:tag inSection:0];
+    
+    [_selectedIndexPaths addObject:[NSString stringWithFormat:@"%ld",(long)selectedIndexPath.row]];
+    
+    [self.tableView reloadData];
+
+}
+- (IBAction)selectAllReport:(id)sender {
+    
+    if (isSelectedAll) {
+        
+        [_selectedIndexPaths removeAllObjects];
+
+        [sender setImage:[UIImage imageNamed:@"checkbox_off"] forState:UIControlStateNormal];
+        
+        [self.tableView reloadData];
+
+        isSelectedAll = NO;
+    }
+    else {
+    [_selectedIndexPaths removeAllObjects];
+    
+    for (int i=0; i<_dataArray.count; i++) {
+        
+        [_selectedIndexPaths addObject:[NSString stringWithFormat:@"%d",i]];
+    }
+    
+    [sender setImage:[UIImage imageNamed:@"checkbox_on"] forState:UIControlStateNormal];
+    
+    [self.tableView reloadData];
+        
+        isSelectedAll = YES;
+    }
+}
+
 
 #pragma mark - Navigation
 
