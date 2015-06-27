@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EA1434B6-611B-46DA-AFB8-91E25CD56EA0</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Dictastar</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F838E9C92D7170470B65387F973E9ED3342BD286</key>
+		<string>https://github.com/anas8180/Dictastar.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Dictastar.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F838E9C92D7170470B65387F973E9ED3342BD286</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/anas8180/Dictastar.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F838E9C92D7170470B65387F973E9ED3342BD286</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F838E9C92D7170470B65387F973E9ED3342BD286</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Dictastar</string>
+		</dict>
+	</array>
+</dict>
+</plist>

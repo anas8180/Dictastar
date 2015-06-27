@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		83FA95451B3AC419002A7F1A /* DictateTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FA95441B3AC419002A7F1A /* DictateTypeViewController.m */; };
 		890EC1F11B31E0A1004F2175 /* DictateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 890EC1F01B31E0A1004F2175 /* DictateViewController.m */; };
 		890EC1F41B31E0BC004F2175 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 890EC1F31B31E0BC004F2175 /* InformationViewController.m */; };
 		890EC1F71B31E0D2004F2175 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 890EC1F61B31E0D2004F2175 /* RecordViewController.m */; };
@@ -60,6 +61,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		83FA95431B3AC419002A7F1A /* DictateTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictateTypeViewController.h; sourceTree = "<group>"; };
+		83FA95441B3AC419002A7F1A /* DictateTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DictateTypeViewController.m; sourceTree = "<group>"; };
 		890EC1EF1B31E0A1004F2175 /* DictateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictateViewController.h; sourceTree = "<group>"; };
 		890EC1F01B31E0A1004F2175 /* DictateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DictateViewController.m; sourceTree = "<group>"; };
 		890EC1F21B31E0BC004F2175 /* InformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationViewController.h; sourceTree = "<group>"; };
@@ -175,6 +178,8 @@
 				890EC1F61B31E0D2004F2175 /* RecordViewController.m */,
 				890EC1F81B31E0F2004F2175 /* ReportViewController.h */,
 				890EC1F91B31E0F2004F2175 /* ReportViewController.m */,
+				83FA95431B3AC419002A7F1A /* DictateTypeViewController.h */,
+				83FA95441B3AC419002A7F1A /* DictateTypeViewController.m */,
 			);
 			name = DictateVC;
 			sourceTree = "<group>";
@@ -499,6 +504,7 @@
 				893D04321B2FFCA000CD178A /* UIRefreshControl+AFNetworking.m in Sources */,
 				893D042E1B2FFCA000CD178A /* UIAlertView+AFNetworking.m in Sources */,
 				893D03D31B2FCF1200CD178A /* AppDelegate.m in Sources */,
+				83FA95451B3AC419002A7F1A /* DictateTypeViewController.m in Sources */,
 				893D04161B2FFC8A00CD178A /* AFSecurityPolicy.m in Sources */,
 				893D03FB1B2FD93B00CD178A /* DataController.m in Sources */,
 				897A5B2B1B318A4E00C08397 /* ReviewDetailViewController.m in Sources */,
