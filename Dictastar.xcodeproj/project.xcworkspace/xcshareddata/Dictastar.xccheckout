@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>32435EF0-8C13-4034-9C61-B3BC7BBC49AD</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Dictastar</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>F838E9C92D7170470B65387F973E9ED3342BD286</key>
 		<string>https://github.com/anas8180/Dictastar.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Dictastar.xcodeproj/project.xcworkspace</string>
+	<string>Dictastar.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>F838E9C92D7170470B65387F973E9ED3342BD286</key>
