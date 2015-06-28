@@ -11,7 +11,10 @@
 #import "BTServicesClient.h"
 #import "UIViewController+ActivityLoader.h"
 
-@interface LoginViewController ()
+@interface LoginViewController () {
+    
+    BOOL savePswdChecked;
+}
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topLayout;
 @property (strong, nonatomic) IBOutlet UITextField *emailTextFld;
@@ -50,6 +53,8 @@
     }
     
     _forgotView.hidden = YES;
+    
+    savePswdChecked = NO;
     
 }
 
@@ -247,6 +252,23 @@
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     NSNumber *number = [formatter numberFromString:str];
     return !!number; // If the string is not numeric, number will be nil
+}
+- (IBAction)savePassword:(id)sender {
+    
+    if (savePswdChecked) {
+        
+        [sender setImage:[UIImage imageNamed:@"unchecked"] forState:UIControlStateNormal];
+        
+        savePswdChecked = NO;
+    }
+    
+    else {
+        
+        [sender setImage:[UIImage imageNamed:@"checked"] forState:UIControlStateNormal];
+        
+        savePswdChecked = YES;
+
+    }
 }
 
 

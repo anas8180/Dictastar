@@ -152,8 +152,11 @@
                                         <include reference="zA8-8i-yQj"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="savePassword:" destination="4oT-8T-1xY" eventType="touchUpInside" id="SQG-If-E4y"/>
+                                </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aWm-N2-zyx">
+                            <view alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aWm-N2-zyx">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JbP-Tx-SH7">
@@ -1586,9 +1589,6 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="124" y="38" width="73" height="24"/>
-                                                    </variation>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c07-kn-rrX">
                                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -1605,8 +1605,7 @@
                                                             <exclude reference="msS-JT-9Q7"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="282" y="35" width="30" height="30"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="a8c-85-o2G"/>
                                                             <include reference="msS-JT-9Q7"/>
