@@ -58,6 +58,7 @@
 		8942B3D21B3EEBEE002C80D0 /* BRRequestUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3C71B3EEBEE002C80D0 /* BRRequestUpload.m */; };
 		8942B3D31B3EEBEE002C80D0 /* BRStreamInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3C91B3EEBEE002C80D0 /* BRStreamInfo.m */; };
 		8942B3D51B3EEFE0002C80D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8942B3D41B3EEFE0002C80D0 /* Foundation.framework */; };
+		8942B3D91B3FA957002C80D0 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3D81B3FA957002C80D0 /* SettingsViewController.m */; };
 		8946B9E91B34736B00916FD2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8946B9E81B34736B00916FD2 /* AVFoundation.framework */; };
 		897A5B2B1B318A4E00C08397 /* ReviewDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */; };
 		8994CB9A1B303D8400FBD6E8 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8994CB991B303D8400FBD6E8 /* CustomTableViewCell.m */; };
@@ -177,6 +178,8 @@
 		8942B3C81B3EEBEE002C80D0 /* BRStreamInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRStreamInfo.h; sourceTree = "<group>"; };
 		8942B3C91B3EEBEE002C80D0 /* BRStreamInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRStreamInfo.m; sourceTree = "<group>"; };
 		8942B3D41B3EEFE0002C80D0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8942B3D71B3FA957002C80D0 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		8942B3D81B3FA957002C80D0 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		8946B9E81B34736B00916FD2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		897A5B291B318A4E00C08397 /* ReviewDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewDetailViewController.h; sourceTree = "<group>"; };
 		897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewDetailViewController.m; sourceTree = "<group>"; };
@@ -292,6 +295,7 @@
 		893D03F31B2FD06D00CD178A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				8942B3D61B3FA93E002C80D0 /* SettingsVC */,
 				890EC1EE1B31E084004F2175 /* DictateVC */,
 				893D04451B30269100CD178A /* ReviewVC */,
 				893D04411B30266E00CD178A /* SendQVC */,
@@ -459,6 +463,15 @@
 			name = BlackRaccon;
 			sourceTree = "<group>";
 		};
+		8942B3D61B3FA93E002C80D0 /* SettingsVC */ = {
+			isa = PBXGroup;
+			children = (
+				8942B3D71B3FA957002C80D0 /* SettingsViewController.h */,
+				8942B3D81B3FA957002C80D0 /* SettingsViewController.m */,
+			);
+			name = SettingsVC;
+			sourceTree = "<group>";
+		};
 		897A5AF41B317BB400C08397 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
@@ -583,6 +596,7 @@
 				893D04311B2FFCA000CD178A /* UIProgressView+AFNetworking.m in Sources */,
 				893D042F1B2FFCA000CD178A /* UIButton+AFNetworking.m in Sources */,
 				893D04321B2FFCA000CD178A /* UIRefreshControl+AFNetworking.m in Sources */,
+				8942B3D91B3FA957002C80D0 /* SettingsViewController.m in Sources */,
 				893D042E1B2FFCA000CD178A /* UIAlertView+AFNetworking.m in Sources */,
 				893D03D31B2FCF1200CD178A /* AppDelegate.m in Sources */,
 				83FA95451B3AC419002A7F1A /* DictateTypeViewController.m in Sources */,
