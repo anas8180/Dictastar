@@ -12,5 +12,6 @@
 @interface RecordViewController : UIViewController <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) NSDictionary *dataDict;
+@property (nonatomic, strong) NSDictionary *jobTypeDict;
 
 @end

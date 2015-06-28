@@ -26,7 +26,7 @@
 
 @implementation DictateViewController
 @synthesize dataDict;
-@synthesize jobType;
+@synthesize jobTypeDict;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,6 +42,7 @@
     
     RecordViewController *recordVC = (RecordViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"RecordView"];
     recordVC.dataDict = dataDict;
+    recordVC.jobTypeDict = jobTypeDict;
     recordVC.title = @"DICTATE";
 
     ReportViewController *reportVC = (ReportViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"ReportView"];

@@ -45,6 +45,19 @@
 		893D04401B30262600CD178A /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D043F1B30262600CD178A /* ScheduleViewController.m */; };
 		893D04441B30268800CD178A /* SendQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D04431B30268800CD178A /* SendQViewController.m */; };
 		893D04481B3026A100CD178A /* ReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D04471B3026A100CD178A /* ReviewViewController.m */; };
+		8942B3B01B3EDEDF002C80D0 /* WhiteRaccoon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3AF1B3EDEDF002C80D0 /* WhiteRaccoon.m */; };
+		8942B3B21B3EDFE5002C80D0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8942B3B11B3EDFE5002C80D0 /* CFNetwork.framework */; };
+		8942B3CA1B3EEBEE002C80D0 /* BRRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3B71B3EEBEE002C80D0 /* BRRequest.m */; };
+		8942B3CB1B3EEBEE002C80D0 /* BRRequest+_UserData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3B91B3EEBEE002C80D0 /* BRRequest+_UserData.m */; };
+		8942B3CC1B3EEBEE002C80D0 /* BRRequestCreateDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3BB1B3EEBEE002C80D0 /* BRRequestCreateDirectory.m */; };
+		8942B3CD1B3EEBEE002C80D0 /* BRRequestDelete.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3BD1B3EEBEE002C80D0 /* BRRequestDelete.m */; };
+		8942B3CE1B3EEBEE002C80D0 /* BRRequestDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3BF1B3EEBEE002C80D0 /* BRRequestDownload.m */; };
+		8942B3CF1B3EEBEE002C80D0 /* BRRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3C11B3EEBEE002C80D0 /* BRRequestError.m */; };
+		8942B3D01B3EEBEE002C80D0 /* BRRequestListDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3C31B3EEBEE002C80D0 /* BRRequestListDirectory.m */; };
+		8942B3D11B3EEBEE002C80D0 /* BRRequestQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3C51B3EEBEE002C80D0 /* BRRequestQueue.m */; };
+		8942B3D21B3EEBEE002C80D0 /* BRRequestUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3C71B3EEBEE002C80D0 /* BRRequestUpload.m */; };
+		8942B3D31B3EEBEE002C80D0 /* BRStreamInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3C91B3EEBEE002C80D0 /* BRStreamInfo.m */; };
+		8942B3D51B3EEFE0002C80D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8942B3D41B3EEFE0002C80D0 /* Foundation.framework */; };
 		8946B9E91B34736B00916FD2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8946B9E81B34736B00916FD2 /* AVFoundation.framework */; };
 		897A5B2B1B318A4E00C08397 /* ReviewDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */; };
 		8994CB9A1B303D8400FBD6E8 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8994CB991B303D8400FBD6E8 /* CustomTableViewCell.m */; };
@@ -139,6 +152,31 @@
 		893D04431B30268800CD178A /* SendQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendQViewController.m; sourceTree = "<group>"; };
 		893D04461B3026A100CD178A /* ReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewViewController.h; sourceTree = "<group>"; };
 		893D04471B3026A100CD178A /* ReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewViewController.m; sourceTree = "<group>"; };
+		8942B3AE1B3EDEDF002C80D0 /* WhiteRaccoon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhiteRaccoon.h; sourceTree = "<group>"; };
+		8942B3AF1B3EDEDF002C80D0 /* WhiteRaccoon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiteRaccoon.m; sourceTree = "<group>"; };
+		8942B3B11B3EDFE5002C80D0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		8942B3B51B3EEBEE002C80D0 /* BRGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRGlobal.h; sourceTree = "<group>"; };
+		8942B3B61B3EEBEE002C80D0 /* BRRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRRequest.h; sourceTree = "<group>"; };
+		8942B3B71B3EEBEE002C80D0 /* BRRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRRequest.m; sourceTree = "<group>"; };
+		8942B3B81B3EEBEE002C80D0 /* BRRequest+_UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BRRequest+_UserData.h"; sourceTree = "<group>"; };
+		8942B3B91B3EEBEE002C80D0 /* BRRequest+_UserData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BRRequest+_UserData.m"; sourceTree = "<group>"; };
+		8942B3BA1B3EEBEE002C80D0 /* BRRequestCreateDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRRequestCreateDirectory.h; sourceTree = "<group>"; };
+		8942B3BB1B3EEBEE002C80D0 /* BRRequestCreateDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRRequestCreateDirectory.m; sourceTree = "<group>"; };
+		8942B3BC1B3EEBEE002C80D0 /* BRRequestDelete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRRequestDelete.h; sourceTree = "<group>"; };
+		8942B3BD1B3EEBEE002C80D0 /* BRRequestDelete.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRRequestDelete.m; sourceTree = "<group>"; };
+		8942B3BE1B3EEBEE002C80D0 /* BRRequestDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRRequestDownload.h; sourceTree = "<group>"; };
+		8942B3BF1B3EEBEE002C80D0 /* BRRequestDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRRequestDownload.m; sourceTree = "<group>"; };
+		8942B3C01B3EEBEE002C80D0 /* BRRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRRequestError.h; sourceTree = "<group>"; };
+		8942B3C11B3EEBEE002C80D0 /* BRRequestError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRRequestError.m; sourceTree = "<group>"; };
+		8942B3C21B3EEBEE002C80D0 /* BRRequestListDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRRequestListDirectory.h; sourceTree = "<group>"; };
+		8942B3C31B3EEBEE002C80D0 /* BRRequestListDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRRequestListDirectory.m; sourceTree = "<group>"; };
+		8942B3C41B3EEBEE002C80D0 /* BRRequestQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRRequestQueue.h; sourceTree = "<group>"; };
+		8942B3C51B3EEBEE002C80D0 /* BRRequestQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRRequestQueue.m; sourceTree = "<group>"; };
+		8942B3C61B3EEBEE002C80D0 /* BRRequestUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRRequestUpload.h; sourceTree = "<group>"; };
+		8942B3C71B3EEBEE002C80D0 /* BRRequestUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRRequestUpload.m; sourceTree = "<group>"; };
+		8942B3C81B3EEBEE002C80D0 /* BRStreamInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRStreamInfo.h; sourceTree = "<group>"; };
+		8942B3C91B3EEBEE002C80D0 /* BRStreamInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRStreamInfo.m; sourceTree = "<group>"; };
+		8942B3D41B3EEFE0002C80D0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8946B9E81B34736B00916FD2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		897A5B291B318A4E00C08397 /* ReviewDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewDetailViewController.h; sourceTree = "<group>"; };
 		897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewDetailViewController.m; sourceTree = "<group>"; };
@@ -151,6 +189,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8942B3D51B3EEFE0002C80D0 /* Foundation.framework in Frameworks */,
+				8942B3B21B3EDFE5002C80D0 /* CFNetwork.framework in Frameworks */,
 				8946B9E91B34736B00916FD2 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,6 +227,8 @@
 		893D03C11B2FCF1200CD178A = {
 			isa = PBXGroup;
 			children = (
+				8942B3D41B3EEFE0002C80D0 /* Foundation.framework */,
+				8942B3B11B3EDFE5002C80D0 /* CFNetwork.framework */,
 				8946B9E81B34736B00916FD2 /* AVFoundation.framework */,
 				893D03CC1B2FCF1200CD178A /* Dictastar */,
 				893D03E61B2FCF1300CD178A /* DictastarTests */,
@@ -380,9 +422,48 @@
 			name = ReviewVC;
 			sourceTree = "<group>";
 		};
+		8942B3B31B3EEBC0002C80D0 /* WhiteRaccon */ = {
+			isa = PBXGroup;
+			children = (
+				8942B3AE1B3EDEDF002C80D0 /* WhiteRaccoon.h */,
+				8942B3AF1B3EDEDF002C80D0 /* WhiteRaccoon.m */,
+			);
+			name = WhiteRaccon;
+			sourceTree = "<group>";
+		};
+		8942B3B41B3EEBDA002C80D0 /* BlackRaccon */ = {
+			isa = PBXGroup;
+			children = (
+				8942B3B51B3EEBEE002C80D0 /* BRGlobal.h */,
+				8942B3B61B3EEBEE002C80D0 /* BRRequest.h */,
+				8942B3B71B3EEBEE002C80D0 /* BRRequest.m */,
+				8942B3B81B3EEBEE002C80D0 /* BRRequest+_UserData.h */,
+				8942B3B91B3EEBEE002C80D0 /* BRRequest+_UserData.m */,
+				8942B3BA1B3EEBEE002C80D0 /* BRRequestCreateDirectory.h */,
+				8942B3BB1B3EEBEE002C80D0 /* BRRequestCreateDirectory.m */,
+				8942B3BC1B3EEBEE002C80D0 /* BRRequestDelete.h */,
+				8942B3BD1B3EEBEE002C80D0 /* BRRequestDelete.m */,
+				8942B3BE1B3EEBEE002C80D0 /* BRRequestDownload.h */,
+				8942B3BF1B3EEBEE002C80D0 /* BRRequestDownload.m */,
+				8942B3C01B3EEBEE002C80D0 /* BRRequestError.h */,
+				8942B3C11B3EEBEE002C80D0 /* BRRequestError.m */,
+				8942B3C21B3EEBEE002C80D0 /* BRRequestListDirectory.h */,
+				8942B3C31B3EEBEE002C80D0 /* BRRequestListDirectory.m */,
+				8942B3C41B3EEBEE002C80D0 /* BRRequestQueue.h */,
+				8942B3C51B3EEBEE002C80D0 /* BRRequestQueue.m */,
+				8942B3C61B3EEBEE002C80D0 /* BRRequestUpload.h */,
+				8942B3C71B3EEBEE002C80D0 /* BRRequestUpload.m */,
+				8942B3C81B3EEBEE002C80D0 /* BRStreamInfo.h */,
+				8942B3C91B3EEBEE002C80D0 /* BRStreamInfo.m */,
+			);
+			name = BlackRaccon;
+			sourceTree = "<group>";
+		};
 		897A5AF41B317BB400C08397 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				8942B3B41B3EEBDA002C80D0 /* BlackRaccon */,
+				8942B3B31B3EEBC0002C80D0 /* WhiteRaccon */,
 			);
 			name = "Third Party";
 			sourceTree = "<group>";
@@ -508,14 +589,20 @@
 				893D04161B2FFC8A00CD178A /* AFSecurityPolicy.m in Sources */,
 				893D03FB1B2FD93B00CD178A /* DataController.m in Sources */,
 				897A5B2B1B318A4E00C08397 /* ReviewDetailViewController.m in Sources */,
+				8942B3D31B3EEBEE002C80D0 /* BRStreamInfo.m in Sources */,
 				893D04401B30262600CD178A /* ScheduleViewController.m in Sources */,
 				893D04131B2FFC8A00CD178A /* AFHTTPRequestOperationManager.m in Sources */,
 				893D04171B2FFC8A00CD178A /* AFURLConnectionOperation.m in Sources */,
+				8942B3D11B3EEBEE002C80D0 /* BRRequestQueue.m in Sources */,
 				893D043C1B30225000CD178A /* HomeViewController.m in Sources */,
+				8942B3D01B3EEBEE002C80D0 /* BRRequestListDirectory.m in Sources */,
 				893D04301B2FFCA000CD178A /* UIImageView+AFNetworking.m in Sources */,
+				8942B3D21B3EEBEE002C80D0 /* BRRequestUpload.m in Sources */,
+				8942B3CD1B3EEBEE002C80D0 /* BRRequestDelete.m in Sources */,
 				890EC1FA1B31E0F2004F2175 /* ReportViewController.m in Sources */,
 				893D04121B2FFC8A00CD178A /* AFHTTPRequestOperation.m in Sources */,
 				890EC1F71B31E0D2004F2175 /* RecordViewController.m in Sources */,
+				8942B3CA1B3EEBEE002C80D0 /* BRRequest.m in Sources */,
 				892113B91B32D6E900BCAFF7 /* NoDataViewCell.m in Sources */,
 				893D042D1B2FFCA000CD178A /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				89391B0E1B3D67340031608F /* ReportTypeViewController.m in Sources */,
@@ -526,13 +613,18 @@
 				893D04151B2FFC8A00CD178A /* AFNetworkReachabilityManager.m in Sources */,
 				893D04191B2FFC8A00CD178A /* AFURLResponseSerialization.m in Sources */,
 				893D04331B2FFCA000CD178A /* UIWebView+AFNetworking.m in Sources */,
+				8942B3B01B3EDEDF002C80D0 /* WhiteRaccoon.m in Sources */,
 				893D041A1B2FFC8A00CD178A /* AFURLSessionManager.m in Sources */,
 				890EC1F11B31E0A1004F2175 /* DictateViewController.m in Sources */,
 				893D042C1B2FFCA000CD178A /* AFNetworkActivityIndicatorManager.m in Sources */,
 				893D04481B3026A100CD178A /* ReviewViewController.m in Sources */,
 				8994CB9A1B303D8400FBD6E8 /* CustomTableViewCell.m in Sources */,
 				893D04371B2FFD0200CD178A /* BTServicesClient.m in Sources */,
+				8942B3CC1B3EEBEE002C80D0 /* BRRequestCreateDirectory.m in Sources */,
+				8942B3CB1B3EEBEE002C80D0 /* BRRequest+_UserData.m in Sources */,
 				89375B8B1B3567ED007516E6 /* BTActionService.m in Sources */,
+				8942B3CE1B3EEBEE002C80D0 /* BRRequestDownload.m in Sources */,
+				8942B3CF1B3EEBEE002C80D0 /* BRRequestError.m in Sources */,
 				893D03F61B2FD08900CD178A /* LoginViewController.m in Sources */,
 				893D04441B30268800CD178A /* SendQViewController.m in Sources */,
 			);

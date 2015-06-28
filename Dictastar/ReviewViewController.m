@@ -11,10 +11,12 @@
 #import "BTServicesClient.h"
 #import "ReviewDetailViewController.h"
 #import "NoDataViewCell.h"
+#import "BTActionService.h"
 
 @interface ReviewViewController ()<UITableViewDelegate,UITableViewDataSource> {
     
     BOOL isSelectedAll,isSelectedSingle;
+    NSDictionary *jobDict;
 }
 
 @property (strong, nonatomic) IBOutlet UILabel *dateLable;
@@ -45,6 +47,8 @@
     
     isSelectedAll = NO;
     isSelectedSingle = NO;
+    
+    self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -135,16 +139,16 @@
             NSArray *filtered = [_selectedIndexPaths filteredArrayUsingPredicate:predicate];
             
             if (filtered.count) {
-                [cell.selectRadioButton setImage:[UIImage imageNamed:@"checkbox_on"] forState:UIControlStateNormal];
+                [cell.selectRadioButton setImage:[UIImage imageNamed:@"outbox_check"] forState:UIControlStateNormal];
             }
             else {
-                [cell.selectRadioButton setImage:[UIImage imageNamed:@"checkbox_off"] forState:UIControlStateNormal];
+                [cell.selectRadioButton setImage:[UIImage imageNamed:@"outbox_uncheck"] forState:UIControlStateNormal];
             }
             
         }
         else {
             
-            [cell.selectRadioButton setImage:[UIImage imageNamed:@"checkbox_off"] forState:UIControlStateNormal];
+            [cell.selectRadioButton setImage:[UIImage imageNamed:@"outbox_uncheck"] forState:UIControlStateNormal];
 
         }
     
@@ -187,10 +191,34 @@
 -(void)selectReport:(id)sender {
     
     NSInteger tag = [sender tag];
-    
-    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:tag inSection:0];
-    
-    [_selectedIndexPaths addObject:[NSString stringWithFormat:@"%ld",(long)selectedIndexPath.row]];
+
+    if (_selectedIndexPaths.count) {
+        
+    NSString *str = [NSString stringWithFormat:@"%ld",tag];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF LIKE[cd] %@", str];
+    NSArray *filtered = [_selectedIndexPaths filteredArrayUsingPredicate:predicate];
+        
+        if (filtered.count) {
+            
+            NSUInteger indexValue = [_selectedIndexPaths indexOfObject:str];
+            [_selectedIndexPaths removeObjectAtIndex:indexValue];
+
+        }
+        else {
+            
+            NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:tag inSection:0];
+            
+            [_selectedIndexPaths addObject:[NSString stringWithFormat:@"%ld",(long)selectedIndexPath.row]];
+
+        }
+    }
+    else {
+        
+        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:tag inSection:0];
+        
+        [_selectedIndexPaths addObject:[NSString stringWithFormat:@"%ld",(long)selectedIndexPath.row]];
+
+    }
     
     [self.tableView reloadData];
 
@@ -201,7 +229,7 @@
         
         [_selectedIndexPaths removeAllObjects];
 
-        [sender setImage:[UIImage imageNamed:@"checkbox_off"] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"outbox_uncheck"] forState:UIControlStateNormal];
         
         [self.tableView reloadData];
 
@@ -215,14 +243,80 @@
         [_selectedIndexPaths addObject:[NSString stringWithFormat:@"%d",i]];
     }
     
-    [sender setImage:[UIImage imageNamed:@"checkbox_on"] forState:UIControlStateNormal];
+    [sender setImage:[UIImage imageNamed:@"outbox_check"] forState:UIControlStateNormal];
     
     [self.tableView reloadData];
         
         isSelectedAll = YES;
     }
 }
+- (IBAction)signTapped:(id)sender {
+    
+    if (_selectedIndexPaths.count) {
+        
+            NSMutableArray *transIdArray = [NSMutableArray new];
+            
+            for (int i=0; i<_selectedIndexPaths.count; i++) {
+                
+                NSInteger indexVal = [[_selectedIndexPaths objectAtIndex:i] integerValue];
+                
+                NSString *transId = [[_dataArray objectAtIndex:indexVal] objectForKey:@"TranscriptionID"];
+                
+                [transIdArray addObject:transId];
 
+
+            }
+            
+            NSString *transIsStr = [transIdArray componentsJoinedByString:@","];
+            
+            NSDictionary *params = @{@"TranscriptionID":transIsStr,@"Facilityid":[_userInfo objectForKey:@"FacilityId"]};
+            [self callWebService:params service:@"GetMultipleJobDetailsJSON"];
+        
+    }
+}
+
+- (IBAction)deleteTappe:(id)sender {
+    
+    if (_selectedIndexPaths.count) {
+        
+        NSMutableArray *transIdArray = [NSMutableArray new];
+        
+        for (int i=0; i<_selectedIndexPaths.count; i++) {
+            
+            NSInteger indexVal = [[_selectedIndexPaths objectAtIndex:i] integerValue];
+            
+            NSString *transId = [[_dataArray objectAtIndex:indexVal] objectForKey:@"TranscriptionID"];
+            
+            [transIdArray addObject:transId];
+            
+            
+        }
+        
+        NSString *transIsStr = [transIdArray componentsJoinedByString:@","];
+        
+        NSDictionary *params = @{@"TranscriptionID":transIsStr};
+        [self callWebService:params service:@"GetMultipleDeleteReviewJSON"];
+        
+    }
+
+}
+
+#pragma mark - Service Methods
+
+- (void)callWebService:(NSDictionary *)params service:(NSString *)service {
+    
+    [[BTServicesClient sharedClient] GET:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        NSLog(@"%@",error.localizedDescription);
+    }];
+    
+}
 
 #pragma mark - Navigation
 

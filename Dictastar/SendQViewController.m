@@ -36,7 +36,7 @@
     _userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
     
     [self getDate];
-    [self fetchPatientInfo];
+    [self fetchOutBoxDetails];
     
     self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
 
@@ -112,10 +112,27 @@
     }
     else {
     CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+        
+    NSString *fileSize = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"FileSize"];
     
-//    cell.title.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Name"];
-//    cell.subTitle.text = [NSString stringWithFormat:@"%@ %@ %@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Gender"],[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"DOB"],[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"ProcedureName"]];
-//    cell.accessoryLable.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Status"];
+        double fileInByte = [fileSize doubleValue];
+        double fileSizeInKb = fileInByte/1000;
+        
+        NSString *kb = [NSString stringWithFormat:@"%.2f",fileSizeInKb];
+        
+    cell.title.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Filename"];
+    cell.subTitle.text = [NSString stringWithFormat:@"%@     %@Kb",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"UploadDate"],kb];
+        
+        NSString *status = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"TranscriptionStatus"];
+        
+        if ([status isEqualToString:@"Assigned"]) {
+            
+            cell.statusIcon.hidden = YES;
+        }
+        else {
+            
+            cell.statusIcon.hidden = NO;
+        }
     
     return cell;
     }
@@ -124,7 +141,7 @@
 
 #pragma mark - Method
 
--(void)fetchPatientInfo {
+-(void)fetchOutBoxDetails {
     
     _isLoading = YES;
     
@@ -134,14 +151,13 @@
     
     NSString *dateString = [dateFormat stringFromDate:_currentDate];
     
-    NSDictionary *params = @{@"FacilityId":[_userInfo objectForKey:@"FacilityId"],@"Fromdate":dateString,@"Todate":dateString};
+    NSDictionary *params = @{@"facilityID":[_userInfo objectForKey:@"FacilityId"],@"attendingPhysicianID":[_userInfo objectForKey:@"DictatorId"],@"UploadDate":dateString};
     
-    [[BTServicesClient sharedClient] GET:@"FetchPatientJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+    [[BTServicesClient sharedClient] GET:@"FetchDictateStatusDetailsinJson" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
         NSError* error;
-        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         _dataArray = [jsonData objectForKey:@"Table"];
-        
         _isLoading = NO;
         
         [self.tableView reloadData];
@@ -211,7 +227,7 @@
     [self getDate];
     _dataArray = [[NSArray alloc]init];
     [self.tableView reloadData];
-    [self fetchPatientInfo];
+    [self fetchOutBoxDetails];
 }
 - (IBAction)forwardAction:(id)sender {
     
@@ -237,7 +253,7 @@
     [self getDate];
     _dataArray = [[NSArray alloc]init];
     [self.tableView reloadData];
-    [self fetchPatientInfo];
+    [self fetchOutBoxDetails];
 }
 
 

@@ -11,6 +11,6 @@
 @interface DictateViewController : UIViewController<UIPageViewControllerDataSource,UIPageViewControllerDelegate,UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSDictionary *dataDict;
-@property (nonatomic, strong) NSString *jobType;
+@property (nonatomic, strong) NSDictionary *jobTypeDict;
 
 @end

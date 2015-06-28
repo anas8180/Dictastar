@@ -7,39 +7,52 @@
 //
 
 #import "RecordViewController.h"
+#import "BTServicesClient.h"
+#import "SendQViewController.h"
+#import "BRRequestUpload.h"
+#import "BRRequest+_UserData.h"
 
-@interface RecordViewController () {
+@interface RecordViewController ()<BRRequestDelegate> {
     
     AVAudioRecorder *recorder;
     AVAudioPlayer *player;
+    NSString *statPriority;
+    BOOL isStat;
+    NSString *fileNameString;
+    NSData *uploadData;
+    BRRequestUpload *uploadFile;
 
 }
 @property (strong, nonatomic) IBOutlet UILabel *patientName;
 @property (strong, nonatomic) IBOutlet UILabel *conditionLable;
 @property (strong, nonatomic) IBOutlet UILabel *fileName;
 @property (strong, nonatomic) IBOutlet UISlider *slider;
-@property (strong, nonatomic) IBOutlet UIButton *playStopButton;
+@property (strong, nonatomic) NSDictionary *user_info;
 
 @end
 
 @implementation RecordViewController
 @synthesize dataDict;
+@synthesize jobTypeDict;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    NSLog(@"%@",dataDict);
-    
+    _user_info = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
+
     _patientName.text = [NSString stringWithFormat:@"%@ %@",[dataDict objectForKey:@"Name"],[self cutStringDate:[dataDict objectForKey:@"Dateofstudy"]]];
     
-    NSString *fileNameString = [self getAudioFileName:[dataDict objectForKey:@"Name"]];
-    _fileName.text = [NSString stringWithFormat:@"%@.m4a",fileNameString];
+    NSArray *nameArray = [[dataDict objectForKey:@"Name"] componentsSeparatedByString:@" "];
+
+    fileNameString = [self getAudioFileName:nameArray];
+    
+    _fileName.text = [NSString stringWithFormat:@"%@.mp4",fileNameString];
 
     // Set the audio file
     NSArray *pathComponents = [NSArray arrayWithObjects:
                                [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
-                               @"MyAudioMemo.m4a",
+                               _fileName.text,
                                nil];
     NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
     
@@ -61,6 +74,9 @@
     [recorder prepareToRecord];
     
     _slider.value = 0.0;
+    
+    statPriority = @"Normal";
+    isStat = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -91,7 +107,14 @@
     
 }
 
-- (NSString *) getAudioFileName:(NSString *)name {
+- (NSString *) getAudioFileName:(NSArray *)name {
+    
+    NSString *fname,*lname;
+    
+    if (name.count>1) {
+        fname = [name objectAtIndex:0];
+        lname = [name objectAtIndex:1];
+    }
     
     NSDate *currentDate = [NSDate date];
     NSCalendar* calendar = [NSCalendar currentCalendar];
@@ -103,7 +126,7 @@
     NSLog(@"%ld",(long)[components minute]);
     NSLog(@"%ld",(long)[components second]);
 
-    NSString *file = [NSString stringWithFormat:@"%@_%ld%ld%ld_%ld%ld%ld",name,[components day],[components month],[components year],[components hour],[components minute],[components second]];
+    NSString *file = [NSString stringWithFormat:@"%@_%@_%ld%ld%ld_%ld%ld%ld",fname,lname,[components day],[components month],[components year],[components hour],[components minute],[components second]];
     
     return file;
 }
@@ -112,11 +135,26 @@
 #pragma mark - Action
 
 - (IBAction)statPressed:(UIButton *)sender {
+    
+    if (isStat) {
+        [sender setImage:[UIImage imageNamed:@"checkbox_off"] forState:UIControlStateNormal];
+        
+        statPriority = @"Normal";
+        
+        isStat = NO;
+    }
+    else {
+        [sender setImage:[UIImage imageNamed:@"checkbox_on"] forState:UIControlStateNormal];
+
+        statPriority = @"High";
+        
+        isStat = YES;
+    }
+    
 }
 - (IBAction)recordPressded:(id)sender {
     
     if (!recorder.recording) {
-        [_playStopButton setImage:[UIImage imageNamed:@"recorder_stop"] forState:UIControlStateNormal];
 
         AVAudioSession *session = [AVAudioSession sharedInstance];
         [session setActive:YES error:nil];
@@ -160,6 +198,40 @@
 }
 - (IBAction)sendPressed:(id)sender {
     
+    NSString *documentdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *tileDirectory = [documentdir stringByAppendingPathComponent:fileNameString];
+
+    unsigned long long fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:tileDirectory error:nil] fileSize];
+    
+    NSString *fileSizeString = [NSString stringWithFormat:@"%llu",fileSize];
+
+    NSDictionary *params = @{@"facilityID":[_user_info objectForKey:@"FacilityId"],@"username":[_user_info objectForKey:@"username"],@"filename":_fileName.text,@"fileType":@".wav",@"fileSize":fileSizeString,@"priority":statPriority,@"attendingPhysicianId":[_user_info objectForKey:@"DictatorId"],@"typeofDictation":[jobTypeDict objectForKey:@"Type"],@"notes":@""};
+    
+    [[BTServicesClient sharedClient] GET:@"AddDictateDetailsinJson" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSArray *dataArray  = [jsonData objectForKey:@"Table"];
+       
+     /*   if (dataArray.count) {
+            
+            SendQViewController *sendQObj = [self.storyboard instantiateViewControllerWithIdentifier:@"SendQView"];
+            [self.navigationController showViewController:sendQObj sender:self];
+            
+        } */
+        
+        [self uploadFile];
+        
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        
+        NSLog(@"%@",error.localizedDescription);
+        
+        
+    }];
+
+    
 }
 - (IBAction)sliderChanged:(UISlider *)sender {
     
@@ -189,10 +261,71 @@
     
     if (flag) {
         
-        [_playStopButton setImage:[UIImage imageNamed:@"recorder_play"] forState:UIControlStateNormal];
     }
 }
 
+#pragma mark - Uplaod FTP on Server
+
+- (void)uploadFile
+{
+    //----- get the file to upload as an NSData object
+    NSArray *pathComponents = [NSArray arrayWithObjects:
+                               [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
+                               _fileName.text,
+                               nil];
+    NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
+    uploadData = [NSData dataWithContentsOfURL:outputFileURL];
+    
+    uploadFile = [[BRRequestUpload alloc] initWithDelegate:self];
+    
+    uploadFile.path = [NSString stringWithFormat:@"/%@/%@",[_user_info objectForKey:@"FacilityId"],_fileName.text];
+    uploadFile.hostname = @"182.72.151.117";
+    uploadFile.username = @"elizabeth";
+    uploadFile.password = @"elizabeth123";
+    
+    [uploadFile start];
+}
+
+-(BOOL) shouldOverwriteFileWithRequest: (BRRequest *) request
+{
+    //----- set this as appropriate if you want the file to be overwritten
+    if (request == uploadFile)
+    {
+        //----- if uploading a file, we set it to YES
+        return YES;
+    }
+    
+    //----- anything else (directories, etc) we set to NO
+    return NO;
+}
+
+-(void) requestCompleted: (BRRequest *) request
+{
+    NSLog(@"%@ completed!", request);
+    uploadFile = nil;
+
+}
+
+- (NSData *) requestDataToSend: (BRRequestUpload *) request
+{
+    //----- returns data object or nil when complete
+    //----- basically, first time we return the pointer to the NSData.
+    //----- and BR will upload the data.
+    //----- Second time we return nil which means no more data to send
+    NSData *temp = uploadData;                                                  // this is a shallow copy of the pointer, not a deep copy
+    
+    uploadData = nil;                                                           // next time around, return nil...
+    
+    return temp;
+}
+
+-(void) requestFailed:(BRRequest *) request
+{
+    NSLog(@"%@", request.error.message);
+    
+    uploadFile = nil;
+
+}
 
 /*
 #pragma mark - Navigation

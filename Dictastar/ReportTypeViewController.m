@@ -22,7 +22,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic) BOOL isLoading;
 @property (nonatomic, strong) NSDictionary *userInfo;
-
+@property (nonatomic, strong) NSDictionary *defaultTypeDict;
 
 @end
 
@@ -35,10 +35,10 @@
     _userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
     NSLog(@"%@",dataDict);
     [self fetchDictateTypeInfo];
+    [self fetchDefaultType];
     self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     
-    selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-
+    selectedIndexPath = nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,7 +60,6 @@
         NSError* error;
         NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         _dataArray = [jsonDict objectForKey:@"Table"];
-        NSLog(@"%@",_dataArray);
         
         _isLoading = NO;
         
@@ -77,6 +76,35 @@
         
     }];
     
+}
+
+-(void) fetchDefaultType {
+    
+    NSDictionary *params = @{@"Facilityuserid":[_userInfo objectForKey:@"DictatorId"]};
+    
+    [[BTServicesClient sharedClient] GET:@"GetDictateTypeinJson" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSArray *data = [jsonDict objectForKey:@"Table"];
+        _defaultTypeDict = [data objectAtIndex:0];
+        
+        NSArray *filteredArray = [_dataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"Dictateid = %@",[_defaultTypeDict objectForKey:@"Dictateid"]]]];
+        
+        NSInteger indexVal = [_dataArray indexOfObject:[filteredArray objectAtIndex:0]];
+        
+        selectedIndexPath = [NSIndexPath indexPathForRow:indexVal inSection:0];
+        
+        [self.tableView reloadData];
+
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        
+        NSLog(@"%@",error.localizedDescription);
+        
+    }];
+
 }
 
 
@@ -145,6 +173,7 @@
 
         }
         
+        
         return cell;
     }
 }
@@ -160,7 +189,28 @@
 
     [self.tableView reloadData];
 }
+- (IBAction)makeDefault:(id)sender {
+    
+    
+    NSDictionary *params = @{@"Tid":[[_dataArray objectAtIndex:selectedIndexPath.row] objectForKey:@"Tid"],@"Dictateid":[[_dataArray objectAtIndex:selectedIndexPath.row] objectForKey:@"Dictateid"]};
+    
+    [[BTServicesClient sharedClient] GET:@"UpdateDefaultDictateTypeinJson" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSArray *data = [jsonDict objectForKey:@"Table"];
+        
+        [self.tableView reloadData];
+        
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        
+        NSLog(@"%@",error.localizedDescription);
+        
+    }];
 
+}
 
 #pragma mark - Navigation
 
@@ -172,7 +222,7 @@
 
     DictateViewController *dictateObj = segue.destinationViewController;
     dictateObj.dataDict = dataDict;
-    dictateObj.jobType = [[_dataArray objectAtIndex:selectedIndexPath.row] objectForKey:@"Tid"];
+    dictateObj.jobTypeDict = [_dataArray objectAtIndex:selectedIndexPath.row];
     
 }
 
