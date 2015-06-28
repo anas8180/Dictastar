@@ -9,6 +9,7 @@
 #import "ReportViewController.h"
 #import "BTServicesClient.h"
 #import "CustomTableViewCell.h"
+#import "ReportDetailViewController.h"
 
 @interface ReportViewController ()
 
@@ -127,14 +128,19 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    
+    ReportDetailViewController *reportObj = segue.destinationViewController;
+    reportObj.dataDict = [_dataArray objectAtIndex:indexPath.row];
 }
-*/
+
 
 @end

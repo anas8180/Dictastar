@@ -11,6 +11,7 @@
 #import "SendQViewController.h"
 #import "BRRequestUpload.h"
 #import "BRRequest+_UserData.h"
+#import "Constant.h"
 
 @interface RecordViewController ()<BRRequestDelegate> {
     
@@ -21,7 +22,7 @@
     NSString *fileNameString;
     NSData *uploadData;
     BRRequestUpload *uploadFile;
-    NSTimer *timer;
+    NSTimer *record_timer,*player_timer;
     int rec_time;
     int max_dict;
 
@@ -33,6 +34,11 @@
 @property (strong, nonatomic) IBOutlet UISlider *slider;
 @property (strong, nonatomic) NSDictionary *user_info;
 @property (strong, nonatomic) NSDictionary *hostDict;
+@property (strong, nonatomic) IBOutlet UILabel *countTimer;
+@property (strong, nonatomic) IBOutlet UILabel *countDownTimer;
+@property (strong, nonatomic) IBOutlet UIButton *playButton;
+@property (strong, nonatomic) IBOutlet UIButton *sendButton;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topLayout;
 
 @end
 
@@ -55,7 +61,7 @@
 
     fileNameString = [self getAudioFileName:nameArray];
     
-    _fileName.text = [NSString stringWithFormat:@"%@.mp4",fileNameString];
+    _fileName.text = [NSString stringWithFormat:@"%@",fileNameString];
 
     // Set the audio file
     NSArray *pathComponents = [NSArray arrayWithObjects:
@@ -85,6 +91,16 @@
     
     statPriority = @"Normal";
     isStat = NO;
+    
+    _countTimer.text = @"00:00";
+    _countDownTimer.text = @"00:00";
+
+    if (IS_IPHONE4) {
+        
+        _topLayout.constant = 20;
+    }
+    
+    rec_time = 1;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -157,7 +173,7 @@
     NSLog(@"%ld",(long)[components minute]);
     NSLog(@"%ld",(long)[components second]);
 
-    NSString *file = [NSString stringWithFormat:@"%@_%@_%ld%ld%ld_%ld%ld%ld",fname,lname,[components day],[components month],[components year],[components hour],[components minute],[components second]];
+    NSString *file = [NSString stringWithFormat:@"%@_%@_%ld%ld%ld_%ld%ld%ld",fname,lname,(long)[components day],(long)[components month],(long)[components year],(long)[components hour],(long)[components minute],(long)[components second]];
     
     return file;
 }
@@ -190,7 +206,7 @@
         AVAudioSession *session = [AVAudioSession sharedInstance];
         [session setActive:YES error:nil];
         
-        timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+        record_timer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                  target:self
                                                selector:@selector(recordingTime)
                                                userInfo:nil
@@ -198,8 +214,7 @@
 
         // Start recording
         [recorder record];
-        
-    }
+            }
 }
 - (IBAction)stopPressed:(UIButton *)sender {
     
@@ -210,13 +225,18 @@
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         [audioSession setActive:NO error:nil];
         
-        [timer invalidate];
+        [record_timer invalidate];
+        
 
     }
     else if (player.isPlaying){
         
         [player stop];
+        
+        [player_timer invalidate];
+
     }
+    
     
 }
 - (IBAction)pausePressed:(id)sender {
@@ -231,7 +251,8 @@
     total = total/60;
     _slider.maximumValue = total;
     
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+    player_timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+    
     
 }
 - (IBAction)sendPressed:(id)sender {
@@ -283,17 +304,31 @@
     
     float f =  (player.currentTime) ;
     self.slider.value = f/60.0;
+    NSLog(@"%f",f);
+    _countTimer.text = [NSString stringWithFormat:@"%.2f",f];
     
+    NSTimeInterval timeLeft = player.duration - player.currentTime;
+    
+    // update your UI with timeLeft
+    _countDownTimer.text = [NSString stringWithFormat:@"%.2f", timeLeft];
+    
+
 }
 
 -(void)recordingTime {
     
-    if (rec_time == 5) {
+    if (rec_time == max_dict) {
         
         [recorder stop];
-        [timer invalidate];
+        
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        [audioSession setActive:NO error:nil];
+        
+        [record_timer invalidate];
+        
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Time Exceeded" message:@"Recording Stopped" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
+        
     }
     
     rec_time = rec_time + 1;
@@ -307,6 +342,13 @@
     
     if (flag) {
         
+        _slider.value = 0.0;
+        
+        [player_timer invalidate];
+        
+        _countTimer.text = @"00:00";
+        
+        _countDownTimer.text = @"00:00";
     }
 }
 

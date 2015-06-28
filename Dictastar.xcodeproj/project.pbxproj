@@ -61,6 +61,9 @@
 		8942B3DF1B3FB7A2002C80D0 /* ProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3DE1B3FB7A2002C80D0 /* ProfileTableViewCell.m */; };
 		8942B3E21B3FBC08002C80D0 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3E11B3FBC08002C80D0 /* ProfileViewController.m */; };
 		8942B3E51B3FE538002C80D0 /* MaxDictateSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3E41B3FE538002C80D0 /* MaxDictateSelectViewController.m */; };
+		8942B3E81B402278002C80D0 /* ReportDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3E71B402278002C80D0 /* ReportDetailViewController.m */; };
+		8942B3EC1B405127002C80D0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3EB1B405127002C80D0 /* MBProgressHUD.m */; };
+		8942B3F01B405186002C80D0 /* UIViewController+ActivityLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3EF1B405186002C80D0 /* UIViewController+ActivityLoader.m */; };
 		8946B9E91B34736B00916FD2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8946B9E81B34736B00916FD2 /* AVFoundation.framework */; };
 		897A5B2B1B318A4E00C08397 /* ReviewDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */; };
 		8994CB9A1B303D8400FBD6E8 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8994CB991B303D8400FBD6E8 /* CustomTableViewCell.m */; };
@@ -186,6 +189,12 @@
 		8942B3E11B3FBC08002C80D0 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		8942B3E31B3FE538002C80D0 /* MaxDictateSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaxDictateSelectViewController.h; sourceTree = "<group>"; };
 		8942B3E41B3FE538002C80D0 /* MaxDictateSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaxDictateSelectViewController.m; sourceTree = "<group>"; };
+		8942B3E61B402278002C80D0 /* ReportDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportDetailViewController.h; sourceTree = "<group>"; };
+		8942B3E71B402278002C80D0 /* ReportDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportDetailViewController.m; sourceTree = "<group>"; };
+		8942B3EA1B405127002C80D0 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		8942B3EB1B405127002C80D0 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		8942B3EE1B405186002C80D0 /* UIViewController+ActivityLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ActivityLoader.h"; sourceTree = "<group>"; };
+		8942B3EF1B405186002C80D0 /* UIViewController+ActivityLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ActivityLoader.m"; sourceTree = "<group>"; };
 		8946B9E81B34736B00916FD2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		897A5B291B318A4E00C08397 /* ReviewDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewDetailViewController.h; sourceTree = "<group>"; };
 		897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewDetailViewController.m; sourceTree = "<group>"; };
@@ -227,6 +236,8 @@
 				890EC1F61B31E0D2004F2175 /* RecordViewController.m */,
 				890EC1F81B31E0F2004F2175 /* ReportViewController.h */,
 				890EC1F91B31E0F2004F2175 /* ReportViewController.m */,
+				8942B3E61B402278002C80D0 /* ReportDetailViewController.h */,
+				8942B3E71B402278002C80D0 /* ReportDetailViewController.m */,
 			);
 			name = DictateVC;
 			sourceTree = "<group>";
@@ -255,6 +266,7 @@
 		893D03CC1B2FCF1200CD178A /* Dictastar */ = {
 			isa = PBXGroup;
 			children = (
+				8942B3ED1B405178002C80D0 /* Categories */,
 				897A5AF41B317BB400C08397 /* Third Party */,
 				8994CB971B303D4400FBD6E8 /* Views */,
 				893D03FC1B2FFC5700CD178A /* AFNetworking */,
@@ -480,9 +492,28 @@
 			name = SettingsVC;
 			sourceTree = "<group>";
 		};
+		8942B3E91B405102002C80D0 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				8942B3EA1B405127002C80D0 /* MBProgressHUD.h */,
+				8942B3EB1B405127002C80D0 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		8942B3ED1B405178002C80D0 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				8942B3EE1B405186002C80D0 /* UIViewController+ActivityLoader.h */,
+				8942B3EF1B405186002C80D0 /* UIViewController+ActivityLoader.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		897A5AF41B317BB400C08397 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				8942B3E91B405102002C80D0 /* MBProgressHUD */,
 				8942B3B41B3EEBDA002C80D0 /* BlackRaccon */,
 				8942B3B31B3EEBC0002C80D0 /* WhiteRaccon */,
 			);
@@ -605,6 +636,7 @@
 			files = (
 				893D04311B2FFCA000CD178A /* UIProgressView+AFNetworking.m in Sources */,
 				893D042F1B2FFCA000CD178A /* UIButton+AFNetworking.m in Sources */,
+				8942B3E81B402278002C80D0 /* ReportDetailViewController.m in Sources */,
 				893D04321B2FFCA000CD178A /* UIRefreshControl+AFNetworking.m in Sources */,
 				8942B3DC1B3FB2D5002C80D0 /* SettingsViewController.m in Sources */,
 				8942B3E21B3FBC08002C80D0 /* ProfileViewController.m in Sources */,
@@ -624,6 +656,7 @@
 				893D04301B2FFCA000CD178A /* UIImageView+AFNetworking.m in Sources */,
 				8942B3D21B3EEBEE002C80D0 /* BRRequestUpload.m in Sources */,
 				8942B3CD1B3EEBEE002C80D0 /* BRRequestDelete.m in Sources */,
+				8942B3F01B405186002C80D0 /* UIViewController+ActivityLoader.m in Sources */,
 				890EC1FA1B31E0F2004F2175 /* ReportViewController.m in Sources */,
 				893D04121B2FFC8A00CD178A /* AFHTTPRequestOperation.m in Sources */,
 				890EC1F71B31E0D2004F2175 /* RecordViewController.m in Sources */,
@@ -637,6 +670,7 @@
 				893D04141B2FFC8A00CD178A /* AFHTTPSessionManager.m in Sources */,
 				893D04151B2FFC8A00CD178A /* AFNetworkReachabilityManager.m in Sources */,
 				893D04191B2FFC8A00CD178A /* AFURLResponseSerialization.m in Sources */,
+				8942B3EC1B405127002C80D0 /* MBProgressHUD.m in Sources */,
 				893D04331B2FFCA000CD178A /* UIWebView+AFNetworking.m in Sources */,
 				8942B3B01B3EDEDF002C80D0 /* WhiteRaccoon.m in Sources */,
 				893D041A1B2FFC8A00CD178A /* AFURLSessionManager.m in Sources */,

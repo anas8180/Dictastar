@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "Constant.h"
 #import "BTServicesClient.h"
+#import "UIViewController+ActivityLoader.h"
 
 @interface LoginViewController ()
 
@@ -16,6 +17,12 @@
 @property (strong, nonatomic) IBOutlet UITextField *emailTextFld;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextFld;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *logoBtmLayout;
+@property (strong, nonatomic) IBOutlet UIView *forgotView;
+@property (strong, nonatomic) IBOutlet UIView *forgotPswdView;
+@property (strong, nonatomic) IBOutlet UITextField *forgotTextField;
+@property (strong, nonatomic) IBOutlet UIImageView *forgot_user_icon;
+@property (strong, nonatomic) IBOutlet UILabel *forgot_status_text;
+@property (strong, nonatomic) IBOutlet UIButton *submitButton;
 
 @end
 
@@ -41,6 +48,8 @@
         
         _topLayout.constant = 70;
     }
+    
+    _forgotView.hidden = YES;
     
 }
 
@@ -118,6 +127,14 @@
 
 - (IBAction)loginAction:(id)sender {
     
+    if ([_emailTextFld.text isEqualToString:@""] || [_passwordTextFld.text isEqualToString:@""]) {
+        
+        [self addMessageLoader:@"Please Enter the Field"];
+    }
+    else {
+        
+    self.view.userInteractionEnabled = NO;
+        
     NSDictionary *params = @{@"Username":_emailTextFld.text,@"Password":_passwordTextFld.text};
     
     [[BTServicesClient sharedClient] GET:@"CheckAuthenticationinJson" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
@@ -133,6 +150,7 @@
         
         if (username == nil) {
             
+            [self addMessageLoader:@"Invalid Username/Password"];
         }
         else
         {
@@ -148,14 +166,81 @@
         [self presentViewController:tabVc animated:YES completion:nil];
         }
         
+        self.view.userInteractionEnabled = YES;
+
+        
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         
         NSLog(@"%@",error.localizedDescription);
         
+        [self addMessageLoader:error.localizedDescription];
+        
+        self.view.userInteractionEnabled = YES;
+    }];
+    }
+
+}
+
+- (IBAction)forgotPasswordTapped:(id)sender {
+    
+    _forgotView.hidden = NO;
+    _forgot_status_text.hidden = YES;
+}
+- (IBAction)closePopUp:(id)sender {
+    
+    _forgotView.hidden = YES;
+
+}
+
+
+- (IBAction)submitAction:(id)sender {
+    
+    NSDictionary *params = @{@"Username":_forgotTextField.text};
+    
+    [[BTServicesClient sharedClient] GET:@"FetchFacilityUserPWDJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary * jsonDict = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSArray *data = [jsonDict objectForKey:@"Table"];
+        
+        if (data.count) {
+            
+            _forgotTextField.hidden = YES;
+            _forgot_user_icon.hidden = YES;
+            _submitButton.hidden = YES;
+            _forgot_status_text.hidden = NO;
+            
+            _forgot_status_text.text = @"Your Password Will be send to the registered Email";
+
+        }
+        else {
+            
+            _forgotTextField.hidden = YES;
+            _forgot_user_icon.hidden = YES;
+            _submitButton.hidden = YES;
+            _forgot_status_text.hidden = NO;
+            
+            _forgot_status_text.text = @"Please Enter Correct Username";
+
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        
+        NSLog(@"%@",error.localizedDescription);
+        _forgotTextField.hidden = YES;
+        _forgot_user_icon.hidden = YES;
+        _submitButton.hidden = YES;
+        _forgot_status_text.hidden = NO;
+        
+        _forgot_status_text.text = error.localizedDescription;
+
         
     }];
 
+    
 }
 
 -(BOOL) stringIsNumeric:(NSString *) str {
@@ -163,6 +248,7 @@
     NSNumber *number = [formatter numberFromString:str];
     return !!number; // If the string is not numeric, number will be nil
 }
+
 
 #pragma mark - Navigation
 

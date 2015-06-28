@@ -3,11 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "footer_review_line.png"
+      "filename" : "footer-outbox-icon-@1x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "footer-outbox-icon-@2x.png"
     },
     {
       "idiom" : "universal",

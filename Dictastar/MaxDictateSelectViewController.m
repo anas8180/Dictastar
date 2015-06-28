@@ -82,7 +82,7 @@
         cell.selectRadioButton.tag = indexPath.row;
 
 
-        if (indexPath == selectedIndexPath) {
+        if (indexPath.row == selectedIndexPath.row) {
             [cell.selectRadioButton setImage:[UIImage imageNamed:@"radio_on"] forState:UIControlStateNormal];
             ;
         }

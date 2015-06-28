@@ -10,8 +10,15 @@
 #import "CustomTableViewCell.h"
 #import "BTServicesClient.h"
 #import "NoDataViewCell.h"
+#import "BRRequestUpload.h"
+#import "BRRequest+_UserData.h"
 
-@interface SendQViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface SendQViewController ()<UITableViewDelegate,UITableViewDataSource,BRRequestDelegate> {
+    
+    NSData *uploadData;
+    BRRequestUpload *uploadFile;
+
+}
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UILabel *dateLable;
@@ -19,6 +26,8 @@
 @property (nonatomic, strong) NSDictionary *userInfo;
 @property (strong, nonatomic) NSDate *currentDate;
 @property (nonatomic) BOOL isLoading;
+@property (strong, nonatomic) NSMutableArray *selectedIndexPaths;
+@property (strong, nonatomic) NSDictionary *hostDict;
 
 @end
 
@@ -33,10 +42,13 @@
         
     _currentDate = [NSDate date];
     
+    _selectedIndexPaths = [NSMutableArray new];
+    
     _userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
     
     [self getDate];
     [self fetchOutBoxDetails];
+    [self fetchFTPDetails];
     
     self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
 
@@ -128,11 +140,40 @@
         if ([status isEqualToString:@"Assigned"]) {
             
             cell.statusIcon.hidden = YES;
+            cell.selectRadioButton.hidden = YES;
         }
         else {
             
             cell.statusIcon.hidden = NO;
+            cell.selectRadioButton.hidden = NO;
         }
+        
+        [cell.selectRadioButton addTarget:self action:@selector(selectReport:) forControlEvents:UIControlEventTouchUpInside];
+        
+        cell.selectRadioButton.tag = indexPath.row;
+        
+        if (_selectedIndexPaths.count) {
+            
+            NSString *str = [NSString stringWithFormat:@"%ld",indexPath.row];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF LIKE[cd] %@", str];
+            NSArray *filtered = [_selectedIndexPaths filteredArrayUsingPredicate:predicate];
+            
+            if (filtered.count) {
+                [cell.selectRadioButton setImage:[UIImage imageNamed:@"outbox_check"] forState:UIControlStateNormal];
+            }
+            else {
+                [cell.selectRadioButton setImage:[UIImage imageNamed:@"outbox_uncheck"] forState:UIControlStateNormal];
+            }
+            
+        }
+        else {
+            
+            [cell.selectRadioButton setImage:[UIImage imageNamed:@"outbox_uncheck"] forState:UIControlStateNormal];
+            
+        }
+
+
     
     return cell;
     }
@@ -203,6 +244,43 @@
 
 #pragma mark - Action
 
+-(void)selectReport:(id)sender {
+    
+    NSInteger tag = [sender tag];
+    
+    if (_selectedIndexPaths.count) {
+        
+        NSString *str = [NSString stringWithFormat:@"%ld",tag];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF LIKE[cd] %@", str];
+        NSArray *filtered = [_selectedIndexPaths filteredArrayUsingPredicate:predicate];
+        
+        if (filtered.count) {
+            
+            NSUInteger indexValue = [_selectedIndexPaths indexOfObject:str];
+            [_selectedIndexPaths removeObjectAtIndex:indexValue];
+            
+        }
+        else {
+            
+            NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:tag inSection:0];
+            
+            [_selectedIndexPaths addObject:[NSString stringWithFormat:@"%ld",(long)selectedIndexPath.row]];
+            
+        }
+    }
+    else {
+        
+        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:tag inSection:0];
+        
+        [_selectedIndexPaths addObject:[NSString stringWithFormat:@"%ld",(long)selectedIndexPath.row]];
+        
+    }
+    
+    [self.tableView reloadData];
+    
+}
+
+
 - (IBAction)backAction:(id)sender {
     
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -225,6 +303,11 @@
     _currentDate = [dateFormatter dateFromString:convertedString];
     
     [self getDate];
+    
+    if (_dataArray != nil) {
+        _dataArray = nil;
+    }
+    
     _dataArray = [[NSArray alloc]init];
     [self.tableView reloadData];
     [self fetchOutBoxDetails];
@@ -251,10 +334,140 @@
     _currentDate = [dateFormatter dateFromString:convertedString];
     
     [self getDate];
+   
+    if (_dataArray != nil) {
+        _dataArray = nil;
+    }
+
     _dataArray = [[NSArray alloc]init];
     [self.tableView reloadData];
     [self fetchOutBoxDetails];
 }
+
+- (IBAction)sendTapped:(id)sender {
+    
+    if (_selectedIndexPaths.count) {
+        
+        for (int i=0; i<_selectedIndexPaths.count; i++) {
+            
+            NSInteger indexVal = [[_selectedIndexPaths objectAtIndex:i] integerValue];
+            
+            [self uploadFile:[[_dataArray objectAtIndex:indexVal] objectForKey:@"Filename"]];
+        }
+    }
+    
+}
+
+- (IBAction)deleteTapped:(id)sender {
+    
+    
+}
+
+#pragma mark - Uplaod FTP on Server
+
+- (void)uploadFile:(NSString *)fileName
+{
+    //----- get the file to upload as an NSData object
+    NSArray *pathComponents = [NSArray arrayWithObjects:
+                               [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
+                               fileName,
+                               nil];
+    
+    NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
+    uploadData = [NSData dataWithContentsOfURL:outputFileURL];
+    
+    uploadFile = [[BRRequestUpload alloc] initWithDelegate:self];
+    
+    uploadFile.path = [NSString stringWithFormat:@"/%@/%@",[_userInfo objectForKey:@"FacilityId"],fileName];
+    uploadFile.hostname = [_hostDict objectForKey:@"HOST"];
+    uploadFile.username = [_hostDict objectForKey:@"UN"];
+    uploadFile.password = [_hostDict objectForKey:@"PWD"];
+    
+    [uploadFile start];
+}
+
+-(BOOL) shouldOverwriteFileWithRequest: (BRRequest *) request
+{
+    //----- set this as appropriate if you want the file to be overwritten
+    if (request == uploadFile)
+    {
+        //----- if uploading a file, we set it to YES
+        return YES;
+    }
+    
+    //----- anything else (directories, etc) we set to NO
+    return NO;
+}
+
+-(void) requestCompleted: (BRRequest *) request
+{
+    NSLog(@"%@ completed!", request);
+    uploadFile = nil;
+    
+    [_selectedIndexPaths removeAllObjects];
+    if (_dataArray != nil) {
+         _dataArray = nil;
+    }
+    
+    _dataArray = [[NSArray alloc]init];
+    [self.tableView reloadData];
+    [self fetchOutBoxDetails];
+}
+
+- (NSData *) requestDataToSend: (BRRequestUpload *) request
+{
+    //----- returns data object or nil when complete
+    //----- basically, first time we return the pointer to the NSData.
+    //----- and BR will upload the data.
+    //----- Second time we return nil which means no more data to send
+    NSData *temp = uploadData;                                                  // this is a shallow copy of the pointer, not a deep copy
+    
+    uploadData = nil;                                                           // next time around, return nil...
+    
+    return temp;
+}
+
+-(void) requestFailed:(BRRequest *) request
+{
+    NSLog(@"%@", request.error.message);
+    
+    uploadFile = nil;
+    
+    [_selectedIndexPaths removeAllObjects];
+    
+    if (_dataArray != nil) {
+        _dataArray = nil;
+    }
+    
+    _dataArray = [[NSArray alloc]init];
+    [self.tableView reloadData];
+    [self fetchOutBoxDetails];
+
+}
+
+#pragma mark - Service Call
+
+-(void)fetchFTPDetails {
+    
+    [[BTServicesClient sharedClient] GET:@"GetFTPDetailsJSON" parameters:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSArray *data  = [jsonData objectForKey:@"Table"];
+        _hostDict = [data objectAtIndex:0];
+        
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        
+        NSLog(@"%@",error.localizedDescription);
+        
+        
+    }];
+    
+}
+
+
 
 
 /*

@@ -19,5 +19,6 @@
 @property (nonatomic, strong) IBOutlet UIImageView *recordIcon;
 @property (nonatomic, strong) IBOutlet UIImageView *headSetIcon;
 @property (nonatomic, strong) IBOutlet UIImageView *editIcon;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *loaderView;
 
 @end

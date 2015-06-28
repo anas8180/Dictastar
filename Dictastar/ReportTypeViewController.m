@@ -162,7 +162,7 @@
         
         cell.selectRadioButton.tag = indexPath.row;
         
-        if (indexPath == selectedIndexPath) {
+        if (indexPath.row == selectedIndexPath.row) {
             [cell.selectRadioButton setImage:[UIImage imageNamed:@"radio_on"] forState:UIControlStateNormal];
             cell.title.textColor = [UIColor colorWithRed:35/255.0 green:122/255.0 blue:190/255.0 alpha:1.0];
 ;
