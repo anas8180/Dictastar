@@ -1,5 +1,5 @@
 //
-//  SettingsViewController.h
+//  MaxDictateSelectViewController.h
 //  Dictastar
 //
 //  Created by mohamed on 28/06/15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsViewController : UIViewController
+@interface MaxDictateSelectViewController : UIViewController
 
 @end

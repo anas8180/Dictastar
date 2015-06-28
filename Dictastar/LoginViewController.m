@@ -123,9 +123,9 @@
     [[BTServicesClient sharedClient] GET:@"CheckAuthenticationinJson" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
    
         NSError* error;
-        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSArray * jsonArray = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         
-        NSArray *jsonArray = [jsonData objectForKey:@"Table"];
+//        NSArray *jsonArray = [jsonData objectForKey:@"Table"];
         
         NSDictionary *dict = [jsonArray objectAtIndex:0];
         
@@ -138,6 +138,10 @@
         {
         [[NSUserDefaults standardUserDefaults] setObject:dict forKey:@"user_info"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:@"10" forKey:@"max_dict"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+
         
         UITabBarController *tabVc = (UITabBarController *)[self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBar"];
         

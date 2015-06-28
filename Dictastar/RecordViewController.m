@@ -21,13 +21,18 @@
     NSString *fileNameString;
     NSData *uploadData;
     BRRequestUpload *uploadFile;
+    NSTimer *timer;
+    int rec_time;
+    int max_dict;
 
 }
+
 @property (strong, nonatomic) IBOutlet UILabel *patientName;
 @property (strong, nonatomic) IBOutlet UILabel *conditionLable;
 @property (strong, nonatomic) IBOutlet UILabel *fileName;
 @property (strong, nonatomic) IBOutlet UISlider *slider;
 @property (strong, nonatomic) NSDictionary *user_info;
+@property (strong, nonatomic) NSDictionary *hostDict;
 
 @end
 
@@ -40,6 +45,9 @@
     // Do any additional setup after loading the view.
     
     _user_info = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
+    max_dict = [[[NSUserDefaults standardUserDefaults] objectForKey:@"max_dict"] intValue];
+    
+    max_dict = max_dict * 60;
 
     _patientName.text = [NSString stringWithFormat:@"%@ %@",[dataDict objectForKey:@"Name"],[self cutStringDate:[dataDict objectForKey:@"Dateofstudy"]]];
     
@@ -82,6 +90,29 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Service Call
+
+-(void)fetchFTPDetails {
+    
+    [[BTServicesClient sharedClient] GET:@"GetFTPDetailsJSON" parameters:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSArray *data  = [jsonData objectForKey:@"Table"];
+        _hostDict = [data objectAtIndex:0];
+        
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        
+        NSLog(@"%@",error.localizedDescription);
+        
+        
+    }];
+
 }
 
 #pragma mark - Methods
@@ -159,6 +190,12 @@
         AVAudioSession *session = [AVAudioSession sharedInstance];
         [session setActive:YES error:nil];
         
+        timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                 target:self
+                                               selector:@selector(recordingTime)
+                                               userInfo:nil
+                                                repeats:YES];
+
         // Start recording
         [recorder record];
         
@@ -173,6 +210,7 @@
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         [audioSession setActive:NO error:nil];
         
+        [timer invalidate];
 
     }
     else if (player.isPlaying){
@@ -199,7 +237,7 @@
 - (IBAction)sendPressed:(id)sender {
     
     NSString *documentdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *tileDirectory = [documentdir stringByAppendingPathComponent:fileNameString];
+    NSString *tileDirectory = [documentdir stringByAppendingPathComponent:_fileName.text];
 
     unsigned long long fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:tileDirectory error:nil] fileSize];
     
@@ -211,15 +249,8 @@
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
-        NSArray *dataArray  = [jsonData objectForKey:@"Table"];
-       
-     /*   if (dataArray.count) {
-            
-            SendQViewController *sendQObj = [self.storyboard instantiateViewControllerWithIdentifier:@"SendQView"];
-            [self.navigationController showViewController:sendQObj sender:self];
-            
-        } */
-        
+        NSArray *data  = [jsonData objectForKey:@"Table"];
+        NSLog(@"%@",data);
         [self uploadFile];
         
         
@@ -255,6 +286,21 @@
     
 }
 
+-(void)recordingTime {
+    
+    if (rec_time == 5) {
+        
+        [recorder stop];
+        [timer invalidate];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Time Exceeded" message:@"Recording Stopped" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    rec_time = rec_time + 1;
+    NSLog(@"%d",rec_time);
+                              
+}
+
 #pragma mark - AVAudioPlayer delegate methods
 
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
@@ -279,9 +325,9 @@
     uploadFile = [[BRRequestUpload alloc] initWithDelegate:self];
     
     uploadFile.path = [NSString stringWithFormat:@"/%@/%@",[_user_info objectForKey:@"FacilityId"],_fileName.text];
-    uploadFile.hostname = @"182.72.151.117";
-    uploadFile.username = @"elizabeth";
-    uploadFile.password = @"elizabeth123";
+    uploadFile.hostname = [_hostDict objectForKey:@"HOST"];
+    uploadFile.username = [_hostDict objectForKey:@"UN"];
+    uploadFile.password = [_hostDict objectForKey:@"PWD"];
     
     [uploadFile start];
 }
@@ -303,6 +349,10 @@
 {
     NSLog(@"%@ completed!", request);
     uploadFile = nil;
+    
+    SendQViewController *sendQObj = [self.storyboard instantiateViewControllerWithIdentifier:@"SendQView"];
+    [self.navigationController showViewController:sendQObj sender:self];
+
 
 }
 
@@ -324,6 +374,9 @@
     NSLog(@"%@", request.error.message);
     
     uploadFile = nil;
+
+    SendQViewController *sendQObj = [self.storyboard instantiateViewControllerWithIdentifier:@"SendQView"];
+    [self.navigationController showViewController:sendQObj sender:self];
 
 }
 

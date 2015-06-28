@@ -58,7 +58,10 @@
 		8942B3D21B3EEBEE002C80D0 /* BRRequestUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3C71B3EEBEE002C80D0 /* BRRequestUpload.m */; };
 		8942B3D31B3EEBEE002C80D0 /* BRStreamInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3C91B3EEBEE002C80D0 /* BRStreamInfo.m */; };
 		8942B3D51B3EEFE0002C80D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8942B3D41B3EEFE0002C80D0 /* Foundation.framework */; };
-		8942B3D91B3FA957002C80D0 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3D81B3FA957002C80D0 /* SettingsViewController.m */; };
+		8942B3DC1B3FB2D5002C80D0 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3DB1B3FB2D5002C80D0 /* SettingsViewController.m */; };
+		8942B3DF1B3FB7A2002C80D0 /* ProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3DE1B3FB7A2002C80D0 /* ProfileTableViewCell.m */; };
+		8942B3E21B3FBC08002C80D0 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3E11B3FBC08002C80D0 /* ProfileViewController.m */; };
+		8942B3E51B3FE538002C80D0 /* MaxDictateSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8942B3E41B3FE538002C80D0 /* MaxDictateSelectViewController.m */; };
 		8946B9E91B34736B00916FD2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8946B9E81B34736B00916FD2 /* AVFoundation.framework */; };
 		897A5B2B1B318A4E00C08397 /* ReviewDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */; };
 		8994CB9A1B303D8400FBD6E8 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8994CB991B303D8400FBD6E8 /* CustomTableViewCell.m */; };
@@ -178,8 +181,14 @@
 		8942B3C81B3EEBEE002C80D0 /* BRStreamInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRStreamInfo.h; sourceTree = "<group>"; };
 		8942B3C91B3EEBEE002C80D0 /* BRStreamInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRStreamInfo.m; sourceTree = "<group>"; };
 		8942B3D41B3EEFE0002C80D0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		8942B3D71B3FA957002C80D0 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		8942B3D81B3FA957002C80D0 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		8942B3DA1B3FB2D5002C80D0 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		8942B3DB1B3FB2D5002C80D0 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		8942B3DD1B3FB7A2002C80D0 /* ProfileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTableViewCell.h; sourceTree = "<group>"; };
+		8942B3DE1B3FB7A2002C80D0 /* ProfileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableViewCell.m; sourceTree = "<group>"; };
+		8942B3E01B3FBC08002C80D0 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		8942B3E11B3FBC08002C80D0 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		8942B3E31B3FE538002C80D0 /* MaxDictateSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaxDictateSelectViewController.h; sourceTree = "<group>"; };
+		8942B3E41B3FE538002C80D0 /* MaxDictateSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaxDictateSelectViewController.m; sourceTree = "<group>"; };
 		8946B9E81B34736B00916FD2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		897A5B291B318A4E00C08397 /* ReviewDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewDetailViewController.h; sourceTree = "<group>"; };
 		897A5B2A1B318A4E00C08397 /* ReviewDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewDetailViewController.m; sourceTree = "<group>"; };
@@ -466,8 +475,12 @@
 		8942B3D61B3FA93E002C80D0 /* SettingsVC */ = {
 			isa = PBXGroup;
 			children = (
-				8942B3D71B3FA957002C80D0 /* SettingsViewController.h */,
-				8942B3D81B3FA957002C80D0 /* SettingsViewController.m */,
+				8942B3DA1B3FB2D5002C80D0 /* SettingsViewController.h */,
+				8942B3DB1B3FB2D5002C80D0 /* SettingsViewController.m */,
+				8942B3E01B3FBC08002C80D0 /* ProfileViewController.h */,
+				8942B3E11B3FBC08002C80D0 /* ProfileViewController.m */,
+				8942B3E31B3FE538002C80D0 /* MaxDictateSelectViewController.h */,
+				8942B3E41B3FE538002C80D0 /* MaxDictateSelectViewController.m */,
 			);
 			name = SettingsVC;
 			sourceTree = "<group>";
@@ -488,6 +501,8 @@
 				8994CB991B303D8400FBD6E8 /* CustomTableViewCell.m */,
 				892113B71B32D6E900BCAFF7 /* NoDataViewCell.h */,
 				892113B81B32D6E900BCAFF7 /* NoDataViewCell.m */,
+				8942B3DD1B3FB7A2002C80D0 /* ProfileTableViewCell.h */,
+				8942B3DE1B3FB7A2002C80D0 /* ProfileTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -596,7 +611,8 @@
 				893D04311B2FFCA000CD178A /* UIProgressView+AFNetworking.m in Sources */,
 				893D042F1B2FFCA000CD178A /* UIButton+AFNetworking.m in Sources */,
 				893D04321B2FFCA000CD178A /* UIRefreshControl+AFNetworking.m in Sources */,
-				8942B3D91B3FA957002C80D0 /* SettingsViewController.m in Sources */,
+				8942B3DC1B3FB2D5002C80D0 /* SettingsViewController.m in Sources */,
+				8942B3E21B3FBC08002C80D0 /* ProfileViewController.m in Sources */,
 				893D042E1B2FFCA000CD178A /* UIAlertView+AFNetworking.m in Sources */,
 				893D03D31B2FCF1200CD178A /* AppDelegate.m in Sources */,
 				83FA95451B3AC419002A7F1A /* DictateTypeViewController.m in Sources */,
@@ -609,6 +625,7 @@
 				893D04171B2FFC8A00CD178A /* AFURLConnectionOperation.m in Sources */,
 				8942B3D11B3EEBEE002C80D0 /* BRRequestQueue.m in Sources */,
 				893D043C1B30225000CD178A /* HomeViewController.m in Sources */,
+				8942B3DF1B3FB7A2002C80D0 /* ProfileTableViewCell.m in Sources */,
 				8942B3D01B3EEBEE002C80D0 /* BRRequestListDirectory.m in Sources */,
 				893D04301B2FFCA000CD178A /* UIImageView+AFNetworking.m in Sources */,
 				8942B3D21B3EEBEE002C80D0 /* BRRequestUpload.m in Sources */,
@@ -630,6 +647,7 @@
 				8942B3B01B3EDEDF002C80D0 /* WhiteRaccoon.m in Sources */,
 				893D041A1B2FFC8A00CD178A /* AFURLSessionManager.m in Sources */,
 				890EC1F11B31E0A1004F2175 /* DictateViewController.m in Sources */,
+				8942B3E51B3FE538002C80D0 /* MaxDictateSelectViewController.m in Sources */,
 				893D042C1B2FFCA000CD178A /* AFNetworkActivityIndicatorManager.m in Sources */,
 				893D04481B3026A100CD178A /* ReviewViewController.m in Sources */,
 				8994CB9A1B303D8400FBD6E8 /* CustomTableViewCell.m in Sources */,
