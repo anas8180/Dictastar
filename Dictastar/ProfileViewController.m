@@ -84,10 +84,9 @@
         }
         
         cell.title.text = [NSString stringWithFormat:@"%@ :",[_keyDictionary objectAtIndex:indexPath.row]];
-        NSLog(@"CellTitle:%@",cell.title.text);
         
         cell.valueText.text = [NSString stringWithFormat:@"%@",[_resultDict objectForKey:[_keyDictionary objectAtIndex:indexPath.row]]];
-        NSLog(@"CellValue:%@",cell.valueText.text);
+        
         return cell;
 
     }
