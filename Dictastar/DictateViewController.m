@@ -33,8 +33,6 @@
     // Do any additional setup after loading the view.
     
     _viewControllerArray = [NSMutableArray array];
-
-    NSLog(@"%@",dataDict);
     
     InformationViewController *infoVC = (InformationViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"InformationView"];
     infoVC.dataDict = dataDict;

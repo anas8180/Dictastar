@@ -39,7 +39,6 @@
     self.title = @"Home";
     
     _userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
-    NSLog(@"%@",_userInfo);
     
     _doctorName.text = [NSString stringWithFormat:@"WELCOME DR. %@",[_userInfo objectForKey:@"DictatorName"]];
     
@@ -50,7 +49,7 @@
     
     _alertView.layer.cornerRadius = 5;
     _alertView.layer.masksToBounds = YES;
-
+    
     _alertTitle.font = [UIFont boldSystemFontOfSize:16.0f];
     _loadingView.hidden = NO;
     
@@ -89,7 +88,6 @@
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         
-        NSLog(@"%@",error.localizedDescription);
     }];
     
 }
@@ -102,29 +100,6 @@
 
     _loadingView.hidden = YES;
 }
-
-
-#pragma mark - Action
-- (IBAction)getAlert:(id)sender {
-    
-    NSDictionary *params = @{@"AttendingPhysician":[_userInfo objectForKey:@"DictatorId"]};
-    
-    [[BTServicesClient sharedClient] GET:@"GetAlertJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
-        
-        NSError* error;
-        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
-        NSArray *jsonArray = [jsonData objectForKey:@"Table"];
-        
-    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
-        //Failure of service call....
-        
-        NSLog(@"%@",error.localizedDescription);
-        
-        
-    }];
-    
-}
-
 
 #pragma mark - Navigation
 

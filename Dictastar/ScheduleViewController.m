@@ -154,14 +154,13 @@
     
     NSString *dateString = [dateFormat stringFromDate:_currentDate];
     
-    NSDictionary *params = @{@"FacilityId":[_userInfo objectForKey:@"FacilityId"],@"Fromdate":_scheduleDateLable.text,@"Todate":_scheduleDateLable.text};
+    NSDictionary *params = @{@"FacilityId":[_userInfo objectForKey:@"FacilityId"],@"Fromdate":dateString,@"Todate":dateString};
     
     [[BTServicesClient sharedClient] GET:@"FetchPatientJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         _dataArray = [jsonData objectForKey:@"Table"];
-        NSLog(@"%@",_dataArray);
         
         _isLoading = NO;
         
@@ -169,8 +168,6 @@
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
-        
-        NSLog(@"%@",error.localizedDescription);
         
         _isLoading = NO;
         
@@ -182,15 +179,15 @@
 
 -(void)getDate {
     
-  /*  NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
     
     NSString *dateString = [dateFormat stringFromDate:_currentDate];
     
-    _scheduleDateLable.text = [NSString stringWithFormat:@"%@",dateString]; */
+    _scheduleDateLable.text = [NSString stringWithFormat:@"%@",dateString]; 
     
-    NSString *str = @"2014-04-01"; /// here this is your date with format yyyy-MM-dd
+   /* NSString *str = @"2014-04-01"; /// here this is your date with format yyyy-MM-dd
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; // here we create NSDateFormatter object for change the Format of date..
     [dateFormatter setDateFormat:@"yyyy-MM-dd"]; //// here set format of date which is in your output date (means above str with format)
@@ -203,7 +200,7 @@
     NSString *convertedString = [dateFormatter stringFromDate:date]; //here convert date in NSString
     NSLog(@"Converted String : %@",convertedString);
    
-   _scheduleDateLable.text = [NSString stringWithFormat:@"%@",convertedString];
+   _scheduleDateLable.text = [NSString stringWithFormat:@"%@",convertedString]; */
 }
 
 #pragma mark - Action
@@ -230,6 +227,10 @@
     _currentDate = [dateFormatter dateFromString:convertedString];
 
     [self getDate];
+    if (_dataArray != nil) {
+        _dataArray = nil;
+    }
+    
     _dataArray = [[NSArray alloc]init];
     [self.tableView reloadData];
     [self fetchPatientInfo];
@@ -256,6 +257,10 @@
     _currentDate = [dateFormatter dateFromString:convertedString];
     
     [self getDate];
+    if (_dataArray != nil) {
+        _dataArray = nil;
+    }
+    
     _dataArray = [[NSArray alloc]init];
     [self.tableView reloadData];
     [self fetchPatientInfo];

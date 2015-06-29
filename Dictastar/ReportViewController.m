@@ -10,11 +10,13 @@
 #import "BTServicesClient.h"
 #import "CustomTableViewCell.h"
 #import "ReportDetailViewController.h"
+#import "NoDataViewCell.h"
 
 @interface ReportViewController ()
 
 @property (nonatomic, strong) NSArray *dataArray;
 @property (nonatomic, strong) NSDictionary *user_info;
+@property (nonatomic) BOOL isLoading;
 
 @end
 
@@ -45,6 +47,8 @@
 
 -(void)fetchPatientInfo {
     
+    _isLoading = YES;
+
     NSDictionary *params = @{@"AttendingPhysician":[_user_info objectForKey:@"DictatorId"],@"patientID":[dataDict objectForKey:@"PatientID"]};
     
     [[BTServicesClient sharedClient] GET:@"GetTranscriptionIDbyAttendingPhysicianforSignedJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
@@ -53,11 +57,17 @@
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         _dataArray  = [jsonData objectForKey:@"Table"];
         
+        _isLoading = NO;
+
         [self.tableView reloadData];
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         
+        _isLoading = NO;
+        
+        [self.tableView reloadData];
+
         NSLog(@"%@",error.localizedDescription);
         
         
@@ -76,11 +86,46 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
+    if(_dataArray.count == 0) {
+        
+        return 1;
+    }
     return _dataArray.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if(_dataArray.count == 0) {
+        
+        return self.tableView.frame.size.height;
+    }
+    
+    return 70.0;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (_dataArray.count == 0) {
+        
+        NoDataViewCell *cell = (NoDataViewCell *)[tableView dequeueReusableCellWithIdentifier:@"NoCell" forIndexPath:indexPath];
+        
+        if (_isLoading) {
+            
+            cell.title.text = @"Loading";
+            [cell.loadingView startAnimating];
+        }
+        else {
+            
+            cell.title.text = @"No Results Found";
+            [cell.loadingView stopAnimating];
+            
+        }
+        
+        return cell;
+    }
+    
+    else {
     
     CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
@@ -91,6 +136,7 @@
     cell.statusLable.text = [NSString stringWithFormat:@"%@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"ServiceDate"]];
     
     return cell;
+    }
 }
 
 

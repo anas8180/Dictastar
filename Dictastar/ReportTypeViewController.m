@@ -11,6 +11,7 @@
 #import "NoDataViewCell.h"
 #import "CustomTableViewCell.h"
 #import "DictateViewController.h"
+#import "UIViewController+ActivityLoader.h"
 
 @interface ReportTypeViewController ()<UITableViewDataSource,UITableViewDelegate> {
     
@@ -33,7 +34,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
-    NSLog(@"%@",dataDict);
+
     [self fetchDictateTypeInfo];
     [self fetchDefaultType];
     self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
@@ -68,8 +69,6 @@
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         
-        NSLog(@"%@",error.localizedDescription);
-        
         _isLoading = NO;
         
         [self.tableView reloadData];
@@ -100,8 +99,6 @@
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
-        
-        NSLog(@"%@",error.localizedDescription);
         
     }];
 
@@ -199,14 +196,11 @@
         NSError* error;
         NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         NSArray *data = [jsonDict objectForKey:@"Table"];
-        
-        [self.tableView reloadData];
-        
+        [self addMessageLoader:@"Success"];
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         
-        NSLog(@"%@",error.localizedDescription);
         
     }];
 

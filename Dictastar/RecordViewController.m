@@ -271,7 +271,7 @@
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         NSArray *data  = [jsonData objectForKey:@"Table"];
-        NSLog(@"%@",data);
+
         [self uploadFile];
         
         
@@ -332,7 +332,6 @@
     }
     
     rec_time = rec_time + 1;
-    NSLog(@"%d",rec_time);
                               
 }
 

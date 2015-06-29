@@ -9,6 +9,7 @@
 #import "ReviewDetailViewController.h"
 #import "BTServicesClient.h"
 #import "BTActionService.h"
+#import "UIViewController+ActivityLoader.h"
 
 @interface ReviewDetailViewController ()
 
@@ -29,7 +30,6 @@
     [self fetchDetail];
     
     
-    NSLog(@"%@",dataDict);
     _titleLable.text = [NSString stringWithFormat:@"%@   %@",[dataDict objectForKey:@"PatientName"],[dataDict objectForKey:@"ServiceDate"]];
     
     _user_info = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
@@ -142,6 +142,8 @@
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        
+        [self addMessageLoader:@"Success"];
         
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {

@@ -10,6 +10,7 @@
 #import "Constant.h"
 #import "BTServicesClient.h"
 #import "UIViewController+ActivityLoader.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface LoginViewController () {
     
@@ -194,7 +195,14 @@
 }
 - (IBAction)closePopUp:(id)sender {
     
+    
     _forgotView.hidden = YES;
+
+    _forgot_status_text.hidden = YES;
+
+    _forgotTextField.hidden = NO;
+    _forgot_user_icon.hidden = NO;
+    _submitButton.hidden = NO;
 
 }
 
@@ -230,11 +238,12 @@
 
         }
         
+        _forgotTextField.text = @"";
+
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         
-        NSLog(@"%@",error.localizedDescription);
         _forgotTextField.hidden = YES;
         _forgot_user_icon.hidden = YES;
         _submitButton.hidden = YES;
@@ -242,7 +251,8 @@
         
         _forgot_status_text.text = error.localizedDescription;
 
-        
+        _forgotTextField.text = @"";
+
     }];
 
     

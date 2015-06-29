@@ -12,6 +12,7 @@
 #import "ReviewDetailViewController.h"
 #import "NoDataViewCell.h"
 #import "BTActionService.h"
+#import "UIViewController+ActivityLoader.h"
 
 @interface ReviewViewController ()<UITableViewDelegate,UITableViewDataSource> {
     
@@ -170,7 +171,6 @@
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         _dataArray = [jsonData objectForKey:@"Table"];
-        NSLog(@"%@",_dataArray);
         _isLoading = NO;
         
         [self.tableView reloadData];
@@ -309,6 +309,7 @@
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        [self addMessageLoader:@"Successfully done"];
         
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
