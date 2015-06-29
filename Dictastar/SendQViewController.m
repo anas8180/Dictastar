@@ -202,6 +202,7 @@
         NSError* error;
         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         _dataArray = [jsonData objectForKey:@"Table"];
+        NSLog(@"Upload Id:%@",_dataArray);
         _isLoading = NO;
         
         [self.tableView reloadData];
@@ -354,8 +355,10 @@
         for (int i=0; i<_selectedIndexPaths.count; i++) {
             
             NSInteger indexVal = [[_selectedIndexPaths objectAtIndex:i] integerValue];
-            
+            NSDictionary *dict = @{@"UploadID":[[_dataArray objectAtIndex:indexVal]objectForKey:@"UploadID"]};
+            [self updateUploadWebService:dict service:@"UpdateFileUploadListinJson"];
             [self uploadFile:[[_dataArray objectAtIndex:indexVal] objectForKey:@"Filename"]];
+            
         }
     }
     
@@ -400,6 +403,29 @@
     
 }
 
+#pragma mark - UpdateUploadFileList inJson
+
+- (void)updateUploadWebService:(NSDictionary *)params service:(NSString *)service
+{
+    [[BTServicesClient sharedClient] POST:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        
+        [self addMessageLoader:@"Successfully done"];
+        
+        [self fetchOutBoxDetails];
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        NSLog(@"%@",error.localizedDescription);
+        
+        [self addMessageLoader:error.localizedDescription];
+        
+    }];
+
+}
+
 
 #pragma mark - Uplaod FTP on Server
 
@@ -439,7 +465,7 @@
 
 -(void) requestCompleted: (BRRequest *) request
 {
-    NSLog(@"%@ completed!", request);
+    NSLog(@"Completed:%@ completed!", request);
     uploadFile = nil;
     
     [_selectedIndexPaths removeAllObjects];
@@ -468,7 +494,7 @@
 
 -(void) requestFailed:(BRRequest *) request
 {
-    NSLog(@"%@", request.error.message);
+    NSLog(@"Failed:%@", request.error.message);
     
     uploadFile = nil;
     
