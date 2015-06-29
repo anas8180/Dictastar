@@ -101,6 +101,8 @@
     }
     
     rec_time = 1;
+    
+    [self fetchFTPDetails];
 }
 
 - (void)didReceiveMemoryWarning {
