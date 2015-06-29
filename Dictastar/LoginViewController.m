@@ -146,9 +146,9 @@
     [[BTServicesClient sharedClient] GET:@"CheckAuthenticationinJson" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
    
         NSError* error;
-        NSArray * jsonArray = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSDictionary * jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         
-//        NSArray *jsonArray = [jsonData objectForKey:@"Table"];
+        NSArray *jsonArray = [jsonData objectForKey:@"Table"];
         
         NSDictionary *dict = [jsonArray objectAtIndex:0];
         

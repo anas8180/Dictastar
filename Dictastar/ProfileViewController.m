@@ -84,9 +84,10 @@
         }
         
         cell.title.text = [NSString stringWithFormat:@"%@ :",[_keyDictionary objectAtIndex:indexPath.row]];
+        NSLog(@"CellTitle:%@",cell.title.text);
         
         cell.valueText.text = [NSString stringWithFormat:@"%@",[_resultDict objectForKey:[_keyDictionary objectAtIndex:indexPath.row]]];
-        
+        NSLog(@"CellValue:%@",cell.valueText.text);
         return cell;
 
     }
@@ -119,8 +120,10 @@
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         NSArray *dataArray = [jsonData objectForKey:@"Table"];
         _resultDict = [dataArray objectAtIndex:0];
-        _keyDictionary = [_resultDict allKeys];
-        
+        NSLog(@"Dict:%@",_resultDict);
+        NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES];
+        _keyDictionary = [[_resultDict allKeys]sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
+        NSLog(@"Keys:%@",_keyDictionary);
         [self.tableView reloadData];
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
