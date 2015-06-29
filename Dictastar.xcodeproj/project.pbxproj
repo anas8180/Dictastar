@@ -14,6 +14,7 @@
 		892113B91B32D6E900BCAFF7 /* NoDataViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 892113B81B32D6E900BCAFF7 /* NoDataViewCell.m */; };
 		89375B8B1B3567ED007516E6 /* BTActionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 89375B8A1B3567ED007516E6 /* BTActionService.m */; };
 		89391B0E1B3D67340031608F /* ReportTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89391B0D1B3D67340031608F /* ReportTypeViewController.m */; };
+		893C0DB41B41B9C100A44DE1 /* ReportPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893C0DB31B41B9C100A44DE1 /* ReportPageViewController.m */; };
 		893D03D01B2FCF1200CD178A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D03CF1B2FCF1200CD178A /* main.m */; };
 		893D03D31B2FCF1200CD178A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D03D21B2FCF1200CD178A /* AppDelegate.m */; };
 		893D03D91B2FCF1200CD178A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 893D03D71B2FCF1200CD178A /* Main.storyboard */; };
@@ -94,6 +95,8 @@
 		89375B8A1B3567ED007516E6 /* BTActionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTActionService.m; sourceTree = "<group>"; };
 		89391B0C1B3D67340031608F /* ReportTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportTypeViewController.h; sourceTree = "<group>"; };
 		89391B0D1B3D67340031608F /* ReportTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportTypeViewController.m; sourceTree = "<group>"; };
+		893C0DB21B41B9C100A44DE1 /* ReportPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportPageViewController.h; sourceTree = "<group>"; };
+		893C0DB31B41B9C100A44DE1 /* ReportPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportPageViewController.m; sourceTree = "<group>"; };
 		893D03CA1B2FCF1200CD178A /* Dictastar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dictastar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		893D03CE1B2FCF1200CD178A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		893D03CF1B2FCF1200CD178A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -236,6 +239,8 @@
 				890EC1F61B31E0D2004F2175 /* RecordViewController.m */,
 				890EC1F81B31E0F2004F2175 /* ReportViewController.h */,
 				890EC1F91B31E0F2004F2175 /* ReportViewController.m */,
+				893C0DB21B41B9C100A44DE1 /* ReportPageViewController.h */,
+				893C0DB31B41B9C100A44DE1 /* ReportPageViewController.m */,
 				8942B3E61B402278002C80D0 /* ReportDetailViewController.h */,
 				8942B3E71B402278002C80D0 /* ReportDetailViewController.m */,
 			);
@@ -674,6 +679,7 @@
 				8942B3EC1B405127002C80D0 /* MBProgressHUD.m in Sources */,
 				893D04331B2FFCA000CD178A /* UIWebView+AFNetworking.m in Sources */,
 				8942B3B01B3EDEDF002C80D0 /* WhiteRaccoon.m in Sources */,
+				893C0DB41B41B9C100A44DE1 /* ReportPageViewController.m in Sources */,
 				893D041A1B2FFC8A00CD178A /* AFURLSessionManager.m in Sources */,
 				890EC1F11B31E0A1004F2175 /* DictateViewController.m in Sources */,
 				8942B3E51B3FE538002C80D0 /* MaxDictateSelectViewController.m in Sources */,

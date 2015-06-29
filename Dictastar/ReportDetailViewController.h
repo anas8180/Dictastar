@@ -11,5 +11,6 @@
 @interface ReportDetailViewController : UIViewController
 
 @property (nonatomic, strong) NSDictionary *dataDict;
+@property NSUInteger pageIndex;
 
 @end

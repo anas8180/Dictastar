@@ -11,6 +11,7 @@
 #import "CustomTableViewCell.h"
 #import "ReportDetailViewController.h"
 #import "NoDataViewCell.h"
+#import "ReportPageViewController.h"
 
 @interface ReportViewController ()
 
@@ -184,8 +185,9 @@
     
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     
-    ReportDetailViewController *reportObj = segue.destinationViewController;
-    reportObj.dataDict = [_dataArray objectAtIndex:indexPath.row];
+    ReportPageViewController *reportObj = segue.destinationViewController;
+    reportObj.dataArray = _dataArray;
+    reportObj.selectedIndex = indexPath.row;
 }
 
 

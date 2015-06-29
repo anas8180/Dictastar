@@ -10,8 +10,12 @@
 #import "ProfileTableViewCell.h"
 #import "BTServicesClient.h"
 #import "Constant.h"
+#import "UIViewController+ActivityLoader.h"
 
-@interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate> {
+    
+    NSString *email,*username,*pswd;
+}
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
@@ -159,6 +163,10 @@ NSArray *sortedArray;
         [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Username"]  forKey:@"M"];
         [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Password"]  forKey:@"N"];
         
+        email = [[arrangeOrder objectAtIndex:i]objectForKey:@"Email"];
+        username = [[arrangeOrder objectAtIndex:i]objectForKey:@"Username"];
+        pswd = [[arrangeOrder objectAtIndex:i]objectForKey:@"Password"];
+
         
         _keyDictionary = [dict allKeys];
 //         NSLog(@"Keys:%@",_keyDictionary);
@@ -186,7 +194,41 @@ NSArray *sortedArray;
 
 - (IBAction)OkTapped:(id)sender {
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    NSMutableArray *textArray = [NSMutableArray new];
+    
+    for (int i=0;i<_keyDictionary.count-3; i++) {
+    
+    ProfileTableViewCell *theCell = (ProfileTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
+
+        
+        [textArray addObject:theCell.valueText.text];
+    
+    }
+    
+    
+    [textArray addObject:email];
+    [textArray addObject:username];
+    [textArray addObject:pswd];
+    
+    NSLog(@"%@",textArray);
+    
+    NSDictionary *params = @{@"facilityUserID":[textArray objectAtIndex:0],@"title":[textArray objectAtIndex:1],@"firstName":[textArray objectAtIndex:2],@"lastName":[textArray objectAtIndex:3],@"AddressLine1":[textArray objectAtIndex:4],@"city":[textArray objectAtIndex:5],@"zipcode":[textArray objectAtIndex:6],@"state":[textArray objectAtIndex:7],@"country":[textArray objectAtIndex:8],@"phone":[textArray objectAtIndex:9],@"fax":[textArray objectAtIndex:10],@"email":email,@"Username":username,@"password":pswd};
+    
+    [[BTServicesClient sharedClient] POST:@"UpdateFacilityUserInfo" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        [self addMessageLoader:@"Success"];
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        
+        [self addMessageLoader:error.localizedDescription];
+
+    }];
 
 }
 
@@ -194,6 +236,20 @@ NSArray *sortedArray;
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     
+    NSLog(@"%@",textField.text);
+    
+    if (textField.tag == 11) {
+        email = textField.text;
+    }
+    else if (textField.tag == 12) {
+        
+        username = textField.text;
+    }
+    else if (textField.tag == 13) {
+        
+        pswd = textField.text;
+    }
+
     _topLayout.constant = 0;
     
     [self moveViewUpAndDown];
@@ -201,7 +257,25 @@ NSArray *sortedArray;
     return [textField resignFirstResponder];
 }
 
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    
+    if (textField.tag == 11) {
+        email = textField.text;
+    }
+    else if (textField.tag == 12) {
+        
+        username = textField.text;
+    }
+    else if (textField.tag == 13) {
+        
+        pswd = textField.text;
+    }
+
+}
+
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    NSLog(@"%@",textField.text);
     
     if (IS_IPHONE4) {
        
