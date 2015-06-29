@@ -227,7 +227,6 @@
         
         [recorder pause];
         
-        [record_timer invalidate];
     }
 }
 - (IBAction)stopPressed:(UIButton *)sender {
