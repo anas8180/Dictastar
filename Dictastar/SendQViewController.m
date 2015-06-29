@@ -199,6 +199,7 @@
         NSError* error;
         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         _dataArray = [jsonData objectForKey:@"Table"];
+        NSLog(@"Upload Id:%@",_dataArray);
         _isLoading = NO;
         
         [self.tableView reloadData];

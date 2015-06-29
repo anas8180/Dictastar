@@ -121,18 +121,19 @@
     cell.subTitle.text = [NSString stringWithFormat:@"%@ %@ - %@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Gender"],[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"DOB"],[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"ProcedureName"]];
     
     NSString *status = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Status"];
+        NSLog(@"Status:%@",status);
         
         if ([status isEqualToString:@"Signed"]) {
             cell.editIcon.alpha = 1;
-            cell.headSetIcon.alpha = 0.2;
-            cell.recordIcon.alpha = 0.2;
-        }
-        else if ([status isEqualToString:@"Transcribed"]) {
             cell.headSetIcon.alpha = 1;
-            cell.recordIcon.alpha = 0.2;
+            cell.recordIcon.alpha = 1;
+        }
+        else if ([status isEqualToString:@"Checked in"]) {
+            cell.headSetIcon.alpha = 1;
+            cell.recordIcon.alpha = 1;
             cell.editIcon.alpha = 0.2;
         }
-        else {
+        else if([status isEqualToString:@"Dictated"]) {
             cell.recordIcon.alpha = 1;
             cell.editIcon.alpha = 0.2;
             cell.headSetIcon.alpha = 0.2;
