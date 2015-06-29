@@ -13,6 +13,7 @@
 #import "BRRequest+_UserData.h"
 #import "Constant.h"
 #import "UIViewController+ActivityLoader.h"
+#import <AudioToolbox/AudioServices.h>
 
 @interface RecordViewController ()<BRRequestDelegate> {
     
@@ -77,6 +78,10 @@
     // Setup audio session
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    
+    UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
+    AudioSessionSetProperty (kAudioSessionProperty_OverrideAudioRoute,
+                             sizeof (audioRouteOverride),&audioRouteOverride);
     
     // Define the recorder setting
     NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
@@ -235,6 +240,9 @@
             AVAudioSession *session = [AVAudioSession sharedInstance];
             [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
             
+            UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
+            AudioSessionSetProperty (kAudioSessionProperty_OverrideAudioRoute,
+                                     sizeof (audioRouteOverride),&audioRouteOverride);
             // Define the recorder setting
             NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
             
