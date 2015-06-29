@@ -63,6 +63,8 @@
     if (isFromHome) {
         self.tabBarController.tabBar.hidden=YES;
     }
+    
+    [self fetchPatientInfo];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -161,6 +163,8 @@
 #pragma mark - Methods
 
 -(void)fetchPatientInfo {
+    
+    [_selectedIndexPaths removeAllObjects];
     
     _isLoading = YES;
 
@@ -311,6 +315,7 @@
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         [self addMessageLoader:@"Successfully done"];
         
+        [self fetchPatientInfo];
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....

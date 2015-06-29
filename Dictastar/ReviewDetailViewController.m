@@ -138,13 +138,14 @@
 
 - (void)callWebService:(NSDictionary *)params service:(NSString *)service {
     
-    [[BTActionService sharedClient] GET:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+    [[BTActionService sharedClient] POST:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         
         [self addMessageLoader:@"Success"];
         
+        [self.navigationController popViewControllerAnimated:YES];
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....

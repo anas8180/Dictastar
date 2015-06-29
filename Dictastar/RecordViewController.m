@@ -62,7 +62,7 @@
 
     fileNameString = [self getAudioFileName:nameArray];
     
-    _fileName.text = [NSString stringWithFormat:@"%@",fileNameString];
+    _fileName.text = [NSString stringWithFormat:@"%@.m4a",fileNameString];
 
     // Set the audio file
     NSArray *pathComponents = [NSArray arrayWithObjects:
@@ -218,12 +218,16 @@
                                                userInfo:nil
                                                 repeats:YES];
         [self addMessageLoader:@"Record Start"];
-        NSLog(@"Record Start");
-        // Start recording
+
         [recorder record];
             }
     else{
+        
         [sender setImage:[UIImage imageNamed:@"recorder_image"]forState:UIControlStateNormal];
+        
+        [recorder pause];
+        
+        [record_timer invalidate];
     }
 }
 - (IBAction)stopPressed:(UIButton *)sender {
