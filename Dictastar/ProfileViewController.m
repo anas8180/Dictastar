@@ -120,8 +120,8 @@
         NSArray *dataArray = [jsonData objectForKey:@"Table"];
         _resultDict = [dataArray objectAtIndex:0];
         NSLog(@"Dict:%@",_resultDict);
-        NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES];
-        _keyDictionary = [[_resultDict allKeys]sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
+        
+        _keyDictionary =[_resultDict allKeys];
         NSLog(@"Keys:%@",_keyDictionary);
         [self.tableView reloadData];
         
