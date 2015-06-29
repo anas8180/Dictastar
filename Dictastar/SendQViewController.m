@@ -405,6 +405,7 @@
     uploadFile = nil;
     
     [_selectedIndexPaths removeAllObjects];
+    
     if (_dataArray != nil) {
          _dataArray = nil;
     }
