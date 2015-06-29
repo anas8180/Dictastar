@@ -12,6 +12,7 @@
 #import "NoDataViewCell.h"
 #import "BRRequestUpload.h"
 #import "BRRequest+_UserData.h"
+#import "UIViewController+ActivityLoader.h"
 
 @interface SendQViewController ()<UITableViewDelegate,UITableViewDataSource,BRRequestDelegate> {
     
@@ -183,6 +184,8 @@
 #pragma mark - Method
 
 -(void)fetchOutBoxDetails {
+    
+    [_selectedIndexPaths removeAllObjects];
     
     _isLoading = YES;
     
@@ -360,8 +363,43 @@
 
 - (IBAction)deleteTapped:(id)sender {
     
+    if (_selectedIndexPaths.count) {
+        
+        for (int i=0; i<_selectedIndexPaths.count; i++) {
+            
+            NSInteger indexVal = [[_selectedIndexPaths objectAtIndex:i] integerValue];
+            
+            NSDictionary *dict = @{@"UploadID":[[_dataArray objectAtIndex:indexVal] objectForKey:@"UploadID"]};
+            
+            [self callWebService:dict service:@"DeleteFileUploadListinJson"];
+        }
+    }
+
+}
+
+#pragma mark - Service Methods
+
+- (void)callWebService:(NSDictionary *)params service:(NSString *)service {
+    
+    [[BTServicesClient sharedClient] POST:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        
+        [self addMessageLoader:@"Successfully done"];
+        
+        [self fetchOutBoxDetails];
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        NSLog(@"%@",error.localizedDescription);
+        
+        [self addMessageLoader:error.localizedDescription];
+
+    }];
     
 }
+
 
 #pragma mark - Uplaod FTP on Server
 
