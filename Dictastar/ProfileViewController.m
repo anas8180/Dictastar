@@ -9,6 +9,7 @@
 #import "ProfileViewController.h"
 #import "ProfileTableViewCell.h"
 #import "BTServicesClient.h"
+#import "Constant.h"
 
 @interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 
@@ -19,6 +20,8 @@
 @property (nonatomic, strong) NSDictionary *resultDict;
 
 @property (nonatomic, strong) NSArray *keyDictionary;
+
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topLayout;
 
 @end
 
@@ -81,9 +84,15 @@ NSArray *sortedArray;
         
         cell.valueText.delegate = self;
         
+        cell.valueText.tag = indexPath.row;
+        
         if ([[sortedArray objectAtIndex:indexPath.row] isEqualToString:@"A"] || [[sortedArray objectAtIndex:indexPath.row] isEqualToString:@"B"] || [[sortedArray objectAtIndex:indexPath.row] isEqualToString:@"C"] || [[sortedArray objectAtIndex:indexPath.row] isEqualToString:@"D"]) {
             
             cell.valueText.enabled = NO;
+        }
+        else {
+            
+            cell.valueText.enabled = YES;
         }
         NSString *titleText = [NSString stringWithFormat:@"%@",[sortedArray objectAtIndex:indexPath.row]];
         
@@ -184,8 +193,61 @@ NSArray *sortedArray;
 #pragma mark - TextField Method
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    _topLayout.constant = 0;
+    
+    [self moveViewUpAndDown];
+
     return [textField resignFirstResponder];
 }
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    if (IS_IPHONE4) {
+       
+        if (textField.tag == 10 || textField.tag == 11) {
+            _topLayout.constant = -500;
+        }
+        
+        else if (textField.tag == 12 || textField.tag == 13) {
+            
+            _topLayout.constant = - 600;
+        }
+
+    }
+    else if (IS_IPHONE5) {
+        
+        if (textField.tag == 10 || textField.tag == 11 ||textField.tag == 12 || textField.tag == 13) {
+            _topLayout.constant = -500;
+        }
+        
+    }
+    else if (IS_IPHONE6) {
+        
+        if (textField.tag == 10 || textField.tag == 11 ||textField.tag == 12 || textField.tag == 13) {
+            _topLayout.constant = -400;
+        }
+
+    }
+    else if (IS_IPHONE6PLUS) {
+       
+        if (textField.tag == 10 || textField.tag == 11 ||textField.tag == 12 || textField.tag == 13) {
+            _topLayout.constant = -350;
+        }
+
+    }
+    [self moveViewUpAndDown];
+
+    return YES;
+}
+
+- (void)moveViewUpAndDown{
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+}
+
 
 #pragma Return Text Arugument From Json
 

@@ -29,6 +29,8 @@
 
 }
 
+@property (strong, nonatomic) IBOutlet UIButton *recordButton;
+@property (strong, nonatomic) IBOutlet UIButton *stopButton;
 @property (strong, nonatomic) IBOutlet UILabel *patientName;
 @property (strong, nonatomic) IBOutlet UILabel *conditionLable;
 @property (strong, nonatomic) IBOutlet UILabel *fileName;
@@ -40,6 +42,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *playButton;
 @property (strong, nonatomic) IBOutlet UIButton *sendButton;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topLayout;
+@property (strong, nonatomic) IBOutlet UIButton *deleteButton;
 
 @end
 
@@ -208,6 +211,45 @@
     
     if (!recorder.recording) {
 
+        NSString *documentdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *filePath = [documentdir stringByAppendingPathComponent:_fileName.text];
+        
+        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
+
+        if (!fileExists) {
+            
+            NSArray *nameArray = [[dataDict objectForKey:@"Name"] componentsSeparatedByString:@" "];
+            
+            fileNameString = [self getAudioFileName:nameArray];
+            
+            _fileName.text = [NSString stringWithFormat:@"%@.m4a",fileNameString];
+            
+            // Set the audio file
+            NSArray *pathComponents = [NSArray arrayWithObjects:
+                                       [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
+                                       _fileName.text,
+                                       nil];
+            NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
+            
+            // Setup audio session
+            AVAudioSession *session = [AVAudioSession sharedInstance];
+            [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+            
+            // Define the recorder setting
+            NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
+            
+            [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
+            [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
+            [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
+            
+            // Initiate and prepare the recorder
+            recorder = [[AVAudioRecorder alloc] initWithURL:outputFileURL settings:recordSetting error:nil];
+            recorder.delegate = self;
+            recorder.meteringEnabled = YES;
+            [recorder prepareToRecord];
+
+        }
+
         [sender setImage:[UIImage imageNamed:@"recorder_pause"]forState:UIControlStateNormal];
         AVAudioSession *session = [AVAudioSession sharedInstance];
         [session setActive:YES error:nil];
@@ -220,9 +262,18 @@
         [self addMessageLoader:@"Record Start"];
 
         [recorder record];
-            }
+        
+        [_playButton setEnabled:NO];
+        [_sendButton setEnabled:NO];
+        [_deleteButton setEnabled:NO];
+        
+    }
     else{
         
+        [_playButton setEnabled:NO];
+        [_sendButton setEnabled:NO];
+        [_deleteButton setEnabled:NO];
+
         [sender setImage:[UIImage imageNamed:@"recorder_image"]forState:UIControlStateNormal];
         
         [recorder pause];
@@ -233,6 +284,8 @@
     
     if (recorder.recording) {
         
+        [_recordButton setImage:[UIImage imageNamed:@"recorder_image"]forState:UIControlStateNormal];
+
         [recorder stop];
         
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
@@ -241,13 +294,21 @@
         [record_timer invalidate];
         [self addMessageLoader:@"Record Stop"];
         NSLog(@"Stop Record");
+        
+        [_playButton setEnabled:YES];
+        [_sendButton setEnabled:YES];
+        [_deleteButton setEnabled:YES];
+
 
     }
     else if (player.isPlaying){
         
         [player stop];
-        NSLog(@"Record Not Stop");
         [player_timer invalidate];
+
+        [_playButton setEnabled:YES];
+        [_sendButton setEnabled:YES];
+        [_deleteButton setEnabled:YES];
 
     }
     
@@ -255,6 +316,8 @@
 }
 - (IBAction)pausePressed:(id)sender {
     
+    if (!player.isPlaying) {
+        
     player = [[AVAudioPlayer alloc] initWithContentsOfURL:recorder.url error:nil];
     [player setDelegate:self];
     
@@ -266,8 +329,12 @@
     _slider.maximumValue = total;
     
     player_timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
-    NSLog(@"Pasue Button Pressed");
+        
+        [_sendButton setEnabled:NO];
+        [_recordButton setEnabled:NO];
+        [_deleteButton setEnabled:NO];
     
+    }
 }
 - (IBAction)sendPressed:(id)sender {
     
@@ -348,6 +415,25 @@
     rec_time = rec_time + 1;
                               
 }
+- (IBAction)deleteRecord:(id)sender {
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *documentdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *filePath = [documentdir stringByAppendingPathComponent:_fileName.text];
+    
+    NSError *error;
+    BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+    
+    if (success) {
+        
+        [self addMessageLoader:@"deleted"];
+    }
+    else {
+        
+        [self addMessageLoader:error.localizedDescription];
+    }
+
+}
 
 #pragma mark - AVAudioPlayer delegate methods
 
@@ -362,6 +448,11 @@
         _countTimer.text = @"00:00";
         
         _countDownTimer.text = @"00:00";
+        
+        [_sendButton setEnabled:YES];
+        [_recordButton setEnabled:YES];
+        [_deleteButton setEnabled:YES];
+
     }
 }
 
