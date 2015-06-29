@@ -24,6 +24,9 @@
 
 @implementation ProfileViewController
 
+NSMutableDictionary *dict;
+NSArray *sortedArray;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -78,14 +81,15 @@
         
         cell.valueText.delegate = self;
         
-        if ([[_keyDictionary objectAtIndex:indexPath.row] isEqualToString:@"FacilityUserID"] || [[_keyDictionary objectAtIndex:indexPath.row] isEqualToString:@"Title"] || [[_keyDictionary objectAtIndex:indexPath.row] isEqualToString:@"FirstName"] || [[_keyDictionary objectAtIndex:indexPath.row] isEqualToString:@"LastName"]) {
+        if ([[sortedArray objectAtIndex:indexPath.row] isEqualToString:@"A"] || [[sortedArray objectAtIndex:indexPath.row] isEqualToString:@"B"] || [[sortedArray objectAtIndex:indexPath.row] isEqualToString:@"C"] || [[sortedArray objectAtIndex:indexPath.row] isEqualToString:@"D"]) {
             
             cell.valueText.enabled = NO;
         }
+        NSString *titleText = [NSString stringWithFormat:@"%@",[sortedArray objectAtIndex:indexPath.row]];
         
-        cell.title.text = [NSString stringWithFormat:@"%@ :",[_keyDictionary objectAtIndex:indexPath.row]];
+        cell.title.text = [self getLabelText:titleText];
         
-        cell.valueText.text = [NSString stringWithFormat:@"%@",[_resultDict objectForKey:[_keyDictionary objectAtIndex:indexPath.row]]];
+        cell.valueText.text = [NSString stringWithFormat:@"%@",[dict objectForKey:titleText]];
         
         return cell;
 
@@ -116,13 +120,45 @@
     [[BTServicesClient sharedClient] GET:@"FetchFacilityUserInfoJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
         NSError* error;
-        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
-        NSArray *dataArray = [jsonData objectForKey:@"Table"];
-        _resultDict = [dataArray objectAtIndex:0];
-        NSLog(@"Dict:%@",_resultDict);
+//        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+//        NSArray *dataArray = [jsonData objectForKey:@"Table"];
+//        _resultDict = [dataArray objectAtIndex:0];
         
-        _keyDictionary =[_resultDict allKeys];
-        NSLog(@"Keys:%@",_keyDictionary);
+        NSArray *newdataArray =[NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        
+        NSArray *recipes = [NSArray arrayWithObjects:newdataArray, nil];
+        NSArray *arrangeOrder = [[recipes objectAtIndex:0]objectForKey:@"Table"];
+
+        
+       
+        
+        dict = [NSMutableDictionary dictionary];
+        int i =0;
+        
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"FacilityUserID"] forKey:@"A"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Title"]  forKey:@"B"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"FirstName"]  forKey:@"C"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"LastName"]  forKey:@"D"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"AddressLine1"]  forKey:@"E"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"City"]  forKey:@"F"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Zipcode"]  forKey:@"G"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"State"]  forKey:@"H"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Country"]  forKey:@"I"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Phone"]  forKey:@"J"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Fax"]  forKey:@"K"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Email"]  forKey:@"L"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Username"]  forKey:@"M"];
+        [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Password"]  forKey:@"N"];
+        
+        
+        _keyDictionary = [dict allKeys];
+//         NSLog(@"Keys:%@",_keyDictionary);
+        sortedArray = [_keyDictionary sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+//        NSLog(@"SortedArray:%@",sortedArray);
+        
+
+        
+//        _keyDictionary =[_resultDict allKeys];
         [self.tableView reloadData];
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
@@ -149,6 +185,70 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     return [textField resignFirstResponder];
+}
+
+#pragma Return Text Arugument From Json
+
+-(NSString *)getLabelText:(NSString *)currentText
+{
+    NSString *returnText;
+    if([currentText  isEqualToString:@"A"])
+    {
+        returnText = @"FacilityUserId";
+    }
+    else if ([currentText isEqualToString:@"B"])
+    {
+        returnText = @"Title";
+    }
+    else if ([currentText isEqualToString:@"C"])
+    {
+        returnText = @"FirstName";
+    }
+    else if ([currentText isEqualToString:@"D"])
+    {
+        returnText = @"LastName";
+    }
+    else if ([currentText isEqualToString:@"E"])
+    {
+        returnText = @"AddressLine1";
+    }
+    else if ([currentText isEqualToString:@"F"])
+    {
+        returnText = @"City";
+    }
+    else if ([currentText isEqualToString:@"G"])
+    {
+        returnText = @"Zipcode";
+    }
+    else if ([currentText isEqualToString:@"H"])
+    {
+        returnText = @"State";
+    }
+    else if ([currentText isEqualToString:@"I"])
+    {
+        returnText = @"Country";
+    }
+    else if ([currentText isEqualToString:@"J"])
+    {
+        returnText = @"Phone";
+    }
+    else if ([currentText isEqualToString:@"K"])
+    {
+        returnText = @"Fax";
+    }
+    else if ([currentText isEqualToString:@"L"])
+    {
+        returnText = @"Email";
+    }
+    else if ([currentText isEqualToString:@"M"])
+    {
+        returnText = @"Username";
+    }
+    else if ([currentText isEqualToString:@"N"])
+    {
+        returnText = @"Password";
+    }
+    return returnText;
 }
 
 
