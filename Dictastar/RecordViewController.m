@@ -12,6 +12,7 @@
 #import "BRRequestUpload.h"
 #import "BRRequest+_UserData.h"
 #import "Constant.h"
+#import "UIViewController+ActivityLoader.h"
 
 @interface RecordViewController ()<BRRequestDelegate> {
     
@@ -121,6 +122,8 @@
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         NSArray *data  = [jsonData objectForKey:@"Table"];
         _hostDict = [data objectAtIndex:0];
+        NSLog(@"Array:%@",data);
+        NSLog(@"HostDict:%@",_hostDict);
         
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
@@ -168,12 +171,12 @@
     NSDate *currentDate = [NSDate date];
     NSCalendar* calendar = [NSCalendar currentCalendar];
     NSDateComponents* components = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond fromDate:currentDate];
-    NSLog(@"%ld",(long)[components day]);
-    NSLog(@"%ld",(long)[components month]);
-    NSLog(@"%ld",(long)[components year]);
-    NSLog(@"%ld",(long)[components hour]);
-    NSLog(@"%ld",(long)[components minute]);
-    NSLog(@"%ld",(long)[components second]);
+    NSLog(@"Day:%ld",(long)[components day]);
+    NSLog(@"Month:%ld",(long)[components month]);
+    NSLog(@"Year:%ld",(long)[components year]);
+    NSLog(@"Hour:%ld",(long)[components hour]);
+    NSLog(@"Min:%ld",(long)[components minute]);
+    NSLog(@"Second:%ld",(long)[components second]);
 
     NSString *file = [NSString stringWithFormat:@"%@_%@_%ld%ld%ld_%ld%ld%ld",fname,lname,(long)[components day],(long)[components month],(long)[components year],(long)[components hour],(long)[components minute],(long)[components second]];
     
@@ -189,14 +192,14 @@
         [sender setImage:[UIImage imageNamed:@"checkbox_off"] forState:UIControlStateNormal];
         
         statPriority = @"Normal";
-        
+        NSLog(@"Stat Normal");
         isStat = NO;
     }
     else {
         [sender setImage:[UIImage imageNamed:@"checkbox_on"] forState:UIControlStateNormal];
 
         statPriority = @"High";
-        
+        NSLog(@"Stat High");
         isStat = YES;
     }
     
@@ -205,6 +208,7 @@
     
     if (!recorder.recording) {
 
+        [sender setImage:[UIImage imageNamed:@"recorder_pause"]forState:UIControlStateNormal];
         AVAudioSession *session = [AVAudioSession sharedInstance];
         [session setActive:YES error:nil];
         
@@ -213,10 +217,14 @@
                                                selector:@selector(recordingTime)
                                                userInfo:nil
                                                 repeats:YES];
-
+        [self addMessageLoader:@"Record Start"];
+        NSLog(@"Record Start");
         // Start recording
         [recorder record];
             }
+    else{
+        [sender setImage:[UIImage imageNamed:@"recorder_image"]forState:UIControlStateNormal];
+    }
 }
 - (IBAction)stopPressed:(UIButton *)sender {
     
@@ -228,13 +236,14 @@
         [audioSession setActive:NO error:nil];
         
         [record_timer invalidate];
-        
+        [self addMessageLoader:@"Record Stop"];
+        NSLog(@"Stop Record");
 
     }
     else if (player.isPlaying){
         
         [player stop];
-        
+        NSLog(@"Record Not Stop");
         [player_timer invalidate];
 
     }
@@ -254,7 +263,7 @@
     _slider.maximumValue = total;
     
     player_timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
-    
+    NSLog(@"Pasue Button Pressed");
     
 }
 - (IBAction)sendPressed:(id)sender {
@@ -306,7 +315,7 @@
     
     float f =  (player.currentTime) ;
     self.slider.value = f/60.0;
-    NSLog(@"%f",f);
+    NSLog(@"SliderValue:%f",f);
     _countTimer.text = [NSString stringWithFormat:@"%.2f",f];
     
     NSTimeInterval timeLeft = player.duration - player.currentTime;
@@ -368,7 +377,9 @@
     uploadFile = [[BRRequestUpload alloc] initWithDelegate:self];
     
     uploadFile.path = [NSString stringWithFormat:@"/%@/%@",[_user_info objectForKey:@"FacilityId"],_fileName.text];
+    NSLog(@"UploadFilePath:%@",uploadFile.path);
     uploadFile.hostname = [_hostDict objectForKey:@"HOST"];
+    NSLog(@"HostUrl:%@",uploadFile.hostname);
     uploadFile.username = [_hostDict objectForKey:@"UN"];
     uploadFile.password = [_hostDict objectForKey:@"PWD"];
     
@@ -390,7 +401,7 @@
 
 -(void) requestCompleted: (BRRequest *) request
 {
-    NSLog(@"%@ completed!", request);
+    NSLog(@"Request %@ completed!", request);
     uploadFile = nil;
     
     SendQViewController *sendQObj = [self.storyboard instantiateViewControllerWithIdentifier:@"SendQView"];
@@ -414,7 +425,7 @@
 
 -(void) requestFailed:(BRRequest *) request
 {
-    NSLog(@"%@", request.error.message);
+    NSLog(@"Request:%@", request.error.message);
     
     uploadFile = nil;
 

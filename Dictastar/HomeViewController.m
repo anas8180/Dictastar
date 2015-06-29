@@ -95,12 +95,27 @@
 -(void) setAlertDetails {
     
     _alertLable1.text = [NSString stringWithFormat:@"%@ Files Ready For Approval",[_alertData objectForKey:@"Approved"]];
+    _alertLable1.userInteractionEnabled= YES;
+    UITapGestureRecognizer *tapLabel1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapaction1)];
+    [_alertLable1 addGestureRecognizer:tapLabel1];
     _alertLable2.text = [NSString stringWithFormat:@"%@ Files Waiting For Transcription",[_alertData objectForKey:@"YettoTranscripted"]];
+   
     _alertLable2.text = [NSString stringWithFormat:@"0 Files Waiting For Transcription"];
+    _alertLable2.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapLabel2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapaction2)];
+    [_alertLable2 addGestureRecognizer:tapLabel2];
 
     _loadingView.hidden = YES;
 }
 
+-(void)tapaction1
+{
+    [self performSegueWithIdentifier:@"ScheduleSegue" sender:self];
+}
+-(void)tapaction2
+{
+    [self performSegueWithIdentifier:@"ReviewSegue" sender:self];
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

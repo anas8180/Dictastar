@@ -81,14 +81,14 @@
     
     NSDictionary *params = @{@"Facilityuserid":[_userInfo objectForKey:@"DictatorId"]};
     
-    [[BTServicesClient sharedClient] GET:@"GetDictateTypeinJson" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+    [[BTServicesClient sharedClient] GET:@"GetDefaultDictateTypeinJson" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
         NSError* error;
         NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         NSArray *data = [jsonDict objectForKey:@"Table"];
         _defaultTypeDict = [data objectAtIndex:0];
         
-        NSArray *filteredArray = [_dataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"Dictateid = %@",[_defaultTypeDict objectForKey:@"Dictateid"]]]];
+        NSArray *filteredArray = [_dataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"Dictateid = %@",[_defaultTypeDict objectForKey:@"DictateId"]]]];
         
         NSInteger indexVal = [_dataArray indexOfObject:[filteredArray objectAtIndex:0]];
         

@@ -276,7 +276,7 @@
                                                 </variation>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="WHb-Wz-byY" firstAttribute="top" secondItem="JbP-Tx-SH7" secondAttribute="top" id="00y-PY-kGU"/>
                                             <constraint firstItem="8Oh-mI-6u7" firstAttribute="top" secondItem="JbP-Tx-SH7" secondAttribute="top" constant="22" id="EvE-u5-N2p">
@@ -525,7 +525,7 @@
         <scene sceneID="MGL-bx-9HL">
             <objects>
                 <navigationController id="su7-EI-CyQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="home_icon" id="aZ0-yi-o8K"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="Home_icon" id="aZ0-yi-o8K"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nfk-JH-0Ro">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1405,6 +1405,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="96" y="39" width="128" height="22"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -2098,7 +2101,8 @@
                                                             <exclude reference="kyq-VR-qRv"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="129" y="38" width="62" height="21"/>
                                                         <mask key="constraints">
                                                             <include reference="XA1-cb-Afy"/>
                                                             <include reference="kyq-VR-qRv"/>
@@ -2107,6 +2111,9 @@
                                                 </label>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="KJT-IL-OM3">
                                                     <rect key="frame" x="-10" y="-10" width="20" height="20"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="150" y="67" width="20" height="20"/>
+                                                    </variation>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -2161,7 +2168,7 @@
                                             <constraint firstAttribute="height" constant="50" id="7JI-1Q-WhY"/>
                                             <constraint firstAttribute="width" constant="187" id="Usk-QF-WBD"/>
                                         </constraints>
-                                        <state key="normal" title="Default">
+                                        <state key="normal" title="Set Default">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <variation key="default">
@@ -4556,7 +4563,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.87450980389999999" green="0.92941176469999998" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="edF-kC-eK7" firstAttribute="leading" secondItem="yKa-qK-tWl" secondAttribute="trailing" constant="8" id="0KK-2R-CjX"/>
+                                    <constraint firstItem="edF-kC-eK7" firstAttribute="leading" secondItem="yKa-qK-tWl" secondAttribute="trailing" constant="102" id="0KK-2R-CjX"/>
                                     <constraint firstAttribute="height" constant="50" id="ITa-3T-L5s"/>
                                     <constraint firstAttribute="centerX" secondItem="edF-kC-eK7" secondAttribute="centerX" id="VvD-Kd-eyk"/>
                                     <constraint firstAttribute="centerY" secondItem="yKa-qK-tWl" secondAttribute="centerY" id="bFg-2m-SBA">
@@ -4641,6 +4648,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="279" y="27" width="33" height="16"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -4825,7 +4835,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="moa-U5-ZkG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2793" y="1863"/>
+            <point key="canvasLocation" x="2865" y="1885.5"/>
         </scene>
         <!--Review Detail View Controller-->
         <scene sceneID="QKy-zf-2QJ">
@@ -5414,6 +5424,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Home_icon" width="30" height="30"/>
         <image name="alert_icon" width="120" height="120"/>
         <image name="arrow_black" width="120" height="120"/>
         <image name="back_arrow" width="18" height="29"/>
@@ -5424,7 +5435,6 @@
         <image name="dictate" width="120" height="120"/>
         <image name="forgot_text" width="518" height="84"/>
         <image name="forward_arrow" width="18" height="29"/>
-        <image name="home_icon" width="30" height="30"/>
         <image name="login_bg" width="640" height="640"/>
         <image name="login_button" width="219" height="66"/>
         <image name="logo" width="320" height="320"/>
