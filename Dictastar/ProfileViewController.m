@@ -15,6 +15,10 @@
 @interface ProfileViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate> {
     
     NSString *email,*username,*pswd;
+    NSString *facilityId,*title,*fname,*lname;
+    NSString *address,*city,*zipCode,*state,*country;
+    NSString *phone,*fax;
+    
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -163,6 +167,20 @@ NSArray *sortedArray;
         [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Username"]  forKey:@"M"];
         [dict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Password"]  forKey:@"N"];
         
+        facilityId = [[arrangeOrder objectAtIndex:i]objectForKey:@"FacilityUserID"];
+        title = [[arrangeOrder objectAtIndex:i]objectForKey:@"Title"];
+        fname = [[arrangeOrder objectAtIndex:i]objectForKey:@"FirstName"];
+        lname = [[arrangeOrder objectAtIndex:i]objectForKey:@"LastName"];
+
+        address = [[arrangeOrder objectAtIndex:i]objectForKey:@"AddressLine1"];
+        city = [[arrangeOrder objectAtIndex:i]objectForKey:@"City"];
+        zipCode = [[arrangeOrder objectAtIndex:i]objectForKey:@"Zipcode"];
+        state = [[arrangeOrder objectAtIndex:i]objectForKey:@"State"];
+        country = [[arrangeOrder objectAtIndex:i]objectForKey:@"Country"];
+        
+        phone = [[arrangeOrder objectAtIndex:i]objectForKey:@"Phone"];
+        fax = [[arrangeOrder objectAtIndex:i]objectForKey:@"Fax"];
+
         email = [[arrangeOrder objectAtIndex:i]objectForKey:@"Email"];
         username = [[arrangeOrder objectAtIndex:i]objectForKey:@"Username"];
         pswd = [[arrangeOrder objectAtIndex:i]objectForKey:@"Password"];
@@ -194,25 +212,8 @@ NSArray *sortedArray;
 
 - (IBAction)OkTapped:(id)sender {
     
-    NSMutableArray *textArray = [NSMutableArray new];
     
-    for (int i=0;i<_keyDictionary.count-3; i++) {
-    
-    ProfileTableViewCell *theCell = (ProfileTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
-
-        
-        [textArray addObject:theCell.valueText.text];
-    
-    }
-    
-    
-    [textArray addObject:email];
-    [textArray addObject:username];
-    [textArray addObject:pswd];
-    
-    NSLog(@"%@",textArray);
-    
-    NSDictionary *params = @{@"facilityUserID":[textArray objectAtIndex:0],@"title":[textArray objectAtIndex:1],@"firstName":[textArray objectAtIndex:2],@"lastName":[textArray objectAtIndex:3],@"AddressLine1":[textArray objectAtIndex:4],@"city":[textArray objectAtIndex:5],@"zipcode":[textArray objectAtIndex:6],@"state":[textArray objectAtIndex:7],@"country":[textArray objectAtIndex:8],@"phone":[textArray objectAtIndex:9],@"fax":[textArray objectAtIndex:10],@"email":email,@"Username":username,@"password":pswd};
+    NSDictionary *params = @{@"facilityUserID":facilityId,@"title":title,@"firstName":fname,@"lastName":lname,@"AddressLine1":address,@"city":city,@"zipcode":zipCode,@"state":state,@"country":country,@"phone":phone,@"fax":fax,@"email":email,@"Username":username,@"password":pswd};
     
     [[BTServicesClient sharedClient] POST:@"UpdateFacilityUserInfo" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
@@ -238,7 +239,54 @@ NSArray *sortedArray;
     
     NSLog(@"%@",textField.text);
     
-    if (textField.tag == 11) {
+    
+    
+    if (textField.tag == 0) {
+        facilityId = textField.text;
+    }
+    else if (textField.tag == 1) {
+        
+        title = textField.text;
+    }
+    else if (textField.tag == 2) {
+        
+        fname = textField.text;
+    }
+    else if (textField.tag == 3) {
+        
+        lname = textField.text;
+    }
+    else if (textField.tag == 4) {
+        
+        address = textField.text;
+    }
+    else if (textField.tag == 5) {
+        
+        city = textField.text;
+    }
+    else if (textField.tag == 6) {
+        
+        zipCode = textField.text;
+    }
+
+    else if (textField.tag == 7) {
+        
+        state = textField.text;
+    }
+    else if (textField.tag == 8) {
+        
+        country = textField.text;
+    }
+    else if (textField.tag == 9) {
+        
+        phone = textField.text;
+    }
+    else if (textField.tag == 10) {
+        
+        fax = textField.text;
+    }
+    else if (textField.tag == 11) {
+        
         email = textField.text;
     }
     else if (textField.tag == 12) {
@@ -250,6 +298,8 @@ NSArray *sortedArray;
         pswd = textField.text;
     }
 
+
+
     _topLayout.constant = 0;
     
     [self moveViewUpAndDown];
@@ -259,7 +309,52 @@ NSArray *sortedArray;
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
     
-    if (textField.tag == 11) {
+    if (textField.tag == 0) {
+        facilityId = textField.text;
+    }
+    else if (textField.tag == 1) {
+        
+        title = textField.text;
+    }
+    else if (textField.tag == 2) {
+        
+        fname = textField.text;
+    }
+    else if (textField.tag == 3) {
+        
+        lname = textField.text;
+    }
+    else if (textField.tag == 4) {
+        
+        address = textField.text;
+    }
+    else if (textField.tag == 5) {
+        
+        city = textField.text;
+    }
+    else if (textField.tag == 6) {
+        
+        zipCode = textField.text;
+    }
+    
+    else if (textField.tag == 7) {
+        
+        state = textField.text;
+    }
+    else if (textField.tag == 8) {
+        
+        country = textField.text;
+    }
+    else if (textField.tag == 9) {
+        
+        phone = textField.text;
+    }
+    else if (textField.tag == 10) {
+        
+        fax = textField.text;
+    }
+    else if (textField.tag == 11) {
+        
         email = textField.text;
     }
     else if (textField.tag == 12) {
@@ -311,6 +406,64 @@ NSArray *sortedArray;
 
     }
     [self moveViewUpAndDown];
+    
+    if (textField.tag == 0) {
+        facilityId = textField.text;
+    }
+    else if (textField.tag == 1) {
+        
+        title = textField.text;
+    }
+    else if (textField.tag == 2) {
+        
+        fname = textField.text;
+    }
+    else if (textField.tag == 3) {
+        
+        lname = textField.text;
+    }
+    else if (textField.tag == 4) {
+        
+        address = textField.text;
+    }
+    else if (textField.tag == 5) {
+        
+        city = textField.text;
+    }
+    else if (textField.tag == 6) {
+        
+        zipCode = textField.text;
+    }
+    
+    else if (textField.tag == 7) {
+        
+        state = textField.text;
+    }
+    else if (textField.tag == 8) {
+        
+        country = textField.text;
+    }
+    else if (textField.tag == 9) {
+        
+        phone = textField.text;
+    }
+    else if (textField.tag == 10) {
+        
+        fax = textField.text;
+    }
+    else if (textField.tag == 11) {
+        
+        email = textField.text;
+    }
+    else if (textField.tag == 12) {
+        
+        username = textField.text;
+    }
+    else if (textField.tag == 13) {
+        
+        pswd = textField.text;
+    }
+
 
     return YES;
 }
