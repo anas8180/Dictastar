@@ -138,16 +138,16 @@
         
         NSString *status = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"TranscriptionStatus"];
         
-        if ([status isEqualToString:@"Assigned"]) {
-            
-            cell.statusIcon.hidden = YES;
-            cell.selectRadioButton.hidden = YES;
-        }
-        else {
+        if ([status isEqualToString:@"UNSENT"]) {
             
             cell.statusIcon.hidden = NO;
             cell.selectRadioButton.hidden = NO;
+            
         }
+        else {
+            
+            cell.statusIcon.hidden = YES;
+            cell.selectRadioButton.hidden = YES;        }
         
         [cell.selectRadioButton addTarget:self action:@selector(selectReport:) forControlEvents:UIControlEventTouchUpInside];
         

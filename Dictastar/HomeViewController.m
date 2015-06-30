@@ -94,23 +94,35 @@
 
 -(void) setAlertDetails {
     
-    _alertLable1.text = [NSString stringWithFormat:@"%@ Files Ready For Approval",[_alertData objectForKey:@"Approved"]];
-    _alertLable1.userInteractionEnabled= YES;
+//    _alertLable1.text = [NSString stringWithFormat:@"%@ Files Ready For Approval",[_alertData objectForKey:@"Approved"]];
+//    _alertLable1.userInteractionEnabled= YES;
+//    UITapGestureRecognizer *tapLabel1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapaction1)];
+//    [_alertLable1 addGestureRecognizer:tapLabel1];
+//    _alertLable2.text = [NSString stringWithFormat:@"%@ Files Waiting For Transcription",[_alertData objectForKey:@"YettoTranscripted"]];
+//   
+//    _alertLable2.text = [NSString stringWithFormat:@"0 Files Waiting For Transcription"];
+//    _alertLable2.userInteractionEnabled = YES;
+//    UITapGestureRecognizer *tapLabel2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapaction2)];
+//    [_alertLable2 addGestureRecognizer:tapLabel2];
+
+    _alertLable1.text = [NSString stringWithFormat:@"%@ Files remaining in Outbox",[_alertData objectForKey:@"OutBox"]];
+    _alertLable1.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapLabel1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapaction1)];
     [_alertLable1 addGestureRecognizer:tapLabel1];
-    _alertLable2.text = [NSString stringWithFormat:@"%@ Files Waiting For Transcription",[_alertData objectForKey:@"YettoTranscripted"]];
-   
-    _alertLable2.text = [NSString stringWithFormat:@"0 Files Waiting For Transcription"];
-    _alertLable2.userInteractionEnabled = YES;
+    
+    _alertLable2.text = [NSString stringWithFormat:@"%@ Files waiting for Transcription",[_alertData objectForKey:@"YettoTranscripted"]];
+    
+    _alertLable3.text = [NSString stringWithFormat:@"%@ Files waiting for Approval",[_alertData objectForKey:@"Approved"]];
+    _alertLable3.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapLabel2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapaction2)];
-    [_alertLable2 addGestureRecognizer:tapLabel2];
+    [_alertLable3 addGestureRecognizer:tapLabel2];
 
     _loadingView.hidden = YES;
 }
 
 -(void)tapaction1
 {
-    [self performSegueWithIdentifier:@"ScheduleSegue" sender:self];
+    [self performSegueWithIdentifier:@"SendQSegue" sender:self];
 }
 -(void)tapaction2
 {

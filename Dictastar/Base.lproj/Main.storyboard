@@ -859,7 +859,7 @@
                                             <constraint firstAttribute="height" constant="21" id="MRU-GT-AzP"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -897,7 +897,7 @@
                                             <constraint firstAttribute="height" constant="21" id="Roj-n7-Eb2"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -5549,8 +5549,8 @@
         <image name="user-blue" width="120" height="120"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5Fd-Kg-Tne"/>
-        <segue reference="N19-DH-CtB"/>
         <segue reference="9c5-Wi-vda"/>
+        <segue reference="N19-DH-CtB"/>
+        <segue reference="5Fd-Kg-Tne"/>
     </inferredMetricsTieBreakers>
 </document>

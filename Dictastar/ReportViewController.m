@@ -136,6 +136,8 @@
     
     cell.statusLable.text = [NSString stringWithFormat:@"%@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"ServiceDate"]];
     
+    cell.subTitle.text = [NSString stringWithFormat:@"%@",[[_dataArray objectAtIndex:indexPath.row]objectForKey:@"TypeOfDictation"]];
+    
     return cell;
     }
 }
