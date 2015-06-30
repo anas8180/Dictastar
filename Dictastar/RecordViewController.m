@@ -346,6 +346,8 @@
 }
 - (IBAction)sendPressed:(id)sender {
     
+    [self addLoader];
+    
     NSString *documentdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *tileDirectory = [documentdir stringByAppendingPathComponent:_fileName.text];
 
@@ -364,12 +366,13 @@
         [self uploadFile];
         
         
+        
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         
         NSLog(@"%@",error.localizedDescription);
         
-        
+        [self hideHud];
     }];
 
     
@@ -503,6 +506,8 @@
 
 -(void) requestCompleted: (BRRequest *) request
 {
+    [self hideHud];
+    
     NSLog(@"Request %@ completed!", request);
     uploadFile = nil;
     
@@ -527,6 +532,8 @@
 
 -(void) requestFailed:(BRRequest *) request
 {
+    [self hideHud];
+
     NSLog(@"Request:%@", request.error.message);
     
     uploadFile = nil;
