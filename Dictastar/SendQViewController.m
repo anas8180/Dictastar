@@ -185,6 +185,13 @@
 
 -(void)fetchOutBoxDetails {
     
+    if (_dataArray !=nil) {
+        _dataArray = nil;
+        
+    }
+    
+    _dataArray = [[NSArray alloc]init];
+    
     [_selectedIndexPaths removeAllObjects];
     
     _isLoading = YES;
@@ -389,8 +396,6 @@
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         
-        [self addMessageLoader:@"Successfully done"];
-        
         [self fetchOutBoxDetails];
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
@@ -411,8 +416,6 @@
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
-        
-        [self addMessageLoader:@"Successfully done"];
         
         [self fetchOutBoxDetails];
         
@@ -467,16 +470,6 @@
 {
     NSLog(@"Completed:%@ completed!", request);
     uploadFile = nil;
-    
-    [_selectedIndexPaths removeAllObjects];
-    
-    if (_dataArray != nil) {
-         _dataArray = nil;
-    }
-    
-    _dataArray = [[NSArray alloc]init];
-    [self.tableView reloadData];
-    [self fetchOutBoxDetails];
 }
 
 - (NSData *) requestDataToSend: (BRRequestUpload *) request
@@ -498,16 +491,6 @@
     
     uploadFile = nil;
     
-    [_selectedIndexPaths removeAllObjects];
-    
-    if (_dataArray != nil) {
-        _dataArray = nil;
-    }
-    
-    _dataArray = [[NSArray alloc]init];
-    [self.tableView reloadData];
-    [self fetchOutBoxDetails];
-
 }
 
 #pragma mark - Service Call
