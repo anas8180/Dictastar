@@ -320,6 +320,8 @@
         [_playButton setEnabled:YES];
         [_sendButton setEnabled:YES];
         [_deleteButton setEnabled:YES];
+        [_recordButton setEnabled:YES];
+
         
         _slider.value = 0.0;
         _countDownTimer.text = @"00:00";
