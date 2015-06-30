@@ -525,7 +525,7 @@
         <scene sceneID="MGL-bx-9HL">
             <objects>
                 <navigationController id="su7-EI-CyQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="home_icon" id="aZ0-yi-o8K"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="Home_icon" id="aZ0-yi-o8K"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nfk-JH-0Ro">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2197,7 +2197,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="YaD-V0-ACp"/>
                                         </constraints>
-                                        <state key="normal" title="Ok">
+                                        <state key="normal" title="OK">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <variation key="default">
@@ -2983,29 +2983,29 @@
                                 <exclude reference="OYa-db-ZjR"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="8BT-tp-cNb"/>
-                                <exclude reference="lVl-Fx-aLK"/>
-                                <exclude reference="T0A-Bh-V0o"/>
-                                <exclude reference="aH9-FU-2wS"/>
                                 <exclude reference="2Db-rD-Tys"/>
                                 <exclude reference="8x6-sa-tIH"/>
                                 <exclude reference="IGL-1m-g7N"/>
-                                <exclude reference="EhQ-il-vO8"/>
-                                <exclude reference="duN-xa-au3"/>
-                                <exclude reference="hUl-zz-w0u"/>
-                                <exclude reference="6No-4K-336"/>
-                                <exclude reference="lSq-Bq-fRH"/>
-                                <exclude reference="LDn-HU-jct"/>
-                                <exclude reference="Nw6-Mi-UDR"/>
-                                <exclude reference="hUZ-I3-jPB"/>
                                 <exclude reference="CgP-sz-Yyb"/>
-                                <exclude reference="CLz-Xp-bVY"/>
-                                <exclude reference="Xg8-h6-745"/>
-                                <exclude reference="Zd8-ek-PjG"/>
-                                <exclude reference="36p-hQ-84N"/>
+                                <exclude reference="8BT-tp-cNb"/>
+                                <exclude reference="lVl-Fx-aLK"/>
                                 <exclude reference="0JH-RK-JEr"/>
                                 <exclude reference="X6N-H9-j53"/>
                                 <exclude reference="hjk-Yw-ior"/>
+                                <exclude reference="EhQ-il-vO8"/>
+                                <exclude reference="duN-xa-au3"/>
+                                <exclude reference="hUl-zz-w0u"/>
+                                <exclude reference="36p-hQ-84N"/>
+                                <exclude reference="6No-4K-336"/>
+                                <exclude reference="lSq-Bq-fRH"/>
+                                <exclude reference="CLz-Xp-bVY"/>
+                                <exclude reference="Xg8-h6-745"/>
+                                <exclude reference="Zd8-ek-PjG"/>
+                                <exclude reference="T0A-Bh-V0o"/>
+                                <exclude reference="aH9-FU-2wS"/>
+                                <exclude reference="LDn-HU-jct"/>
+                                <exclude reference="Nw6-Mi-UDR"/>
+                                <exclude reference="hUZ-I3-jPB"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -3023,29 +3023,29 @@
                                 <include reference="OYa-db-ZjR"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="8BT-tp-cNb"/>
-                                <include reference="lVl-Fx-aLK"/>
-                                <include reference="T0A-Bh-V0o"/>
-                                <include reference="aH9-FU-2wS"/>
                                 <include reference="2Db-rD-Tys"/>
                                 <include reference="8x6-sa-tIH"/>
                                 <include reference="IGL-1m-g7N"/>
-                                <include reference="EhQ-il-vO8"/>
-                                <include reference="duN-xa-au3"/>
-                                <include reference="hUl-zz-w0u"/>
-                                <include reference="6No-4K-336"/>
-                                <include reference="lSq-Bq-fRH"/>
-                                <include reference="LDn-HU-jct"/>
-                                <include reference="Nw6-Mi-UDR"/>
-                                <include reference="hUZ-I3-jPB"/>
                                 <include reference="CgP-sz-Yyb"/>
-                                <include reference="CLz-Xp-bVY"/>
-                                <include reference="Xg8-h6-745"/>
-                                <include reference="Zd8-ek-PjG"/>
-                                <include reference="36p-hQ-84N"/>
+                                <include reference="8BT-tp-cNb"/>
+                                <include reference="lVl-Fx-aLK"/>
                                 <include reference="0JH-RK-JEr"/>
                                 <include reference="X6N-H9-j53"/>
                                 <include reference="hjk-Yw-ior"/>
+                                <include reference="EhQ-il-vO8"/>
+                                <include reference="duN-xa-au3"/>
+                                <include reference="hUl-zz-w0u"/>
+                                <include reference="36p-hQ-84N"/>
+                                <include reference="6No-4K-336"/>
+                                <include reference="lSq-Bq-fRH"/>
+                                <include reference="CLz-Xp-bVY"/>
+                                <include reference="Xg8-h6-745"/>
+                                <include reference="Zd8-ek-PjG"/>
+                                <include reference="T0A-Bh-V0o"/>
+                                <include reference="aH9-FU-2wS"/>
+                                <include reference="LDn-HU-jct"/>
+                                <include reference="Nw6-Mi-UDR"/>
+                                <include reference="hUZ-I3-jPB"/>
                             </mask>
                         </variation>
                     </view>
@@ -5469,6 +5469,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Home_icon" width="30" height="30"/>
         <image name="alert_icon" width="120" height="120"/>
         <image name="arrow_black" width="120" height="120"/>
         <image name="back_arrow" width="18" height="29"/>
@@ -5479,7 +5480,6 @@
         <image name="dictate" width="120" height="120"/>
         <image name="forgot_text" width="518" height="84"/>
         <image name="forward_arrow" width="18" height="29"/>
-        <image name="home_icon" width="30" height="30"/>
         <image name="login_bg" width="640" height="640"/>
         <image name="login_button" width="219" height="66"/>
         <image name="logo" width="320" height="320"/>
