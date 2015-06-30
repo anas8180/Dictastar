@@ -281,5 +281,22 @@
     dictateVC.dataDict = [_dataArray objectAtIndex:indexPath.row];
 }
 
+-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    NSString *status = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"Status"];
+
+    if ([status isEqualToString:@"Dictated"]) {
+        
+        return YES;
+    }
+    
+    else {
+        
+        return NO;
+    }
+    
+}
+
 
 @end

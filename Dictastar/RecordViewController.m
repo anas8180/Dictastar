@@ -255,6 +255,8 @@
             recorder.delegate = self;
             recorder.meteringEnabled = YES;
             [recorder prepareToRecord];
+            
+            self.view.userInteractionEnabled = NO;
 
         }
 
@@ -307,6 +309,8 @@
         [_sendButton setEnabled:YES];
         [_deleteButton setEnabled:YES];
 
+        self.view.userInteractionEnabled = YES;
+
 
     }
     else if (player.isPlaying){
@@ -317,7 +321,10 @@
         [_playButton setEnabled:YES];
         [_sendButton setEnabled:YES];
         [_deleteButton setEnabled:YES];
-
+        
+        _slider.value = 0.0;
+        _countDownTimer.text = @"00:00";
+        _countTimer.text = @"00:00";
     }
     
     
@@ -415,6 +422,8 @@
         
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         [audioSession setActive:NO error:nil];
+        
+        self.view.userInteractionEnabled = YES;
         
         [record_timer invalidate];
         
