@@ -492,7 +492,8 @@
     
     uploadFile.path = [NSString stringWithFormat:@"/%@/%@",[_user_info objectForKey:@"FacilityId"],_fileName.text];
     NSLog(@"UploadFilePath:%@",uploadFile.path);
-    uploadFile.hostname = [_hostDict objectForKey:@"HOST"];
+//    uploadFile.hostname = [_hostDict objectForKey:@"HOST"];
+    uploadFile.hostname = @"192.168.1.7";
     NSLog(@"HostUrl:%@",uploadFile.hostname);
     uploadFile.username = [_hostDict objectForKey:@"UN"];
     uploadFile.password = [_hostDict objectForKey:@"PWD"];

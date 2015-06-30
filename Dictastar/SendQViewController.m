@@ -357,6 +357,7 @@
 
 - (IBAction)sendTapped:(id)sender {
     
+    [self addLoader];
     if (_selectedIndexPaths.count) {
         
         for (int i=0; i<_selectedIndexPaths.count; i++) {
@@ -422,7 +423,7 @@
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         NSLog(@"%@",error.localizedDescription);
-        
+        [self hideHud];
         [self addMessageLoader:error.localizedDescription];
         
     }];
@@ -446,7 +447,8 @@
     uploadFile = [[BRRequestUpload alloc] initWithDelegate:self];
     
     uploadFile.path = [NSString stringWithFormat:@"/%@/%@",[_userInfo objectForKey:@"FacilityId"],fileName];
-    uploadFile.hostname = [_hostDict objectForKey:@"HOST"];
+//    uploadFile.hostname = [_hostDict objectForKey:@"HOST"];
+    uploadFile.hostname = @"192.168.1.7";
     uploadFile.username = [_hostDict objectForKey:@"UN"];
     uploadFile.password = [_hostDict objectForKey:@"PWD"];
     
@@ -468,7 +470,9 @@
 
 -(void) requestCompleted: (BRRequest *) request
 {
+    [self hideHud];
     NSLog(@"Completed:%@ completed!", request);
+   [self.tableView reloadData];
     uploadFile = nil;
 }
 
@@ -487,6 +491,8 @@
 
 -(void) requestFailed:(BRRequest *) request
 {
+    [self hideHud];
+    [self.tableView reloadData];
     NSLog(@"Failed:%@", request.error.message);
     
     uploadFile = nil;
@@ -509,7 +515,7 @@
         //Failure of service call....
         
         NSLog(@"%@",error.localizedDescription);
-        
+        [self hideHud];
         
     }];
     

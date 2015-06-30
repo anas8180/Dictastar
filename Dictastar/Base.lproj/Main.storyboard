@@ -525,7 +525,7 @@
         <scene sceneID="MGL-bx-9HL">
             <objects>
                 <navigationController id="su7-EI-CyQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="home_icon" id="aZ0-yi-o8K"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="Home_icon" id="aZ0-yi-o8K"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nfk-JH-0Ro">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -5512,6 +5512,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Home_icon" width="30" height="30"/>
         <image name="alert_icon" width="120" height="120"/>
         <image name="arrow_black" width="120" height="120"/>
         <image name="arrow_left" width="120" height="120"/>
@@ -5521,7 +5522,6 @@
         <image name="close_button" width="120" height="120"/>
         <image name="dictate" width="120" height="120"/>
         <image name="forgot_text" width="518" height="84"/>
-        <image name="home_icon" width="30" height="30"/>
         <image name="login_bg" width="640" height="640"/>
         <image name="login_button" width="219" height="66"/>
         <image name="logo" width="320" height="320"/>
