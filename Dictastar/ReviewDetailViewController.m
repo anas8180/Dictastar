@@ -115,6 +115,7 @@
     NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"],@"Content":webHTMLSourceCodeString};
     
     [self callWebService:params service:@"SaveRecord"];
+//    [self addMessageLoader:@"Success"];
 
 }
 - (IBAction)signTapped:(id)sender {
@@ -123,7 +124,7 @@
 
     NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"],@"ReviewState":@"Signed",@"_Content":webHTMLSourceCodeString,@"jobid":[_jobDict objectForKey:@"JobID"],@"PDFModule":[_jobDict objectForKey:@"PDFModule"],@"FacilityId":[_user_info objectForKey:@"FacilityId"],@"FileNames":[_jobDict objectForKey:@"ReportName"]};
     
-    [self callWebService:params service:@"SignRecordWS"];
+    [self callSignWebService:params service:@"SignRecordWS"];
 
     
 }
@@ -131,7 +132,7 @@
         
     NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"],@"Status":@"Deleted"};
 
-    [self callWebService:params service:@"DeleteRecord"];
+    [self callDeleteWebService:params service:@"DeleteRecord"];
 }
 
 #pragma mark - Service Methods
@@ -143,15 +144,63 @@
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         
-        [self addMessageLoader:@"Success"];
+        [self addMessageLoader:@"Record Save Success"];
         
-        [self.navigationController popViewControllerAnimated:YES];
+        
+//        [self.navigationController popViewControllerAnimated:YES];
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         NSLog(@"%@",error.localizedDescription);
     }];
 
+}
+
+- (void)callSignWebService:(NSDictionary *)params service:(NSString *)service {
+    
+    [[BTActionService sharedClient] POST:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Message" message:@"Record Sign Successfully" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        
+//        [self addMessageLoader:@"Record Sign Success"];
+//        [self.navigationController popViewControllerAnimated:YES];
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        NSLog(@"%@",error.localizedDescription);
+    }];
+    
+}
+
+- (void)callDeleteWebService:(NSDictionary *)params service:(NSString *)service {
+    
+    [[BTActionService sharedClient] POST:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Message" message:@"Record Delete Successfully" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+//        [self addMessageLoader:@"Record Delete"];
+//        [self.navigationController popViewControllerAnimated:YES];
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        NSLog(@"%@",error.localizedDescription);
+    }];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    // the user clicked OK
+    if (buttonIndex == 0) {
+        // do something here...
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)fetchJobDetials {

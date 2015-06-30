@@ -138,6 +138,11 @@
             cell.editIcon.alpha = 0.2;
             cell.headSetIcon.alpha = 0.2;
         }
+        else{
+            cell.recordIcon.alpha =0.2;
+            cell.editIcon.alpha = 0.2;
+            cell.headSetIcon.alpha = 0.2;
+        }
     
     return cell;
     }
@@ -276,7 +281,6 @@
     // Pass the selected object to the new view controller.
     
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    
     ReportTypeViewController *dictateVC = segue.destinationViewController;
     dictateVC.dataDict = [_dataArray objectAtIndex:indexPath.row];
 }
