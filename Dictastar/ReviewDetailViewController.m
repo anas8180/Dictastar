@@ -115,7 +115,6 @@
     NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"],@"Content":webHTMLSourceCodeString};
     
     [self callWebService:params service:@"SaveRecord"];
-//    [self addMessageLoader:@"Success"];
 
 }
 - (IBAction)signTapped:(id)sender {
@@ -139,31 +138,41 @@
 
 - (void)callWebService:(NSDictionary *)params service:(NSString *)service {
     
-    [[BTActionService sharedClient] POST:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
-        
-        NSError* error;
-        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
-        
-        [self addMessageLoader:@"Record Save Success"];
-        
-        
-//        [self.navigationController popViewControllerAnimated:YES];
-        
-    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
-        //Failure of service call....
-        NSLog(@"%@",error.localizedDescription);
-    }];
-
-}
-
-- (void)callSignWebService:(NSDictionary *)params service:(NSString *)service {
+    [self addLoader];
     
     [[BTActionService sharedClient] POST:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Message" message:@"Record Sign Successfully" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [self hideHud];
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Message" message:@"Record Saved Successfully" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        NSLog(@"%@",error.localizedDescription);
+        
+        [self hideHud];
+        [self addMessageLoader:error.localizedDescription];
+    }];
+
+}
+
+- (void)callSignWebService:(NSDictionary *)params service:(NSString *)service {
+    
+    [self addLoader];
+
+    [[BTActionService sharedClient] POST:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        
+        [self hideHud];
+
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Message" message:@"Record Signed Successfully" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         
 //        [self addMessageLoader:@"Record Sign Success"];
@@ -172,25 +181,37 @@
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         NSLog(@"%@",error.localizedDescription);
+        [self hideHud];
+        [self addMessageLoader:error.localizedDescription];
+
     }];
     
 }
 
 - (void)callDeleteWebService:(NSDictionary *)params service:(NSString *)service {
     
+    [self addLoader];
+
     [[BTActionService sharedClient] POST:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Message" message:@"Record Delete Successfully" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Message" message:@"Record Deleted Successfully" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
 //        [self addMessageLoader:@"Record Delete"];
 //        [self.navigationController popViewControllerAnimated:YES];
         
+        [self hideHud];
+
+        
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         NSLog(@"%@",error.localizedDescription);
+        
+        [self hideHud];
+        [self addMessageLoader:error.localizedDescription];
+
     }];
     
 }

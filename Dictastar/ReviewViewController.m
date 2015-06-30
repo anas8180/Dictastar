@@ -190,6 +190,7 @@
 
 -(void)fetchPatientInfo {
     
+    
     [_selectedIndexPaths removeAllObjects];
     
     _isLoading = YES;
@@ -335,17 +336,51 @@
 
 - (void)callWebService:(NSDictionary *)params service:(NSString *)service {
     
+    [self addLoader];
+    
     [[BTServicesClient sharedClient] GET:service parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
-        [self addMessageLoader:@"Successfully done"];
         
-        [self fetchPatientInfo];
+        [self hideHud];
+        
+        [self fetchPatientInfoAfterUpdate];
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         NSLog(@"%@",error.localizedDescription);
+        
+        [self hideHud];
+        [self addMessageLoader:error.localizedDescription];
+    }];
+    
+}
+
+-(void)fetchPatientInfoAfterUpdate {
+    
+    [self addLoader];
+    
+    [_selectedIndexPaths removeAllObjects];
+    
+    NSDictionary *params = @{@"AttendingPhysician":[_userInfo objectForKey:@"DictatorId"]};
+    
+    [[BTServicesClient sharedClient] GET:@"GetTranscriptionIDbyAttendingPhysicianJSON" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        _dataArray = [jsonData objectForKey:@"Table"];
+        
+        [self.tableView reloadData];
+        
+        [self hideHud];
+
+        
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        //Failure of service call....
+        
+        [self hideHud];
+        
     }];
     
 }

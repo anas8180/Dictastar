@@ -19,6 +19,8 @@
 
 @property (nonatomic, strong) NSArray *dataArray;
 
+@property (nonatomic, strong) NSString *maxLength;
+
 
 @end
 
@@ -34,7 +36,11 @@
     
     self.tableView.backgroundColor = [UIColor clearColor];
     
-    selectedIndexPath = nil;
+    _maxLength = [[NSUserDefaults standardUserDefaults] objectForKey:@"max_dict"];
+
+    NSUInteger idx = [_dataArray indexOfObject:_maxLength];
+
+    selectedIndexPath = [NSIndexPath indexPathForRow:idx inSection:1];
 
 }
 

@@ -525,7 +525,7 @@
         <scene sceneID="MGL-bx-9HL">
             <objects>
                 <navigationController id="su7-EI-CyQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="Home_icon" id="aZ0-yi-o8K"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="home_icon" id="aZ0-yi-o8K"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nfk-JH-0Ro">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -3493,6 +3493,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="37" width="205" height="21"/>
+                                                    </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="schedule_edit" translatesAutoresizingMaskIntoConstraints="NO" id="0zr-lJ-Iik">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -3506,7 +3509,8 @@
                                                             <exclude reference="jIA-Kj-xls"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="287" y="22" width="25" height="25"/>
                                                         <mask key="constraints">
                                                             <include reference="137-4a-Ehb"/>
                                                             <include reference="jIA-Kj-xls"/>
@@ -3525,7 +3529,8 @@
                                                             <exclude reference="kOf-9i-9OW"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="254" y="22" width="25" height="25"/>
                                                         <mask key="constraints">
                                                             <include reference="KaT-3H-8Kr"/>
                                                             <include reference="kOf-9i-9OW"/>
@@ -3544,7 +3549,8 @@
                                                             <exclude reference="dO2-yj-MpV"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="221" y="22" width="25" height="25"/>
                                                         <mask key="constraints">
                                                             <include reference="00s-Aa-Rnq"/>
                                                             <include reference="dO2-yj-MpV"/>
@@ -4629,7 +4635,7 @@
                                     <constraint firstItem="2uq-WO-rOS" firstAttribute="leading" secondItem="lEJ-VX-Gz2" secondAttribute="trailing" constant="8" id="G9n-jj-iv7"/>
                                     <constraint firstAttribute="height" constant="50" id="ITa-3T-L5s"/>
                                     <constraint firstAttribute="centerY" secondItem="lEJ-VX-Gz2" secondAttribute="centerY" id="OD9-yN-4eW"/>
-                                    <constraint firstItem="lEJ-VX-Gz2" firstAttribute="leading" secondItem="6ye-I4-7U3" secondAttribute="leading" constant="15" id="tTf-Th-2A8"/>
+                                    <constraint firstItem="lEJ-VX-Gz2" firstAttribute="leading" secondItem="6ye-I4-7U3" secondAttribute="leading" constant="8" id="tTf-Th-2A8"/>
                                     <constraint firstItem="2uq-WO-rOS" firstAttribute="top" secondItem="6ye-I4-7U3" secondAttribute="top" constant="14" id="uKf-jy-IDx"/>
                                     <constraint firstAttribute="trailing" secondItem="2uq-WO-rOS" secondAttribute="trailing" constant="8" id="ve8-ej-GIp"/>
                                 </constraints>
@@ -5512,7 +5518,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Home_icon" width="30" height="30"/>
         <image name="alert_icon" width="120" height="120"/>
         <image name="arrow_black" width="120" height="120"/>
         <image name="arrow_left" width="120" height="120"/>
@@ -5522,6 +5527,7 @@
         <image name="close_button" width="120" height="120"/>
         <image name="dictate" width="120" height="120"/>
         <image name="forgot_text" width="518" height="84"/>
+        <image name="home_icon" width="30" height="30"/>
         <image name="login_bg" width="640" height="640"/>
         <image name="login_button" width="219" height="66"/>
         <image name="logo" width="320" height="320"/>
@@ -5549,8 +5555,8 @@
         <image name="user-blue" width="120" height="120"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9c5-Wi-vda"/>
-        <segue reference="N19-DH-CtB"/>
+        <segue reference="cVw-k2-u6O"/>
         <segue reference="5Fd-Kg-Tne"/>
+        <segue reference="N19-DH-CtB"/>
     </inferredMetricsTieBreakers>
 </document>

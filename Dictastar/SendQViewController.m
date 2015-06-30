@@ -382,13 +382,13 @@
 
 - (IBAction)sendTapped:(id)sender {
     
-    [self addLoader];
     if (_selectedIndexPaths.count) {
         
         for (int i=0; i<_selectedIndexPaths.count; i++) {
             
             NSInteger indexVal = [[_selectedIndexPaths objectAtIndex:i] integerValue];
             NSDictionary *dict = @{@"UploadID":[[_dataArray objectAtIndex:indexVal]objectForKey:@"UploadID"]};
+           
             [self updateUploadWebService:dict service:@"UpdateFileUploadListinJson"];
             [self uploadFile:[[_dataArray objectAtIndex:indexVal] objectForKey:@"Filename"]];
             
@@ -443,16 +443,56 @@
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         
-        [self fetchOutBoxDetails];
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         NSLog(@"%@",error.localizedDescription);
-        [self hideHud];
-        [self addMessageLoader:error.localizedDescription];
         
     }];
 
+}
+
+- (void) fetchOutBoxAfterUpdate {
+    
+    
+    [self addLoader];
+        if (_dataArray !=nil) {
+            _dataArray = nil;
+            
+        }
+        
+        _dataArray = [[NSArray alloc]init];
+        
+        [_selectedIndexPaths removeAllObjects];
+        
+    
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        
+        [dateFormat setDateFormat:@"MM/dd/yyyy"];
+        
+        NSString *dateString = [dateFormat stringFromDate:_currentDate];
+        
+        NSDictionary *params = @{@"facilityID":[_userInfo objectForKey:@"FacilityId"],@"attendingPhysicianID":[_userInfo objectForKey:@"DictatorId"],@"UploadDate":dateString};
+        
+        [[BTServicesClient sharedClient] GET:@"FetchDictateStatusDetailsinJson" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+            
+            NSError* error;
+            NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+            _dataArray = [jsonData objectForKey:@"Table"];
+            
+            [self.tableView reloadData];
+            
+            [self hideHud];
+            
+        } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+            //Failure of service call....
+            
+            NSLog(@"%@",error.localizedDescription);
+            
+            [self hideHud];
+
+        }];
+    
 }
 
 
@@ -460,6 +500,9 @@
 
 - (void)uploadFile:(NSString *)fileName
 {
+    
+    [self addLoader];
+    
     //----- get the file to upload as an NSData object
     NSArray *pathComponents = [NSArray arrayWithObjects:
                                [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
@@ -497,8 +540,8 @@
 {
     [self hideHud];
     NSLog(@"Completed:%@ completed!", request);
-   [self.tableView reloadData];
     uploadFile = nil;
+    [self fetchOutBoxAfterUpdate];
 }
 
 - (NSData *) requestDataToSend: (BRRequestUpload *) request
@@ -517,11 +560,13 @@
 -(void) requestFailed:(BRRequest *) request
 {
     [self hideHud];
-    [self.tableView reloadData];
+
     NSLog(@"Failed:%@", request.error.message);
     
     uploadFile = nil;
     
+    [self fetchOutBoxAfterUpdate];
+
 }
 
 #pragma mark - Service Call

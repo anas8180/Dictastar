@@ -256,8 +256,6 @@
             recorder.meteringEnabled = YES;
             [recorder prepareToRecord];
             
-            self.view.userInteractionEnabled = NO;
-
         }
 
         [sender setImage:[UIImage imageNamed:@"recorder_pause"]forState:UIControlStateNormal];
@@ -288,6 +286,8 @@
         
         [recorder pause];
         
+        [record_timer invalidate];
+        
     }
 }
 - (IBAction)stopPressed:(UIButton *)sender {
@@ -308,8 +308,7 @@
         [_playButton setEnabled:YES];
         [_sendButton setEnabled:YES];
         [_deleteButton setEnabled:YES];
-
-        self.view.userInteractionEnabled = YES;
+        [_recordButton setEnabled:YES];
 
 
     }
@@ -422,9 +421,7 @@
         
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         [audioSession setActive:NO error:nil];
-        
-        self.view.userInteractionEnabled = YES;
-        
+                
         [record_timer invalidate];
         
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Time Exceeded" message:@"Recording Stopped" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
