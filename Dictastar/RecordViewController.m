@@ -13,6 +13,7 @@
 #import "BRRequest+_UserData.h"
 #import "Constant.h"
 #import "UIViewController+ActivityLoader.h"
+#import "ScheduleViewController.h"
 #import <AudioToolbox/AudioServices.h>
 
 @interface RecordViewController ()<BRRequestDelegate> {
@@ -197,14 +198,14 @@
 - (IBAction)statPressed:(UIButton *)sender {
     
     if (isStat) {
-        [sender setImage:[UIImage imageNamed:@"checkbox_off"] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"record_stat_button"] forState:UIControlStateNormal];
         
         statPriority = @"Normal";
         NSLog(@"Stat Normal");
         isStat = NO;
     }
     else {
-        [sender setImage:[UIImage imageNamed:@"checkbox_on"] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"record_stat_button_ticked"] forState:UIControlStateNormal];
 
         statPriority = @"High";
         NSLog(@"Stat High");
@@ -349,6 +350,10 @@
         [_sendButton setEnabled:NO];
         [_recordButton setEnabled:NO];
         [_deleteButton setEnabled:NO];
+        
+    NSString *dur = [NSString stringWithFormat:@"%02d:%02d", (int)((int)(player.duration)) / 60, (int)((int)(player.duration)) % 60];
+
+        _countTimer.text = dur;
     
     }
 }
@@ -404,15 +409,12 @@
     
     float f =  (player.currentTime) ;
     self.slider.value = f/60.0;
-    NSLog(@"SliderValue:%f",f);
-    _countTimer.text = [NSString stringWithFormat:@"%.2f",f];
     
-    NSTimeInterval timeLeft = player.duration - player.currentTime;
-    
-    // update your UI with timeLeft
-    _countDownTimer.text = [NSString stringWithFormat:@"%.2f", timeLeft];
-    
+    NSString *dur = [NSString stringWithFormat:@"%02d:%02d", (int)((int)(player.currentTime)) / 60, (int)((int)(player.currentTime)) % 60];
 
+    _countDownTimer.text = dur;
+
+    
 }
 
 -(void)recordingTime {
@@ -520,9 +522,20 @@
     NSLog(@"Request %@ completed!", request);
     uploadFile = nil;
     
-    SendQViewController *sendQObj = [self.storyboard instantiateViewControllerWithIdentifier:@"SendQView"];
-    [self.navigationController showViewController:sendQObj sender:self];
+ /*   SendQViewController *sendQObj = [self.storyboard instantiateViewControllerWithIdentifier:@"SendQView"];
+    [self.navigationController showViewController:sendQObj sender:self]; */
 
+
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        
+        //Do not forget to import AnOldViewController.h
+        if ([controller isKindOfClass:[ScheduleViewController class]]) {
+            
+            [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
 
 }
 
@@ -547,8 +560,19 @@
     
     uploadFile = nil;
 
-    SendQViewController *sendQObj = [self.storyboard instantiateViewControllerWithIdentifier:@"SendQView"];
-    [self.navigationController showViewController:sendQObj sender:self];
+  /*  SendQViewController *sendQObj = [self.storyboard instantiateViewControllerWithIdentifier:@"SendQView"];
+    [self.navigationController showViewController:sendQObj sender:self]; */
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        
+        //Do not forget to import AnOldViewController.h
+        if ([controller isKindOfClass:[ScheduleViewController class]]) {
+            
+            [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
 
 }
 
