@@ -130,8 +130,8 @@
         }
         
     cell.title.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"PatientName"];
-    cell.subTitle.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"AllergyInformation"];
-    cell.statusLable.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"DOB"];
+    cell.subTitle.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"PatientCode"];
+    cell.statusLable.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"ServiceDate"];
     
     [cell.selectRadioButton addTarget:self action:@selector(selectReport:) forControlEvents:UIControlEventTouchUpInside];
         

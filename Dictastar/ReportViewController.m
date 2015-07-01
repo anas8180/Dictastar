@@ -134,7 +134,7 @@
     if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {  // Safety check for below iOS 7
             [tableView setSeparatorInset:UIEdgeInsetsZero];
         }
-    cell.title.text = [NSString stringWithFormat:@"%@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"PatientName"]];
+    cell.title.text = [NSString stringWithFormat:@"%@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"AttendingPhysician"]];
     
     cell.statusLable.text = [NSString stringWithFormat:@"%@",[[_dataArray objectAtIndex:indexPath.row] objectForKey:@"ServiceDate"]];
     
