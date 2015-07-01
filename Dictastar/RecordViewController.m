@@ -445,7 +445,7 @@
     
     if (success) {
         
-        [self addMessageLoader:@"deleted"];
+        [self addMessageLoader:@"Deleted"];
     }
     else {
         
