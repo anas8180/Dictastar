@@ -3641,6 +3641,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="139" y="37" width="42" height="21"/>
+                                                    </variation>
                                                 </label>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="7GU-O7-rAq">
                                                     <rect key="frame" x="-10" y="-10" width="20" height="20"/>
@@ -3654,7 +3657,8 @@
                                                             <exclude reference="q4y-U0-LNS"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="150" y="66" width="20" height="20"/>
                                                         <mask key="constraints">
                                                             <include reference="UMp-SM-5gH"/>
                                                             <include reference="q4y-U0-LNS"/>
@@ -4791,6 +4795,9 @@
                                                 </label>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="TH7-ku-nvX">
                                                     <rect key="frame" x="-10" y="-10" width="20" height="20"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="150" y="57" width="20" height="20"/>
+                                                    </variation>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -5346,6 +5353,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="54" y="40" width="213" height="22"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -5555,8 +5565,8 @@
         <image name="user-blue" width="120" height="120"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cVw-k2-u6O"/>
-        <segue reference="5Fd-Kg-Tne"/>
+        <segue reference="9c5-Wi-vda"/>
         <segue reference="N19-DH-CtB"/>
+        <segue reference="5Fd-Kg-Tne"/>
     </inferredMetricsTieBreakers>
 </document>
