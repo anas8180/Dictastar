@@ -59,6 +59,9 @@
     [super viewWillAppear:animated];
     
     if (isFromHome) {
+        self.tabBarController.tabBar.hidden=YES;
+    }
+    else{
         self.tabBarController.tabBar.hidden=NO;
     }
 }

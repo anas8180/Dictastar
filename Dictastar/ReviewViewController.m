@@ -59,12 +59,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [self fetchPatientInfo];
     if (isFromHome) {
+        self.tabBarController.tabBar.hidden=YES;
+    }
+    else{
         self.tabBarController.tabBar.hidden=NO;
     }
-    
-    [self fetchPatientInfo];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -74,7 +75,6 @@
         self.tabBarController.tabBar.hidden=NO;
     }
 }
-
 
 #pragma mark - Tableview Methods
 
@@ -130,7 +130,7 @@
         }
         
     cell.title.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"PatientName"];
-    cell.subTitle.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"DocumentFlag"];
+    cell.subTitle.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"AllergyInformation"];
     cell.statusLable.text = [[_dataArray objectAtIndex:indexPath.row] objectForKey:@"DOB"];
     
     [cell.selectRadioButton addTarget:self action:@selector(selectReport:) forControlEvents:UIControlEventTouchUpInside];

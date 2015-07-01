@@ -23,7 +23,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[dataDict objectForKey:@"PatientName"],[dataDict objectForKey:@"ServiceDate"]];
+    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[dataDict objectForKey:@"AttendingPhysician"],[dataDict objectForKey:@"ServiceDate"]];
 
     [self fetchReportDetials];
 }

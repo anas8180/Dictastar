@@ -31,7 +31,7 @@
     NSLog(@"%lu",(unsigned long)selectedIndex);
     NSLog(@"%@",dataArray);
     
-    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:selectedIndex] objectForKey:@"PatientName"],[[dataArray objectAtIndex:selectedIndex] objectForKey:@"ServiceDate"]];
+    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:selectedIndex] objectForKey:@"AttendingPhysician"],[[dataArray objectAtIndex:selectedIndex] objectForKey:@"ServiceDate"]];
     
     [self setupPageViewController];
     
@@ -97,7 +97,7 @@
     }
     
     index--;
-    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:index] objectForKey:@"PatientName"],[[dataArray objectAtIndex:index] objectForKey:@"ServiceDate"]];
+    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:index] objectForKey:@"AttendingPhysician"],[[dataArray objectAtIndex:index] objectForKey:@"ServiceDate"]];
 
     return [self viewControllerAtIndex:index];
 }
@@ -116,7 +116,7 @@
         return nil;
     }
     
-    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:index] objectForKey:@"PatientName"],[[dataArray objectAtIndex:index] objectForKey:@"ServiceDate"]];
+    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:index] objectForKey:@"AttendingPhysician"],[[dataArray objectAtIndex:index] objectForKey:@"ServiceDate"]];
 
     return [self viewControllerAtIndex:index];
 }
@@ -160,7 +160,7 @@
         return;
     }
     
-    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:pageIndex] objectForKey:@"PatientName"],[[dataArray objectAtIndex:pageIndex] objectForKey:@"ServiceDate"]];
+    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:pageIndex] objectForKey:@"AttendingPhysician"],[[dataArray objectAtIndex:pageIndex] objectForKey:@"ServiceDate"]];
 
     [_pageController setViewControllers:@[viewController]
                                   direction:direction
