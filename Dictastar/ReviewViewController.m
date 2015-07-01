@@ -392,10 +392,15 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    ReviewDetailViewController *reviewDetailVC = segue.destinationViewController;
-    NSDictionary *dict = [_dataArray objectAtIndex:indexPath.row];
-    reviewDetailVC.dataDict = dict;
+    if ([segue.identifier isEqualToString:@"ShowDetail"]) {
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        ReviewDetailViewController *reviewDetailVC = segue.destinationViewController;
+        NSDictionary *dict = [_dataArray objectAtIndex:indexPath.row];
+        reviewDetailVC.dataDict = dict;
+
+    }
+    
     
 }
 

@@ -29,6 +29,7 @@
 @property (nonatomic) BOOL isLoading;
 @property (strong, nonatomic) NSMutableArray *selectedIndexPaths;
 @property (strong, nonatomic) NSDictionary *hostDict;
+@property (strong, nonatomic) IBOutlet UIButton *sendButton;
 
 @end
 
@@ -52,7 +53,9 @@
     [self fetchFTPDetails];
     
     self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
-
+    
+    [_sendButton setBackgroundImage:[self imageWithColor:[UIColor colorWithRed:225/255.0 green:124.0/255.0 blue:127.0/255.0 alpha:0.5]] forState:UIControlStateHighlighted];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -595,7 +598,19 @@
 }
 
 
-
+- (UIImage *)imageWithColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
 
 /*
 #pragma mark - Navigation
