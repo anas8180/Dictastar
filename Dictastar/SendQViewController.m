@@ -35,6 +35,7 @@
 
 @implementation SendQViewController
 @synthesize isFromHome;
+@synthesize alertDelete;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -405,18 +406,47 @@
 
 - (IBAction)deleteTapped:(id)sender {
     
-    if (_selectedIndexPaths.count) {
-        
-        for (int i=0; i<_selectedIndexPaths.count; i++) {
+    alertDelete = [[UIAlertView alloc] init];
+    [alertDelete setDelegate:self];
+    [alertDelete setTitle:@"Alert!"];
+    [alertDelete setMessage:@"Do you want to Delete Record?"];
+    [alertDelete addButtonWithTitle:@"Yes"];
+    [alertDelete addButtonWithTitle:@"No"];
+    
+    alertDelete.alertViewStyle =UIAlertViewStyleDefault;
+    alertDelete.tag = 1;
+    [alertDelete show];
+    
+    
+}
+
+#pragma Alert Delegate
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // the user clicked OK
+    if (alertDelete.tag ==1 ) {
+        if (buttonIndex == 0) {
+            // do something here...
+            NSLog(@"Delete Yes");
+            if (_selectedIndexPaths.count) {
+                
+                for (int i=0; i<_selectedIndexPaths.count; i++) {
+                    
+                    NSInteger indexVal = [[_selectedIndexPaths objectAtIndex:i] integerValue];
+                    
+                    NSDictionary *dict = @{@"UploadID":[[_dataArray objectAtIndex:indexVal] objectForKey:@"UploadID"]};
+                    
+                    [self callWebService:dict service:@"DeleteFileUploadListinJson"];
+                }
+            }
             
-            NSInteger indexVal = [[_selectedIndexPaths objectAtIndex:i] integerValue];
-            
-            NSDictionary *dict = @{@"UploadID":[[_dataArray objectAtIndex:indexVal] objectForKey:@"UploadID"]};
-            
-            [self callWebService:dict service:@"DeleteFileUploadListinJson"];
+        }
+        else if(buttonIndex == 1)
+        {
+            NSLog(@"Delete No");
         }
     }
-
+    
 }
 
 #pragma mark - Service Methods

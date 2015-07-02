@@ -11,5 +11,5 @@
 @interface SendQViewController : UIViewController
 
 @property (nonatomic) BOOL isFromHome;
-
+@property (nonatomic,strong) UIAlertView *alertDelete;
 @end

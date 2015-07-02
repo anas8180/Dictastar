@@ -13,5 +13,5 @@
 
 @property (nonatomic, strong) NSDictionary *dataDict;
 @property (nonatomic, strong) NSDictionary *jobTypeDict;
-
+@property (nonatomic, strong) UIAlertView *alertDelete;
 @end

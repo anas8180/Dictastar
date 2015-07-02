@@ -11,5 +11,5 @@
 @interface ReviewDetailViewController : UIViewController
 
 @property (nonatomic, copy) NSDictionary *dataDict;
-
+@property (nonatomic,strong) UIAlertView *add, *alertSave, *alertSign;
 @end

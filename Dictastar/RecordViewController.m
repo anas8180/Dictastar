@@ -51,6 +51,7 @@
 @implementation RecordViewController
 @synthesize dataDict;
 @synthesize jobTypeDict;
+@synthesize alertDelete;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -180,12 +181,12 @@
     NSDate *currentDate = [NSDate date];
     NSCalendar* calendar = [NSCalendar currentCalendar];
     NSDateComponents* components = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond fromDate:currentDate];
-    NSLog(@"Day:%ld",(long)[components day]);
-    NSLog(@"Month:%ld",(long)[components month]);
-    NSLog(@"Year:%ld",(long)[components year]);
-    NSLog(@"Hour:%ld",(long)[components hour]);
-    NSLog(@"Min:%ld",(long)[components minute]);
-    NSLog(@"Second:%ld",(long)[components second]);
+//    NSLog(@"Day:%ld",(long)[components day]);
+//    NSLog(@"Month:%ld",(long)[components month]);
+//    NSLog(@"Year:%ld",(long)[components year]);
+//    NSLog(@"Hour:%ld",(long)[components hour]);
+//    NSLog(@"Min:%ld",(long)[components minute]);
+//    NSLog(@"Second:%ld",(long)[components second]);
 
     NSString *file = [NSString stringWithFormat:@"%@_%@_%ld%ld%ld_%ld%ld%ld",fname,lname,(long)[components day],(long)[components month],(long)[components year],(long)[components hour],(long)[components minute],(long)[components second]];
     
@@ -447,7 +448,20 @@
     
     if (success) {
         
-        [self addMessageLoader:@"Deleted"];
+//        alertDelete = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Do you want to Delete Record File" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+//        [alertDelete show];
+        
+        UIAlertView* add = [[UIAlertView alloc] init];
+        [add setDelegate:self];
+        [add setTitle:@"Alert!"];
+        [add setMessage:@"Do you want to Delete Record?"];
+        [add addButtonWithTitle:@"Yes"];
+        [add addButtonWithTitle:@"No"];
+        
+        add.alertViewStyle =UIAlertViewStyleDefault;
+        add.tag = 1;
+        [add show];
+
     }
     else {
         
@@ -574,6 +588,29 @@
         }
     }
 
+}
+
+#pragma Alert Delegate
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // the user clicked OK
+    if (buttonIndex == 0) {
+        // do something here...
+        NSLog(@"Delete Yes");
+        
+        for (UIViewController *controller in self.navigationController.viewControllers) {
+        
+                    //Do not forget to import AnOldViewController.h
+        if ([controller isKindOfClass:[ScheduleViewController class]]) {
+        [self.navigationController popToViewController:controller animated:YES];
+            break;
+                    }
+                }
+    }
+    else if(buttonIndex == 1)
+    {
+        NSLog(@"Delete No");
+    }
 }
 
 /*

@@ -22,7 +22,7 @@
 
 @implementation ReviewDetailViewController
 @synthesize dataDict;
-
+@synthesize add,alertSave,alertSign;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -147,8 +147,9 @@
         
         [self hideHud];
         
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Message" message:@"Record Saved Successfully" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        alertSave = [[UIAlertView alloc]initWithTitle:@"Message" message:@"Record Saved Successfully" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        alertSave.tag = 1;
+        [alertSave show];
 
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
@@ -172,8 +173,9 @@
         
         [self hideHud];
 
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Message" message:@"Record Signed Successfully" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        alertSign = [[UIAlertView alloc]initWithTitle:@"Message" message:@"Record Signed Successfully" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        alertSign.tag = 2;
+        [alertSign show];
         
 //        [self addMessageLoader:@"Record Sign Success"];
 //        [self.navigationController popViewControllerAnimated:YES];
@@ -197,8 +199,17 @@
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Message" message:@"Record Deleted Successfully" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        add = [[UIAlertView alloc] init];
+        [add setDelegate:self];
+        [add setTitle:@"Alert!"];
+        [add setMessage:@"Do you want to Delete Record?"];
+        [add addButtonWithTitle:@"Yes"];
+        [add addButtonWithTitle:@"No"];
+        
+        add.alertViewStyle =UIAlertViewStyleDefault;
+        add.tag = 3;
+        [add show];
+
 //        [self addMessageLoader:@"Record Delete"];
 //        [self.navigationController popViewControllerAnimated:YES];
         
@@ -218,10 +229,29 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     // the user clicked OK
-    if (buttonIndex == 0) {
-        // do something here...
+//    if (buttonIndex == 0) {
+//        // do something here...
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+    if (alertSave.tag ==1) {
+        if (buttonIndex == 0 ) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+    else if (alertSign.tag ==2){
         [self.navigationController popViewControllerAnimated:YES];
     }
+    else if (add.tag == 3)
+    {
+        if (buttonIndex == 0 ) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+    else
+    {
+         [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 
 - (void)fetchJobDetials {

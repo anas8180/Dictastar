@@ -19,6 +19,10 @@
 @end
 
 @implementation InformationViewController
+
+NSMutableDictionary *infodict;
+NSArray *sortArray;
+
 @synthesize dataDict;
 
 - (void)viewDidLoad {
@@ -31,7 +35,8 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     _userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
-    [self fetchPatientInfo];
+//    [self fetchPatientInfo];
+    [self fetchPatientInformation];
     
     self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
 
@@ -40,6 +45,78 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)fetchPatientInformation
+{
+     NSDictionary *params = @{@"FacilityId":[_userInfo objectForKey:@"FacilityId"],@"patientID":[dataDict objectForKey:@"PatientID"]};
+    
+    [[BTServicesClient sharedClient] GET:@"FetchPatientInfoJSONIOS" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        
+        NSError* error;
+        NSArray *newdataArray =[NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
+        NSArray *recipes = [NSArray arrayWithObjects:newdataArray, nil];
+        NSArray *arrangeOrder = [[recipes objectAtIndex:0]objectForKey:@"Table"];
+        NSLog(@"ArrangeOrder:%@",arrangeOrder);
+        
+        infodict = [NSMutableDictionary dictionary];
+        int i =0;
+        
+        [infodict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Name"] forKey:@"A"];
+        [infodict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"MRNNo"]  forKey:@"B"];
+        [infodict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"DOB"]  forKey:@"C"];
+        [infodict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Gender"]  forKey:@"D"];
+        [infodict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"AddressLine1"]  forKey:@"E"];
+        [infodict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"Phone"]  forKey:@"F"];
+        [infodict setObject:[[arrangeOrder objectAtIndex:i]objectForKey:@"InsuranceProvider"]  forKey:@"G"];
+        
+        _keyDictionary = [infodict allKeys];
+        sortArray = [_keyDictionary sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+        NSLog(@"KeyDict:%@",_keyDictionary);
+        NSLog(@"SortArray:%@",sortArray);
+        NSLog(@"Info:%@",infodict);
+        
+        [self.tableView reloadData];
+    }
+     failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+          NSLog(@"%@",error.localizedDescription);
+         [self.tableView reloadData];
+     }];
+
+}
+
+-(NSString *)getLabelText:(NSString *)currentText
+{
+    NSString *returnText;
+    if([currentText  isEqualToString:@"A"])
+    {
+        returnText = @"Name";
+    }
+    else if ([currentText isEqualToString:@"B"])
+    {
+        returnText = @"MRNNo";
+    }
+    else if ([currentText isEqualToString:@"C"])
+    {
+        returnText = @"DOB";
+    }
+    else if ([currentText isEqualToString:@"D"])
+    {
+        returnText = @"Gender";
+    }
+    else if ([currentText isEqualToString:@"E"])
+    {
+        returnText = @"AddressLine1";
+    }
+    else if ([currentText isEqualToString:@"F"])
+    {
+        returnText = @"Phone";
+    }
+    else if ([currentText isEqualToString:@"G"])
+    {
+        returnText = @"InsuranceProvider";
+    }
+    return returnText;
 }
 
 -(void)fetchPatientInfo {
@@ -89,10 +166,15 @@
         [tableView setSeparatorInset:UIEdgeInsetsZero];
     }
 
+    NSString *titleText = [NSString stringWithFormat:@"%@",[sortArray objectAtIndex:indexPath.row]];
     
-    cell.title.text = [NSString stringWithFormat:@"%@ :",[_keyDictionary objectAtIndex:indexPath.row]];
+    cell.title.text = [NSString stringWithFormat:@"%@ %@",[self getLabelText:titleText],@":"];
     
-    cell.subTitle.text = [NSString stringWithFormat:@"%@",[_resultDict objectForKey:[_keyDictionary objectAtIndex:indexPath.row]]];
+    cell.subTitle.text = [NSString stringWithFormat:@"%@",[infodict objectForKey:titleText]];
+    
+    
+//    cell.title.text = [NSString stringWithFormat:@"%@ :",[_keyDictionary objectAtIndex:indexPath.row]];
+//    cell.subTitle.text = [NSString stringWithFormat:@"%@",[_resultDict objectForKey:[_keyDictionary objectAtIndex:indexPath.row]]];
     
     return cell;
 }
