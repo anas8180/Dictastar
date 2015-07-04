@@ -188,8 +188,8 @@
 //    NSLog(@"Min:%ld",(long)[components minute]);
 //    NSLog(@"Second:%ld",(long)[components second]);
 
-    NSString *file = [NSString stringWithFormat:@"%@_%@_%ld%ld%ld_%ld%ld%ld",fname,lname,(long)[components day],(long)[components month],(long)[components year],(long)[components hour],(long)[components minute],(long)[components second]];
-    
+    NSString *file = [NSString stringWithFormat:@"%@_%@_%ld%ld%ld_%ld%ld%ld",fname,lname,(long)[components month],(long)[components day],(long)[components year],(long)[components hour],(long)[components minute],(long)[components second]];
+    NSLog(@"DateFormat:%@",file);
     return file;
 }
 
@@ -507,8 +507,8 @@
     
     uploadFile.path = [NSString stringWithFormat:@"/%@/%@",[_user_info objectForKey:@"FacilityId"],_fileName.text];
     NSLog(@"UploadFilePath:%@",uploadFile.path);
-//    uploadFile.hostname = [_hostDict objectForKey:@"HOST"];
-    uploadFile.hostname = @"192.168.1.7";
+    uploadFile.hostname = [_hostDict objectForKey:@"HOST"];
+//    uploadFile.hostname = @"192.168.1.7";
     NSLog(@"HostUrl:%@",uploadFile.hostname);
     uploadFile.username = [_hostDict objectForKey:@"UN"];
     uploadFile.password = [_hostDict objectForKey:@"PWD"];

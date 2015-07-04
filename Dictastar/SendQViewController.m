@@ -551,8 +551,8 @@
     uploadFile = [[BRRequestUpload alloc] initWithDelegate:self];
     
     uploadFile.path = [NSString stringWithFormat:@"/%@/%@",[_userInfo objectForKey:@"FacilityId"],fileName];
-//    uploadFile.hostname = [_hostDict objectForKey:@"HOST"];
-    uploadFile.hostname = @"192.168.1.7";
+    uploadFile.hostname = [_hostDict objectForKey:@"HOST"];
+//    uploadFile.hostname = @"192.168.1.7";
     uploadFile.username = [_hostDict objectForKey:@"UN"];
     uploadFile.password = [_hostDict objectForKey:@"PWD"];
     
