@@ -139,6 +139,8 @@
     }
     else {
         
+        [self addLoader];
+        
     self.view.userInteractionEnabled = NO;
         
     NSDictionary *params = @{@"Username":_emailTextFld.text,@"Password":_passwordTextFld.text};
@@ -174,10 +176,13 @@
         
         self.view.userInteractionEnabled = YES;
 
+        [self hideHud];
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         //Failure of service call....
         
+        [self hideHud];
+
         NSLog(@"%@",error.localizedDescription);
         
         [self addMessageLoader:error.localizedDescription];
