@@ -336,7 +336,6 @@
         
         
         _slider.value = 0.0;
-        _countDownTimer.text = @"00:00";
         
         player = nil;
     }
@@ -378,6 +377,8 @@
             
             [sender setImage:[UIImage imageNamed:@"record_pause_button"] forState:UIControlStateNormal];
             
+            _record_timer_lable.text = @"00:00";
+
         }
     }
     
