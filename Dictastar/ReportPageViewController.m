@@ -8,6 +8,7 @@
 
 #import "ReportPageViewController.h"
 #import "ReportDetailViewController.h"
+#import "UIViewController+ActivityLoader.m"
 
 @interface ReportPageViewController ()
 
@@ -122,7 +123,10 @@
     
     index++;
     if (index == [dataArray count]) {
-        
+        if ((index = (unsigned long)[dataArray lastObject])) {
+            [self addMessageLoader:@"Last Record"];
+        }
+
         return nil;
     }
     
@@ -163,6 +167,13 @@
     }
     else {
         pageIndex--;
+    }
+    
+    if (pageIndex == [dataArray count]) {
+        if ((pageIndex = (unsigned long)[dataArray lastObject])) {
+            [self addMessageLoader:@"Last Record"];
+        }
+        
     }
     
     ReportDetailViewController *viewController = [self viewControllerAtIndex:pageIndex];
