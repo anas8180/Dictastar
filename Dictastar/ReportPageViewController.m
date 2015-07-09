@@ -91,20 +91,30 @@
 {
     NSUInteger index = ((ReportDetailViewController*) viewController).pageIndex;
     
+    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:index] objectForKey:@"AttendingPhysician"],[[dataArray objectAtIndex:index] objectForKey:@"ServiceDate"]];
+    
     if ((index == 0) || (index == NSNotFound)) {
+        
+        if (index == 0) {
+            
+        }
         
         return nil;
     }
     
     index--;
+    
     _titleLable.text = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:index] objectForKey:@"AttendingPhysician"],[[dataArray objectAtIndex:index] objectForKey:@"ServiceDate"]];
-
+    
+    
     return [self viewControllerAtIndex:index];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
     NSUInteger index = ((ReportDetailViewController*) viewController).pageIndex;
+    
+    _titleLable.text = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:index] objectForKey:@"AttendingPhysician"],[[dataArray objectAtIndex:index] objectForKey:@"ServiceDate"]];
     
     if (index == NSNotFound) {
         return nil;
@@ -117,7 +127,8 @@
     }
     
     _titleLable.text = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:index] objectForKey:@"AttendingPhysician"],[[dataArray objectAtIndex:index] objectForKey:@"ServiceDate"]];
-
+    
+    
     return [self viewControllerAtIndex:index];
 }
 

@@ -31,6 +31,7 @@
 
 }
 
+@property (strong, nonatomic) IBOutlet UILabel *record_timer_lable;
 @property (strong, nonatomic) IBOutlet UIButton *recordButton;
 @property (strong, nonatomic) IBOutlet UIButton *stopButton;
 @property (strong, nonatomic) IBOutlet UILabel *patientName;
@@ -297,7 +298,7 @@
     if (recorder.recording) {
         
         [_recordButton setImage:[UIImage imageNamed:@"recorder_image"]forState:UIControlStateNormal];
-
+        
         [recorder stop];
         
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
@@ -311,23 +312,27 @@
         [_sendButton setEnabled:YES];
         [_deleteButton setEnabled:YES];
         [_recordButton setEnabled:YES];
-
-
+        
+        
     }
     else if (player.isPlaying){
         
         [player stop];
         [player_timer invalidate];
-
+        
+        [_playButton setImage:[UIImage imageNamed:@"play_button"]forState:UIControlStateNormal];
+        
+        
         [_playButton setEnabled:YES];
         [_sendButton setEnabled:YES];
         [_deleteButton setEnabled:YES];
         [_recordButton setEnabled:YES];
-
+        
         
         _slider.value = 0.0;
         _countDownTimer.text = @"00:00";
-        _countTimer.text = @"00:00";
+        
+        player = nil;
     }
     
     
@@ -336,26 +341,47 @@
     
     if (!player.isPlaying) {
         
-    player = [[AVAudioPlayer alloc] initWithContentsOfURL:recorder.url error:nil];
-    [player setDelegate:self];
-    
-    [player play];
-    
-    _slider.minimumValue = 0.0;
-    float total= player.duration;
-    total = total/60;
-    _slider.maximumValue = total;
-    
-    player_timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+        if (player != nil) {
+            
+            [player play];
+            
+            [sender setImage:[UIImage imageNamed:@"record_pause_button"] forState:UIControlStateNormal];
+            
+        }
         
-        [_sendButton setEnabled:NO];
-        [_recordButton setEnabled:NO];
-        [_deleteButton setEnabled:NO];
-        
-    NSString *dur = [NSString stringWithFormat:@"%02d:%02d", (int)((int)(player.duration)) / 60, (int)((int)(player.duration)) % 60];
-
-        _countTimer.text = dur;
+        else {
+            player = [[AVAudioPlayer alloc] initWithContentsOfURL:recorder.url error:nil];
+            [player setDelegate:self];
+            
+            [player play];
+            
+            _slider.minimumValue = 0.0;
+            float total= player.duration;
+            total = total/60;
+            _slider.maximumValue = total;
+            
+            player_timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+            
+            [_sendButton setEnabled:NO];
+            [_recordButton setEnabled:NO];
+            [_deleteButton setEnabled:NO];
+            
+            NSString *dur = [NSString stringWithFormat:@"%02d:%02d", (int)((int)(player.duration)) / 60, (int)((int)(player.duration)) % 60];
+            
+            _countTimer.text = dur;
+            
+            [sender setImage:[UIImage imageNamed:@"record_pause_button"] forState:UIControlStateNormal];
+            
+        }
+    }
     
+    else {
+        
+        [player pause];
+        
+        [sender setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
+        
+        //record_pause_button
     }
 }
 - (IBAction)sendPressed:(id)sender {
@@ -426,7 +452,7 @@
         
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         [audioSession setActive:NO error:nil];
-                
+        
         [record_timer invalidate];
         
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Time Exceeded" message:@"Recording Stopped" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -434,8 +460,12 @@
         
     }
     
+    NSString *dur = [NSString stringWithFormat:@"%02d:%02d", rec_time / 60, rec_time % 60];
+    
+    _record_timer_lable.text = dur;
+    
     rec_time = rec_time + 1;
-                              
+    
 }
 - (IBAction)deleteRecord:(id)sender {
     
@@ -476,6 +506,8 @@
     
     if (flag) {
         
+        [_playButton setImage:[UIImage imageNamed:@"play_button"]forState:UIControlStateNormal];
+        
         _slider.value = 0.0;
         
         [player_timer invalidate];
@@ -487,7 +519,7 @@
         [_sendButton setEnabled:YES];
         [_recordButton setEnabled:YES];
         [_deleteButton setEnabled:YES];
-
+        
     }
 }
 
