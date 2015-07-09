@@ -22,7 +22,7 @@
 
 @implementation ReviewDetailViewController
 @synthesize dataDict;
-@synthesize add,alertSave,alertSign;
+@synthesize add,alertSave,alertSign,alertDelete;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -128,10 +128,20 @@
     
 }
 - (IBAction)deleteTapped:(id)sender {
-        
-    NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"],@"Status":@"Deleted"};
-
-    [self callDeleteWebService:params service:@"DeleteRecord"];
+    
+    alertDelete = [[UIAlertView alloc] init];
+    [alertDelete setDelegate:self];
+    [alertDelete setTitle:@"Alert!"];
+    [alertDelete setMessage:@"Do you want to Delete Record?"];
+    [alertDelete addButtonWithTitle:@"Yes"];
+    [alertDelete addButtonWithTitle:@"No"];
+    
+    alertDelete.alertViewStyle =UIAlertViewStyleDefault;
+    alertDelete.tag = 3;
+    [alertDelete show];
+//    NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"],@"Status":@"Deleted"};
+//
+//    [self callDeleteWebService:params service:@"DeleteRecord"];
 }
 
 #pragma mark - Service Methods
@@ -198,20 +208,9 @@
         
         NSError* error;
         NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
-        
-        add = [[UIAlertView alloc] init];
-        [add setDelegate:self];
-        [add setTitle:@"Alert!"];
-        [add setMessage:@"Do you want to Delete Record?"];
-        [add addButtonWithTitle:@"Yes"];
-        [add addButtonWithTitle:@"No"];
-        
-        add.alertViewStyle =UIAlertViewStyleDefault;
-        add.tag = 3;
-        [add show];
 
-//        [self addMessageLoader:@"Record Delete"];
-//        [self.navigationController popViewControllerAnimated:YES];
+
+        [self.navigationController popViewControllerAnimated:YES];
         
         [self hideHud];
 
@@ -241,10 +240,12 @@
     else if (alertSign.tag ==2){
         [self.navigationController popViewControllerAnimated:YES];
     }
-    else if (add.tag == 3)
+    else if (alertDelete.tag == 3)
     {
         if (buttonIndex == 0 ) {
-            [self.navigationController popViewControllerAnimated:YES];
+            NSDictionary *params = @{@"TranscriptionID":[dataDict objectForKey:@"TranscriptionID"],@"Status":@"Deleted"};
+            
+            [self callDeleteWebService:params service:@"DeleteRecord"];
         }
     }
     else

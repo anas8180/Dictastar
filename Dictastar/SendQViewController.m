@@ -401,11 +401,15 @@
             
         }
     }
+    else{
+        [self addMessageLoader:@"Please Select Check Box!"];
+    }
     
 }
 
 - (IBAction)deleteTapped:(id)sender {
     
+    if (_selectedIndexPaths.count) {
     alertDelete = [[UIAlertView alloc] init];
     [alertDelete setDelegate:self];
     [alertDelete setTitle:@"Alert!"];
@@ -416,6 +420,11 @@
     alertDelete.alertViewStyle =UIAlertViewStyleDefault;
     alertDelete.tag = 1;
     [alertDelete show];
+    }
+    else
+    {
+        [self addMessageLoader:@"Please Select Check Box!"];
+    }
     
     
 }
