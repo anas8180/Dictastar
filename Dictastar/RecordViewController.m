@@ -101,8 +101,8 @@
     
     _slider.value = 0.0;
     
-    statPriority = @"Normal";
-    isStat = NO;
+    statPriority = @"Hight";
+    isStat = YES;
     
     _countTimer.text = @"00:00";
     _countDownTimer.text = @"00:00";
@@ -115,6 +115,11 @@
     rec_time = 1;
     
     [self fetchFTPDetails];
+    
+    _playButton.enabled = NO;
+    _deleteButton.enabled = NO;
+    _sendButton.enabled = NO;
+    _stopButton.enabled = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -277,6 +282,7 @@
         [_playButton setEnabled:NO];
         [_sendButton setEnabled:NO];
         [_deleteButton setEnabled:NO];
+        _stopButton.enabled = YES;
         
     }
     else{
