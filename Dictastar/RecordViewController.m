@@ -476,34 +476,42 @@
 }
 - (IBAction)deleteRecord:(id)sender {
     
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *documentdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *filePath = [documentdir stringByAppendingPathComponent:_fileName.text];
+    alertDelete = [[UIAlertView alloc]init];
+    [alertDelete setDelegate:self];
+    [alertDelete setTitle:@"Alert!"];
+    [alertDelete setMessage:@"Do you want to Delete Record?"];
+    [alertDelete addButtonWithTitle:@"Yes"];
+    [alertDelete addButtonWithTitle:@"No"];
     
-    NSError *error;
-    BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+    alertDelete.alertViewStyle =UIAlertViewStyleDefault;
+    alertDelete.tag = 1;
+    [alertDelete show];
     
-    if (success) {
-        
-//        alertDelete = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Do you want to Delete Record File" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-//        [alertDelete show];
-        
-        UIAlertView* add = [[UIAlertView alloc] init];
-        [add setDelegate:self];
-        [add setTitle:@"Alert!"];
-        [add setMessage:@"Do you want to Delete Record?"];
-        [add addButtonWithTitle:@"Yes"];
-        [add addButtonWithTitle:@"No"];
-        
-        add.alertViewStyle =UIAlertViewStyleDefault;
-        add.tag = 1;
-        [add show];
-
-    }
-    else {
-        
-        [self addMessageLoader:error.localizedDescription];
-    }
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSString *documentdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//    NSString *filePath = [documentdir stringByAppendingPathComponent:_fileName.text];
+//    
+//    NSError *error;
+//    BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+//    
+//    if (success) {
+//        
+//        UIAlertView* add = [[UIAlertView alloc] init];
+//        [add setDelegate:self];
+//        [add setTitle:@"Alert!"];
+//        [add setMessage:@"Do you want to Delete Record?"];
+//        [add addButtonWithTitle:@"Yes"];
+//        [add addButtonWithTitle:@"No"];
+//        
+//        add.alertViewStyle =UIAlertViewStyleDefault;
+//        add.tag = 1;
+//        [add show];
+//
+//    }
+//    else {
+//        
+//        [self addMessageLoader:error.localizedDescription];
+//    }
 
 }
 
@@ -637,14 +645,27 @@
         // do something here...
         NSLog(@"Delete Yes");
         
-        for (UIViewController *controller in self.navigationController.viewControllers) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *documentdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *filePath = [documentdir stringByAppendingPathComponent:_fileName.text];
         
-                    //Do not forget to import AnOldViewController.h
-        if ([controller isKindOfClass:[ScheduleViewController class]]) {
-        [self.navigationController popToViewController:controller animated:YES];
-            break;
-                    }
+        NSError *error;
+        BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+        
+        if (success) {
+            for (UIViewController *controller in self.navigationController.viewControllers) {
+                
+                //Do not forget to import AnOldViewController.h
+                if ([controller isKindOfClass:[ScheduleViewController class]]) {
+                    [self.navigationController popToViewController:controller animated:YES];
+                    break;
                 }
+            }
+        }
+        else
+        {
+            [self addMessageLoader:@"Delete No"];
+        }
     }
     else if(buttonIndex == 1)
     {
