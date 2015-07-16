@@ -18,6 +18,7 @@
     
     NSData *uploadData;
     BRRequestUpload *uploadFile;
+    BOOL isSelectedAll,isSelectedSingle;
 
 }
 
@@ -52,6 +53,9 @@
     [self getDate];
     [self fetchOutBoxDetails];
     [self fetchFTPDetails];
+    
+    isSelectedAll = NO;
+    isSelectedSingle = NO;
     
     self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     
@@ -427,6 +431,35 @@
     }
     
     
+}
+
+
+- (IBAction)selectAllReport:(id)sender {
+    
+    if (isSelectedAll) {
+        
+        [_selectedIndexPaths removeAllObjects];
+        
+        [sender setImage:[UIImage imageNamed:@"outbox_uncheck"] forState:UIControlStateNormal];
+        
+        [self.tableView reloadData];
+        
+        isSelectedAll = NO;
+    }
+    else {
+        [_selectedIndexPaths removeAllObjects];
+        
+        for (int i=0; i<_dataArray.count; i++) {
+            
+            [_selectedIndexPaths addObject:[NSString stringWithFormat:@"%d",i]];
+        }
+        
+        [sender setImage:[UIImage imageNamed:@"outbox_check"] forState:UIControlStateNormal];
+        
+        [self.tableView reloadData];
+        
+        isSelectedAll = YES;
+    }
 }
 
 #pragma Alert Delegate

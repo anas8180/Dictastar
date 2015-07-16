@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "EZAudio.h"
+#import "PCSEQVisualizer.h"
 
-@interface RecordViewController : UIViewController <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
-
+@interface RecordViewController : UIViewController <AVAudioRecorderDelegate, AVAudioPlayerDelegate,EZMicrophoneDelegate>
+{
+    
+    __weak IBOutlet UIView *barVisualizer;
+}
 @property (nonatomic, strong) NSDictionary *dataDict;
 @property (nonatomic, strong) NSDictionary *jobTypeDict;
 @property (nonatomic, strong) UIAlertView *alertDelete;
+@property (weak, nonatomic) IBOutlet EZAudioPlot *audioPlot;
+@property (nonatomic, strong) EZMicrophone *microphone;
+
 @end

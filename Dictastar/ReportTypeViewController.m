@@ -34,7 +34,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _userInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_info"];
-
+    
     [self fetchDictateTypeInfo];
     [self fetchDefaultType];
     self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
@@ -225,7 +225,7 @@
 }
 - (IBAction)makeDefault:(id)sender {
     
-    
+
     NSDictionary *params = @{@"Tid":[[_dataArray objectAtIndex:selectedIndexPath.row] objectForKey:@"Tid"],@"Dictateid":[[_dataArray objectAtIndex:selectedIndexPath.row] objectForKey:@"Dictateid"]};
     
     [[BTServicesClient sharedClient] GET:@"UpdateDefaultDictateTypeinJson" parameters:params success:^(NSURLSessionDataTask * __unused task, id JSON) {
@@ -233,6 +233,7 @@
         NSError* error;
         NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:JSON options:kNilOptions error:&error];
         NSArray *data = [jsonDict objectForKey:@"Table"];
+        
         [self addMessageLoader:@"Default Saved"];
         
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
@@ -249,12 +250,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    
 
     DictateViewController *dictateObj = segue.destinationViewController;
     dictateObj.dataDict = dataDict;
     dictateObj.jobTypeDict = [_dataArray objectAtIndex:selectedIndexPath.row];
-    
 }
 
 

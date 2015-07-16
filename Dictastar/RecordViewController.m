@@ -15,6 +15,7 @@
 #import "UIViewController+ActivityLoader.h"
 #import "ScheduleViewController.h"
 #import <AudioToolbox/AudioServices.h>
+#import "PCSEQVisualizer.h"
 
 @interface RecordViewController ()<BRRequestDelegate> {
     
@@ -28,6 +29,7 @@
     NSTimer *record_timer,*player_timer;
     int rec_time;
     int max_dict;
+    PCSEQVisualizer *eq;
 
 }
 
@@ -46,7 +48,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *sendButton;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topLayout;
 @property (strong, nonatomic) IBOutlet UIButton *deleteButton;
-
+@property (nonatomic, strong) NSArray *inputs;
 @end
 
 @implementation RecordViewController
@@ -106,6 +108,8 @@
     
     _countTimer.text = @"00:00";
     _countDownTimer.text = @"00:00";
+    
+  
 
     if (IS_IPHONE4) {
         
@@ -115,6 +119,8 @@
     rec_time = 1;
     
     [self fetchFTPDetails];
+    [self showVisualizer];
+    [self showBarVisualizer];
     
     _playButton.enabled = NO;
     _deleteButton.enabled = NO;
@@ -152,6 +158,58 @@
 
 }
 
+-(void)showVisualizer
+{
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSError *error;
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+    
+    if (error)
+    {
+        NSLog(@"Error setting up audio session category: %@", error.localizedDescription);
+    }
+    [session setActive:YES error:&error];
+    if (error)
+    {
+        NSLog(@"Error setting up audio session active: %@", error.localizedDescription);
+    }
+    
+    // Customizing the audio plot's look
+    // Background color
+    self.audioPlot.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    //
+    
+    // Waveform color
+    self.audioPlot.color = [UIColor colorWithRed:0.984 green:0.471 blue:0.525 alpha:1.0];
+    //
+    
+    // Plot type
+    self.audioPlot.plotType = EZPlotTypeBuffer;
+    //
+    
+    // Create the microphone
+    self.microphone = [EZMicrophone microphoneWithDelegate:self];
+    //
+    
+    //
+    // Set up the microphone input UIPickerView items to select
+    // between different microphone inputs. Here what we're doing behind the hood
+    // is enumerating the available inputs provided by the AVAudioSession.
+    //
+    self.inputs = [EZAudioDevice inputDevices];
+    
+    // Start the microphone
+    [self.microphone startFetchingAudio];
+    //
+    [self.audioPlot setHidden:YES];
+}
+
+-(void)showBarVisualizer
+{
+    eq = [[PCSEQVisualizer alloc]initWithNumberOfBars:5];
+    [barVisualizer addSubview:eq];
+    [eq setHidden:YES];
+}
 #pragma mark - Methods
 
 -(NSString *)cutStringDate:(NSString *)dateString
@@ -224,6 +282,7 @@
     
     if (!recorder.recording) {
 
+        [self.audioPlot setHidden:NO];
         NSString *documentdir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         NSString *filePath = [documentdir stringByAppendingPathComponent:_fileName.text];
         
@@ -243,12 +302,9 @@
                                        _fileName.text,
                                        nil];
             NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
-            
+ 
             // Setup audio session
-            AVAudioSession *session = [AVAudioSession sharedInstance];
-            [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
-            
-            UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
+                        UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
             AudioSessionSetProperty (kAudioSessionProperty_OverrideAudioRoute,
                                      sizeof (audioRouteOverride),&audioRouteOverride);
             // Define the recorder setting
@@ -294,6 +350,7 @@
         [sender setImage:[UIImage imageNamed:@"recorder_image"]forState:UIControlStateNormal];
         
         [recorder pause];
+        [self.audioPlot setHidden:YES];
         
         [record_timer invalidate];
         
@@ -317,8 +374,9 @@
         [_playButton setEnabled:YES];
         [_sendButton setEnabled:YES];
         [_deleteButton setEnabled:YES];
-        [_recordButton setEnabled:YES];
-        
+        [_recordButton setEnabled:NO];
+        [self.audioPlot setHidden:YES];
+        [eq setHidden:YES];
         
     }
     else if (player.isPlaying){
@@ -327,13 +385,14 @@
         [player_timer invalidate];
         
         [_playButton setImage:[UIImage imageNamed:@"play_button"]forState:UIControlStateNormal];
-        
+        NSLog(@"Player Stop");
         
         [_playButton setEnabled:YES];
         [_sendButton setEnabled:YES];
         [_deleteButton setEnabled:YES];
-        [_recordButton setEnabled:YES];
-        
+        [_recordButton setEnabled:NO];
+        [self.audioPlot setHidden:YES];
+        [eq setHidden:YES];
         
         _slider.value = 0.0;
         
@@ -349,9 +408,25 @@
         if (player != nil) {
             
             [player play];
-            
             [sender setImage:[UIImage imageNamed:@"record_pause_button"] forState:UIControlStateNormal];
+            [eq setHidden:NO];
+            [eq start];
             
+            _slider.minimumValue = 0.0;
+            float total= player.duration;
+            total = total/60;
+            _slider.maximumValue = total;
+            
+            player_timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+            
+            [_sendButton setEnabled:NO];
+            [_recordButton setEnabled:NO];
+            [_deleteButton setEnabled:NO];
+            
+            NSString *dur = [NSString stringWithFormat:@"%02d:%02d", (int)((int)(player.duration)) / 60, (int)((int)(player.duration)) % 60];
+            
+            _countTimer.text = dur;
+
         }
         
         else {
@@ -359,7 +434,9 @@
             [player setDelegate:self];
             
             [player play];
-            
+            [eq setHidden:NO];
+            [eq start];
+            [self.audioPlot setHidden:YES];
             _slider.minimumValue = 0.0;
             float total= player.duration;
             total = total/60;
@@ -378,18 +455,23 @@
             [sender setImage:[UIImage imageNamed:@"record_pause_button"] forState:UIControlStateNormal];
             
             _record_timer_lable.text = @"00:00";
-
+            
         }
+        
     }
     
     else {
         
         [player pause];
-        
+        NSLog(@"Play Pause");
+        [self.audioPlot setHidden:YES];
+        [eq setHidden:YES];
+        [eq stop];
         [sender setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
-        
-        //record_pause_button
+//        record_pause_button
+//         player = nil;
     }
+   
 }
 - (IBAction)sendPressed:(id)sender {
     
@@ -430,13 +512,13 @@
     if (player.isPlaying)
     {
         [player pause];
+//        [player setCurrentTime:position];
     }
     [player setCurrentTime:position];
     
-    if (player.isPlaying) {
-        [player
-         play];
-    }
+//    if (player.isPlaying) {
+//        [player play];
+//    }
 }
 
 - (void)updateTime:(NSTimer *)timer {
@@ -524,17 +606,18 @@
         [_playButton setImage:[UIImage imageNamed:@"play_button"]forState:UIControlStateNormal];
         
         _slider.value = 0.0;
-        
+   
         [player_timer invalidate];
-        
         _countTimer.text = @"00:00";
         
         _countDownTimer.text = @"00:00";
         
         [_sendButton setEnabled:YES];
-        [_recordButton setEnabled:YES];
+        [_recordButton setEnabled:NO];
         [_deleteButton setEnabled:YES];
-        
+        [self.audioPlot setHidden:YES];
+        [eq setHidden:YES];
+        [eq stop];
     }
 }
 
@@ -672,6 +755,83 @@
         NSLog(@"Delete No");
     }
 }
+
+#pragma mark - EZMicrophoneDelegate
+#warning Thread Safety
+// Note that any callback that provides streamed audio data (like streaming
+// microphone input) happens on a separate audio thread that should not be
+// blocked. When we feed audio data into any of the UI components we need to
+// explicity create a GCD block on the main thread to properly get the UI
+// to work.
+- (void)microphone:(EZMicrophone *)microphone
+  hasAudioReceived:(float **)buffer
+    withBufferSize:(UInt32)bufferSize
+withNumberOfChannels:(UInt32)numberOfChannels
+{
+    // Getting audio data as an array of float buffer arrays. What does that mean?
+    // Because the audio is coming in as a stereo signal the data is split into
+    // a left and right channel. So buffer[0] corresponds to the float* data
+    // for the left channel while buffer[1] corresponds to the float* data
+    // for the right channel.
+    
+    // See the Thread Safety warning above, but in a nutshell these callbacks
+    // happen on a separate audio thread. We wrap any UI updating in a GCD block
+    // on the main thread to avoid blocking that audio flow.
+    __weak typeof (self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // All the audio plot needs is the buffer data (float*) and the size.
+        // Internally the audio plot will handle all the drawing related code,
+        // history management, and freeing its own resources.
+        // Hence, one badass line of code gets you a pretty plot :)
+        [weakSelf.audioPlot updateBuffer:buffer[0] withBufferSize:bufferSize];
+    });
+}
+
+//------------------------------------------------------------------------------
+
+- (void)microphone:(EZMicrophone *)microphone hasAudioStreamBasicDescription:(AudioStreamBasicDescription)audioStreamBasicDescription
+{
+    // The AudioStreamBasicDescription of the microphone stream. This is useful
+    // when configuring the EZRecorder or telling another component what
+    // audio format type to expect.
+    [EZAudioUtilities printASBD:audioStreamBasicDescription];
+}
+
+//------------------------------------------------------------------------------
+
+- (void)microphone:(EZMicrophone *)microphone
+     hasBufferList:(AudioBufferList *)bufferList
+    withBufferSize:(UInt32)bufferSize
+withNumberOfChannels:(UInt32)numberOfChannels
+{
+    // Getting audio data as a buffer list that can be directly fed into the
+    // EZRecorder or EZOutput. Say whattt...
+}
+
+//------------------------------------------------------------------------------
+
+- (void)microphone:(EZMicrophone *)microphone changedDevice:(EZAudioDevice *)device
+{
+    NSLog(@"Microphone changed device: %@", device.name);
+    
+    // Called anytime the microphone's device changes
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *name = device.name;
+        NSString *tapText = @" (Tap To Change)";
+        NSString *microphoneInputToggleButtonText = [NSString stringWithFormat:@"%@%@", device.name, tapText];
+        NSRange rangeOfName = [microphoneInputToggleButtonText rangeOfString:name];
+        NSMutableAttributedString *microphoneInputToggleButtonAttributedText = [[NSMutableAttributedString alloc] initWithString:microphoneInputToggleButtonText];
+        [microphoneInputToggleButtonAttributedText addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:13.0f] range:rangeOfName];
+//        [weakSelf.microphoneInputToggleButton setAttributedTitle:microphoneInputToggleButtonAttributedText forState:UIControlStateNormal];
+        
+        // reset the device list (a device may have been plugged in/out)
+        weakSelf.inputs = [EZAudioDevice inputDevices];
+//        [weakSelf.microphoneInputPickerView reloadAllComponents];
+//        [weakSelf setMicrophonePickerViewHidden:YES];
+    });
+}
+
 
 /*
 #pragma mark - Navigation
